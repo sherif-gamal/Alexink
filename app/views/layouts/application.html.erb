@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AlexinkEgypt</title>
+  <%= render "layouts/stylesheets" %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<%= yield %>
+<%= render "layouts/scripts" %>
+</body>
+</html>

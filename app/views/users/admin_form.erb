@@ -1,0 +1,133 @@
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">Dashboard</a></li>
+      <li><a href="#">Employees</a></li>
+      <li><a href="#">Register Employee</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>Employee Details</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+          <%= form_for(@user, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @user.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+                <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= f.label :name,  'Employee Name', {class:"col-sm-2 control-label"}%>
+              <div class="col-sm-4">
+                <%= f.text_field :name , {class:"form-control", placeholder:"Employee Name", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Employee Name"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :email,  'Email address', {class:"col-sm-2 control-label"}%>
+              <div class="col-sm-4">
+                <%= f.text_field :email , {class:"form-control", placeholder:"email@example.com", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Email Address"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :password,  'Password', {class:"col-sm-2 control-label"}%>
+              <div class="col-sm-4 has-warning has-feedback">
+                <%= f.password_field :password , {class:"form-control", placeholder:"Password", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Password"}%>
+                <span class="fa fa-key txt-warning form-control-feedback"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :occupation,  'Occupation', {class:"col-sm-2 control-label"}%>
+              <div class="col-sm-4">
+                <%= f.text_field :occupation , {class:"form-control", placeholder:"Occupation", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Occupation"}%>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.label :privilege,  'Privilege', {class:"col-sm-2 control-label"}%>
+              <div class="col-sm-4">
+                <%= f.number_field :privilege , {class:"form-control", placeholder:"Privilege", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Privilege"}%>
+              </div>
+            </div>
+            <div class="form-group has-success has-feedback">
+            
+              <label class="col-sm-2 control-label">Address</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" placeholder="Address">
+                <span class="fa fa-check-square-o txt-success form-control-feedback"></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2">
+              <%= f.submit class:"btn btn-primary btn-label-left" %>
+            </div>
+            <div class="col-sm-offset-1 col-sm-2">
+              <button type="cancel" class="btn btn-default btn-label-left">
+              <span><i class="fa fa-clock-o txt-danger"></i></span>
+                Cancel
+              </button>
+            </div>
+          </div>
+            </div>
+          <% end %>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(DemoFormValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>

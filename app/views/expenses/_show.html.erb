@@ -1,0 +1,9 @@
+<%= render "layouts/ajaxify" %>
+<p id="notice"><%= notice %></p>
+<%= render 'form' %>
+<script>
+	$('input.btn').hide();
+	$('button').hide();
+</script>
+<%= link_to 'Edit', edit_expense_path(@expense) %> |
+<%= link_to 'Back', expenses_path %>

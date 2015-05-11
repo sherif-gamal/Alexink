@@ -1,0 +1,10 @@
+<%= render "layouts/ajaxify" %>
+<h1>Showing Employee Details</h1>
+
+<%= render 'form' %>
+<script>
+	$('input.btn').hide();
+	$('button').hide();
+</script>
+<%= link_to 'Show', @user %> |
+<%= link_to 'Back', users_path %>
