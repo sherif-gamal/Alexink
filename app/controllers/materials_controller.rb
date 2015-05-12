@@ -33,7 +33,7 @@ class MaterialsController < ApplicationController
 
     respond_to do |format|
       if @material.save
-        format.html { redirect_to @material, notice: 'Material was successfully created.' }
+        format.html { redirect_to materials_url, notice: 'Material was successfully created.' }
         format.json { render :show, status: :created, location: @material }
       else
         format.html { render :new }

@@ -46,7 +46,7 @@ class PurchasesController < ApplicationController
   def update
     respond_to do |format|
       if @purchase.update(purchase_params)
-        format.html { redirect_to @purchase, notice: 'Purchase was successfully updated.' }
+        format.html { redirect_to purchases_url, notice: 'Purchase was successfully updated.' }
         format.json { render :show, status: :ok, location: @purchase }
       else
         format.html { render :edit }
@@ -73,6 +73,6 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      params[:purchase]
+      params.require(:purchase).permit(:quantity, :price, :client, :payment_method, :payment_state, :state)
     end
 end

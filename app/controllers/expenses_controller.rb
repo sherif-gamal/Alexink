@@ -46,7 +46,7 @@ class ExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @expense.update(expense_params)
-        format.html { redirect_to @expense, notice: 'Expense was successfully updated.' }
+        format.html { redirect_to expenses_url, notice: 'Expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @expense }
       else
         format.html { render :edit }
@@ -73,6 +73,6 @@ class ExpensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def expense_params
-      params[:expense]
+      params.require(:expense).permit(:name, :unit, :quantity, :price, :seller, :payment_method, :payment_state, :state)
     end
 end
