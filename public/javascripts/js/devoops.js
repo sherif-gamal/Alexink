@@ -1748,7 +1748,7 @@ function MorrisDashboard(){
 var sparkLine_interval = null;
 function DrawSparklineDashboard(){
 	SparklineLoop();
-	sparkLine_interval = setInterval(SparklineLoop, 1000);
+	//sparkLine_interval = setInterval(SparklineLoop, 1000);
 	var sparkline_clients = [[309],[223], [343], [652], [455], [18], [912],[15]];
 	$('.bar').each(function(){
 		$(this).sparkline(sparkline_clients.map(SmallChangeVal), {type: 'bar', barWidth: 5, highlightColor: '#000', barSpacing: 2, height: 30, stackedBarColor: '#6AA6D6'});
@@ -1772,9 +1772,9 @@ function DrawKnobDashboard(){
 		$("#knob-srv-4"),$("#knob-srv-5"),$("#knob-srv-6")
 	];
 	srv_monitoring_selectors.forEach(DrawKnob);
-	setInterval(function(){
+/*	setInterval(function(){
 		srv_monitoring_selectors.forEach(RedrawKnob);
-	}, 3000);
+	}, 3000); */
 }
 /*-------------------------------------------
 	Function for File upload page (form_file_uploader.html)
@@ -2428,6 +2428,7 @@ $(document).ready(function () {
 		var button = $('<div class="text-center"><a href="index.html" class="btn btn-primary">Unlock</a></div>');
 		OpenModalBox(header, form, button);
 	});
+
 });
 
 

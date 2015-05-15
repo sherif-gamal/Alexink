@@ -2360,3 +2360,7 @@ td.beauty-hover {
     display: none;
   }
 }
+
+tr.hover {
+  cursor: pointer;
+}

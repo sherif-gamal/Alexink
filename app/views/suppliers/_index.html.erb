@@ -3,8 +3,8 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="#">Alexink Egypt</a></li>
-      <li><a href="#">Clients</a></li>
-      <li><a href="#">Show Clients</a></li>
+      <li><a href="#">Suppliers</a></li>
+      <li><a href="#">Show Suppliers</a></li>
     </ol>
   </div>
 </div>
@@ -15,7 +15,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-linux"></i>
-          <span>List of all company clients</span>
+          <span>List of all company suppliers</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -44,15 +44,15 @@
             </tr>
           </thead>
           <tbody>
-            <% @clients.each do |client| %>
-              <tr data-href="<%= edit_client_path(client) %>">
-                <td><%= client.name %></td>
-                <td><%= client.country %></td>
-                <td><%= client.phone %></td>
-                <td><%= client.email %></td>
-                <td><%= link_to 'Show', client %></td>
-                <td><%= link_to 'Edit', edit_client_path(client) %></td>
-                <td><%= link_to 'Delete', client, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% @suppliers.each do |supplier| %>
+              <tr data-href="<%= edit_supplier_path(supplier) %>">
+                <td><%= supplier.name %></td>
+                <td><%= supplier.country %></td>
+                <td><%= supplier.phone %></td>
+                <td><%= supplier.email %></td>
+                <td><%= link_to 'Show', supplier %></td>
+                <td><%= link_to 'Edit', edit_supplier_path(supplier) %></td>
+                <td><%= link_to 'Delete', supplier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
               </tr>
             <% end %>
             </tr>
