@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="rtl">
 	<head>
 		<meta charset="utf-8">
 		<title>Alexink Egypt Admin Panel</title>
@@ -39,7 +39,7 @@
 <header class="navbar">
 	<div class="container-fluid expanded-panel">
 		<div class="row">
-			<div id="logo" class="col-xs-12 col-sm-2">
+			<div id="logo" class="col-xs-12 col-sm-2 pull-right">
 				<a href="index.html">Alexink Egypt</a>
 			</div>
 			<div id="top-panel" class="col-xs-12 col-sm-10">
@@ -134,102 +134,134 @@
 <!--Start Container-->
 <div id="main" class="container-fluid">
 	<div class="row">
-		<div id="sidebar-left" class="col-xs-2 col-sm-2">
+		<div id="sidebar-left" class="col-xs-2 col-sm-2 pull-right">
 			<ul class="nav main-menu">
 				<li>
 					<a href="ajax/dashboard.html" class="active ajax-link">
 						<i class="fa fa-dashboard"></i>
-						<span class="hidden-xs">Dashboard</span>
+						<span class="hidden-xs">الصفحة الرئيسية</span>
 					</a>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Employees</span>
+						<span class="hidden-xs">الموظفين</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/users">Show Employees</a></li>
-						<li><a class="ajax-link" href="/users/new">Register Employee</a></li>
+						<li><a class="ajax-link" href="/users">جميع الموظفين</a></li>
+						<li><a class="ajax-link" href="/users/new">موظف جديد</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Clients</span>
+						<span class="hidden-xs">العملاء</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/clients">Show Clients</a></li>
-						<li><a class="ajax-link" href="/clients/new">Add New</a></li>
+						<li><a class="ajax-link" href="/clients">جميع العملاء</a></li>
+						<li><a class="ajax-link" href="/clients/new">عميل جديد</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Suppliers</span>
+						<span class="hidden-xs">الموزعون</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/suppliers">Show Suppliers</a></li>
-						<li><a class="ajax-link" href="/suppliers/new">Add New</a></li>
+						<li><a class="ajax-link" href="/suppliers">جميع الموزعون</a></li>
+						<li><a class="ajax-link" href="/suppliers/new">إضافة موزع</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Materials</span>
+						<span class="hidden-xs">المواد الخام</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/materials">Show Materials</a></li>
-						<li><a class="ajax-link" href="/materials/new">Add New</a></li>
+						<li><a class="ajax-link" href="/materials">المواد الخام</a></li>
+						<li><a class="ajax-link" href="/materials/new">عملية شراء</a></li>
+						<li><a class="ajax-link" href="/materials/production">عملية صناعة</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Products</span>
+						<span class="hidden-xs">المنتجات</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/products">Show Products</a></li>
-						<li><a class="ajax-link" href="/products/new">Add New</a></li>
+						<li><a class="ajax-link" href="/products">المنتجات</a></li>
+						<li><a class="ajax-link" href="/products/new">إضافة منتج للمخزن</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Purchases</span>
+						<span class="hidden-xs">عمليات البيع</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/purchases">Show Purchases</a></li>
-						<li><a class="ajax-link" href="/purchases/new">Add New</a></li>
+						<li><a class="ajax-link" href="/purchases">عمليات البيع</a></li>
+						<li><a class="ajax-link" href="/purchases/new">عملية بيع جديدة</a></li>
 					</ul>
 				</li>
 
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Expenses</span>
+						<span class="hidden-xs">المصروفات</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/expenses">Show Expenses</a></li>
-						<li><a class="ajax-link" href="/expenses/new">Add New</a></li>
+						<li><a class="ajax-link" href="/expenses">المصروفات</a></li>
+						<li><a class="ajax-link" href="/expenses/new">إضافة مصروفات</a></li>
 					</ul>
 				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">المخزن</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="/stock">عرض المخزن</a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">الخزنة</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="/treasury/show">عرض الخزنة</a></li>
+					</ul>
+				</li>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">اليوميات</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="/diaries">اليوميات</a></li>
+					</ul>
+				</li>
+
 				<li><a class="ajax-link" href="ajax/invoice.html">Invoice</a></li>
-<!--
+
 				<li>
 					<a class="ajax-link" href="ajax/calendar.html">
 						 <i class="fa fa-calendar"></i>
-						 <span class="hidden-xs">Calendar</span>
+						 <span class="hidden-xs">جدول الأعمال</span>
 					</a>
 				 </li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle">
 						<i class="fa fa-bar-chart-o"></i>
-						<span class="hidden-xs">Charts</span>
+						<span class="hidden-xs">الرسومات البيانية</span>
 					</a>
 					<ul class="dropdown-menu">
 						<li><a class="ajax-link" href="ajax/charts_xcharts.html">xCharts</a></li>
@@ -380,7 +412,6 @@
 						</li>
 					</ul>
 				</li>
-			-->
 			</ul>
 		</div>
 		<!--Start Content-->

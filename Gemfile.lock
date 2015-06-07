@@ -68,6 +68,9 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.2)
+    jspdf-rails (1.0.3)
+      jquery-rails
+      rails (>= 3.1.0)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -161,6 +164,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
   jquery-rails
+  jspdf-rails
   paperclip (~> 4.2)
   pg (~> 0.18.1)
   rails (= 4.2.0)

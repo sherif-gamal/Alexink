@@ -33,5 +33,29 @@ class ApplicationController < ActionController::Base
     else
       redirect_to "/dashboard##{request.path}"
     end
-end
+  end
+
+  def invoice
+    if request.xhr?
+      render partial: 'invoice'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
+  end
+
+  def success
+    if request.xhr?
+      render partial: 'success'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
+  end
+
+  def is_int?(param)
+    true if Integer(param) rescue false
+  end
+
+  def is_float?(param)
+    true if Float(param) rescue false
+  end
 end

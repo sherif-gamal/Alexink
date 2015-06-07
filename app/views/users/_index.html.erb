@@ -3,8 +3,8 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="#">Alexink Egypt</a></li>
-      <li><a href="#">Employees</a></li>
-      <li><a href="#">Show Employees</a></li>
+      <li><a href="#">الموظفين</a></li>
+      <li><a href="#">جميع الموظفين</a></li>
     </ol>
   </div>
 </div>
@@ -15,7 +15,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-linux"></i>
-          <span>List of all company employees</span>
+          <span>جميع موظفي الشركة</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -44,7 +44,7 @@
           </thead>
           <tbody>
             <% @users.each do |user| %>
-              <tr>
+              <tr data-href="<%= user_path(client) %>">
                 <td><%= user.name %></td>
                 <td><%= user.occupation %></td>
                 <td><%= user.privilege %></td>

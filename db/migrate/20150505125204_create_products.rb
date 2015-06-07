@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string 	:unit
       t.float 	:quantity
       t.float 	:price_per_unit
-      t.string	:state
+      t.integer	:in_stock
 
       t.timestamps null: false
     end

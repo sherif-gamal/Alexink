@@ -1,0 +1,99 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="index.html">الصفحة الرئيسية</a></li>
+			<li><a href="#">الخزنة</a></li>
+			<li><a href="#">عرض الخزنة</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span>عرض الخزنة</span>
+				</div>
+				<div class="box-icons">
+					<a class="collapse-link">
+						<i class="fa fa-chevron-up"></i>
+					</a>
+					<a class="expand-link">
+						<i class="fa fa-expand"></i>
+					</a>
+					<a class="close-link">
+						<i class="fa fa-times"></i>
+					</a>
+				</div>
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<%= form_tag('treasury/update', method:'put', html: {class: 'form-horizontal'}) do %>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">الرصيد البنك</label>
+						<div class="col-sm-4 pull-right">
+							<%= text_field_tag 'bank' , @treasury.bank, {class:"form-control", onchange: "updateSum()"}%>
+						</div>
+					</div><br/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">رصيد الكاش</label>
+						<div class="col-sm-4 pull-right">
+							<%= text_field_tag 'cash' , @treasury.cash,{class:"form-control", onchange: "updateSum()"}%>
+						</div>
+					</div><br/>
+					<hr align="right" class="style-seven"></hr>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">الرصيد الكلي</label>
+						<div class="col-sm-4 pull-right">
+							<input type="text" class="form-control" id="sum" value= <%= @treasury.cash + @treasury.bank%> data-toggle="tooltip" data-placement="bottom" title="Tooltip for last name">
+						</div>
+					</div><br/>
+					<div class="form-group">
+						<%= submit_tag "تعديل", class:"btn btn-primary btn-label-left" %>
+					</div>
+					</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+	$('#s2_with_tag').select2({placeholder: "Select OS"});
+	$('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+	$('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+	// Create Wysiwig editor for textare
+	TinyMCEStart('#wysiwig_simple', null);
+	TinyMCEStart('#wysiwig_full', 'extreme');
+	// Add slider for change test input length
+	FormLayoutExampleInputLength($( ".slider-style" ));
+	// Initialize datepicker
+	$('#input_date').datepicker({setDate: new Date()});
+	// Load Timepicker plugin
+	LoadTimePickerScript(DemoTimePicker);
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(DemoFormValidator);
+	// Add drag-n-drop feature to boxes
+	WinMove();
+});
+
+function updateSum() {
+	sum = parseInt($('#cash').val()) + parseInt($('#bank').val())
+	if (isNaN(sum))
+		$('#sum').val(0)	
+	else
+		$('#sum').val(sum)
+}
+</script>

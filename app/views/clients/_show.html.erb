@@ -1,4 +1,201 @@
-<p id="notice"><%= notice %></p>
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">العملاء</a></li>
+      <li><a href="#">تسجيل عميل جديد</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>بيانات العميل</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
+          <%= form_for(@client, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @client.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@client.errors.count, "error") %> prohibited this client from being saved:</h2>
 
-<%= link_to 'Edit', edit_client_path(@client) %> |
-<%= link_to 'Back', clients_path %>
+                <ul>
+                <% @client.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= f.label :name,  'اسم العميل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :name , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :country,  'الدولة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :country , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :address , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :zip,  'الرقم البريدي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :zip , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :phone,  'الهاتف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :phone , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :email,  'البريد الإليكتروني', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :email , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :contact_person,  'جهة الاتصال', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :contact_person , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :debt,  'الدين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :debt , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <% end %>
+            <%= link_to 'تعديل', edit_client_path(@client) %> |
+			<%= link_to 'حذف', @client, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>عرض جميع عمليات البيع</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pstate" value="البحث بحالة الدفع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @purchases.each do |purchase| %>
+              <tr data-href="<%= purchase_path(client) %>">
+                <td><%= @clients[purchase.client_id].name %></td>
+                <td><%= @products[purchase.product_id].name %></td>
+                <td><%= purchase.quantity %></td>
+                <td><%= purchase.price %></td>
+                <td><%= purchase.payment_state %></td>
+                <td><%= purchase.debt %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>العميل</th>
+              <th>المنج</th>
+              <th>الكمية</th>
+              <th>السعر</th>
+              <th>حالة الدفع</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(clientValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>

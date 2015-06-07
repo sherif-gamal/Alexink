@@ -1,0 +1,145 @@
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">Alexink Egypt</a></li>
+      <li><a href="#">المنتجات</a></li>
+      <li><a href="#">عرض المنتجات</a></li>
+    </ol>
+  </div>
+</div>
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>عرض المنتجات بالمخزن</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث بالوحدة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بسعر الوحدة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_state" value="البحث بالكمية بالمخزن" class="search_init" /></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @products.each do |product| %>
+              <tr data-href="<%= product_path(product) %>">
+                <td><%= product.name %></td>
+                <td><%= product.unit %></td>
+                <td><%= product.quantity %></td>
+                <td><%= product.price_per_unit %></td>
+                <td><%= product.in_stock %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>الاسم</th>
+              <th>الوحدة</th>
+              <th>الكمية</th>
+              <th>سعر الوحدة</th>
+              <th>الكمية بالمخزن</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>عرض المواد الخام بالمخزن</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @materials.each do |material| %>
+              <tr data-href="<%= material_path(material) %>">
+                <td><%= material.name %></td>
+                <td><%= material.price %></td>
+                <td><%= material.in_stock %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>الاسم</th>
+              <th>المبلغ</th>
+              <th>كمية المخزون</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  TestTable2();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+  $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+});
+</script>

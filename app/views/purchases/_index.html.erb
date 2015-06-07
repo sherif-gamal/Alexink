@@ -2,9 +2,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="#">Alexink Egypt</a></li>
-      <li><a href="#">Purchases</a></li>
-      <li><a href="#">Show Purchases</a></li>
+      <li><a href="#">الصفحة الرئيسية</a></li>
+      <li><a href="#">المبيعات</a></li>
+      <li><a href="#">عرض عمليات البيع</a></li>
     </ol>
   </div>
 </div>
@@ -15,7 +15,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-linux"></i>
-          <span>List of Purchases</span>
+          <span>عرض جميع عمليات البيع</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -34,39 +34,34 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="Search Name" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_unit" value="Search Seller" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_quantity" value="Search Quantity" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="Search Price Per Unit" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_state" value="Search State" class="search_init" /></label></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pstate" value="البحث بحالة الدفع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
             </tr>
           </thead>
           <tbody>
             <% @purchases.each do |purchase| %>
-              <tr>
-                <td><%= purchase.client %></td>
+              <tr data-href="<%= purchase_path(purchase) %>">
+                <td><%= @clients.find(purchase.client_id).name %></td>
+                <td><%= @products.find(purchase.product_id).name %></td>
                 <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
-                <td><%= purchase.payment_method %></td>
                 <td><%= purchase.payment_state %></td>
-                <td><%= purchase.state %></td>
-                <td><%= link_to 'Show', purchase, {class:"ajax-link"} %></td>
-                <td><%= link_to 'Edit', edit_purchase_path(purchase) %></td>
-                <td><%= link_to 'Destroy', purchase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <td><%= purchase.debt %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Unit</th>
-              <th>Quantity</th>
-              <th>Price Per Unit</th>
-              <th>State</th>
+              <th>العميل</th>
+              <th>المنج</th>
+              <th>الكمية</th>
+              <th>السعر</th>
+              <th>حالة الدفع</th>
             </tr>
           </tfoot>
         </table>
@@ -91,5 +86,10 @@ $(document).ready(function() {
   LoadDataTablesScripts(AllTables);
   // Add Drag-n-Drop feature
   WinMove();
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
 });
 </script>

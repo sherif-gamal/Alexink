@@ -1,7 +1,129 @@
 <%= render "layouts/ajaxify" %>
-<h1>Editing Product</h1>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">المنتجات</a></li>
+      <li><a href="#">تعديل.منتج</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>تعديل بيانات المنتج</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
+          <%= form_for(@product, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @product.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@product.errors.count, "error") %> prohibited this product from being saved:</h2>
 
-<%= render 'form' %>
+                <ul>
+                <% @product.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
 
-<%= link_to 'Show', @product %> |
-<%= link_to 'Back', products_path %>
+            <div class="form-group">
+              <%= f.label :name,  'اسم المنتج', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :name , {class:"form-control"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :unit,  'الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :unit , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :quantity,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :quantity , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :price_per_unit,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :price_per_unit , {class:"form-control"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :in_stock,  'كمية المخزون', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :in_stock , {class:"form-control"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2 pull-right">
+                <%= f.submit "تعديل المنتج", class:"btn btn-primary btn-label-left" %>
+              </div>
+              <div class="col-sm-offset-1 col-sm-2 pull-right">
+                <button type="cancel" class="btn btn-default btn-label-left">
+                <span><i class="fa fa-clock-o txt-danger"></i></span>
+                  إلغاء
+                </button>
+            </div>
+          </div>
+          </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(DemoFormValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>

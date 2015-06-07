@@ -1,4 +1,38 @@
 Rails.application.routes.draw do
+  
+  get '/dashboard/index'
+  match '/dashboard', to: 'dashboard#index', via: [:get]
+  get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
+
+  get 'stock/index'
+  match '/stock', to: 'stock#index', via: [:get]
+  get 'diaries/index'
+  match '/diaries', to: 'diaries#index', via: [:get]
+
+  get '/users/login'
+  post '/users/authenticate'
+
+  get 'materials/production'
+  post 'materials/permit'
+  get 'materials/permission'
+  post 'materials/confirm'
+  post 'purchases/confirm'
+
+  post 'expenses/confirm'
+  get 'expenses/permission'
+
+  get 'materials/success'
+  get 'purchases/success'
+  get 'purchases/invoice'
+  post 'materials/confirm'
+  get 'treasury/addtotreasury'
+  get 'treasury/show'
+  put 'treasury/update'
+
+  resources :users
+
+  resources :treasury
+
   resources :suppliers
 
   resources :clients
@@ -10,14 +44,6 @@ Rails.application.routes.draw do
   resources :products
 
   resources :materials
-  
-  get '/dashboard/index'
-  match '/dashboard', to: 'dashboard#index', via: [:get]
-  get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
-
-  get '/users/login'
-  post '/users/authenticate'
-  resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

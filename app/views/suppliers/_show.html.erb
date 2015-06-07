@@ -1,4 +1,142 @@
-<p id="notice"><%= notice %></p>
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">الموزعين</a></li>
+      <li><a href="#">تعديل.موزع</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>بيانات الموزع</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+         <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
+          <%= form_for(@supplier, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @supplier.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@supplier.errors.count, "error") %> prohibited this supplier from being saved:</h2>
 
-<%= link_to 'Edit', edit_supplier_path(@supplier) %> |
-<%= link_to 'Back', suppliers_path %>
+                <ul>
+                <% @supplier.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= f.label :name,  'اسم الموزع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :name , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :country,  'الدولة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :country , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :address , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :zip,  'الرقم البريدي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :zip , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :phone,  'الهاتف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :phone , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :email,  'البريد الإليكتروني', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :email , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :contact_person,  'جهة الاتصال', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :contact_person , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :credit,  'الدين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :credit , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+      			<%= link_to 'تعديل', edit_supplier_path(@supplier) %> |
+      			<%= link_to 'حذف', @supplier, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
+            </div>
+          <% end %>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(DemoFormValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>

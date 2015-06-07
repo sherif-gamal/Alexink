@@ -1,9 +1,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="/">Dashboard</a></li>
-      <li><a href="#">Suppliers</a></li>
-      <li><a href="#">Register Supplier</a></li>
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">الموزعين</a></li>
+      <li><a href="#">تسجيل.موزع</a></li>
     </ol>
   </div>
 </div>
@@ -13,7 +13,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-search"></i>
-          <span>Supplier Details</span>
+          <span>بيانات الموزع</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -29,6 +29,9 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
+         <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
           <%= form_for(@supplier, html: {class: 'form-horizontal'}) do |f| %>
             <% if @supplier.errors.any? %>
               <div id="error_explanation">
@@ -43,62 +46,69 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :name,  'Supplier Name', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :name , {class:"form-control", placeholder:"Supplier Name", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Supplier Name"}%>
+              <%= f.label :name,  'اسم الموزع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :name , {class:"form-control", placeholder:"اسم الموزع", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"اسم الموزع"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :country,  'Country', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :country , {class:"form-control", placeholder:"Country", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Country"}%>
+              <%= f.label :country,  'الدولة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :country , {class:"form-control", placeholder:"الدولة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الدولة"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :address,  'Address', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :address , {class:"form-control", placeholder:"Address", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Address"}%>
+              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :address , {class:"form-control", placeholder:"العنوان", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"العنوان"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :zip,  'Postal Code', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :zip , {class:"form-control", placeholder:"Postal Code", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Postal Code"}%>
+              <%= f.label :zip,  'الرقم البريدي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :zip , {class:"form-control", placeholder:"الرقم البريدي", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الرقم البريدي"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :phone,  'Phone', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :phone , {class:"form-control", placeholder:"Phone", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Phone"}%>
+              <%= f.label :phone,  'الهاتف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :phone , {class:"form-control", placeholder:"الهاتف", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الهاتف"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :email,  'Email address', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :email , {class:"form-control", placeholder:"email@example.com", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Email Address"}%>
+              <%= f.label :email,  'البريد الإليكتروني', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :email , {class:"form-control", placeholder:"email@example.com", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"البريد الإليكتروني"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :contact_person,  'Contact Person', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :contact_person , {class:"form-control", placeholder:"Contact Person", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Contact Person"}%>
+              <%= f.label :contact_person,  'جهة الاتصال', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :contact_person , {class:"form-control", placeholder:"جهة الاتصال", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"جهة الاتصال"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-2">
-              <%= f.submit class:"btn btn-primary btn-label-left" %>
+              <%= f.label :credit,  'الدين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :credit , {class:"form-control", placeholder:"مستحقات الموزع لدينا", 'data-toggle' => "tooltip", 'data-placement' => "bottom"}%>
+              </div>
             </div>
-            <div class="col-sm-offset-1 col-sm-2">
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2 pull-right">
+              <%= f.submit "تسجيل الموزع", class:"btn btn-primary btn-label-left" %>
+            </div>
+            <div class="col-sm-offset-1 col-sm-2 pull-right">
               <button type="cancel" class="btn btn-default btn-label-left">
               <span><i class="fa fa-clock-o txt-danger"></i></span>
-                Cancel
+                إلغاء
               </button>
             </div>
           </div>

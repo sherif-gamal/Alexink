@@ -1403,7 +1403,7 @@ table {
   background-color: transparent;
 }
 th {
-  text-align: left;
+  text-align: right;
 }
 .table {
   width: 100%;

@@ -16,6 +16,7 @@ body {
 h1, .h1, h2, .h2, h3, .h3 {
   margin:0;
 }
+
 #logo {
   position:relative;
   background: #525252 url(../img/devoops_pattern_b10.png) 0 0 repeat;
@@ -97,7 +98,7 @@ a.show-sidebar:hover {
   margin:0 -15px;
 }
 .nav.main-menu > li > a, .nav.msg-menu > li > a {
-  text-align: center;
+  text-align: right;
   color:#f0f0f0;
   min-height: 40px;
   -webkit-transition: 0.2s;
@@ -220,6 +221,9 @@ a.show-sidebar:hover {
 .panel-menu {
   margin: 0;
 }
+.nav {
+  padding-right: 0;
+}
 .top-panel-right {
   padding-left: 0;
 }
@@ -308,7 +312,7 @@ a.show-sidebar:hover {
   font-size: 14px;
   width: 20px;
   display: inline-block;
-  text-align: center;
+  text-align: right;
   vertical-align: middle;
 }
 .well {
@@ -358,7 +362,7 @@ a.show-sidebar:hover {
 .box-icons {
   position: absolute;
   top:0;
-  right:0;
+  left:0;
   z-index: 9;
 }
 .no-move {
@@ -2281,7 +2285,7 @@ td.beauty-hover {
 }
 @media (min-width: 992px) {
   .nav.main-menu > li > a, .nav.msg-menu > li > a {
-    text-align: left;
+    text-align: right;
   }
   .nav.main-menu > li > a > i, .nav.msg-menu > li > a > i {
     font-size:14px;
@@ -2363,4 +2367,51 @@ td.beauty-hover {
 
 tr.hover {
   cursor: pointer;
+}
+
+.isa_info, .isa_success, .isa_warning, .isa_error {
+margin: 10px 0px;
+padding:12px;
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
+
+/* Flaired edges, by Tomas Theunissen */
+
+hr.style-seven {
+    height: 30px;
+    width: 50%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+hr.style-seven:before { /* Not really supposed to work, but does */
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: black;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
 }

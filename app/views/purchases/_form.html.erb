@@ -1,9 +1,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="/">Dashboard</a></li>
-      <li><a href="#">Purchases</a></li>
-      <li><a href="#">Register Purchase</a></li>
+      <li><a href="/">الصفحة الؤئيسية</a></li>
+      <li><a href="#">المبيعات</a></li>
+      <li><a href="#">تسجيل.عملية.بيع</a></li>
     </ol>
   </div>
 </div>
@@ -13,7 +13,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-search"></i>
-          <span>Enter New Purchase Details</span>
+          <span>إتمام عملية بيع</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -29,6 +29,9 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
           <%= form_for(@purchase, html: {class: 'form-horizontal'}) do |f| %>
             <% if @purchase.errors.any? %>
               <div id="error_explanation">
@@ -43,55 +46,63 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :client,  'Client', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :client , {class:"form-control", placeholder:"Client", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Client"}%>
+              <%= f.label :product_id,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :product_id, @products.collect {|p| [p.name, p.id, {'in_stock' => p.in_stock}]}, {}, {class:"pull-right", style:"min-width:100%", onchange:"set_unit()"} %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :quantity,  'Quantity', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :quantity , {class:"form-control", placeholder:"Quantity", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Quantity"}%>
+              <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :price,  'Price', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :price , {class:"form-control", placeholder:"Price", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Price"}%>
+              <%= f.label :quantity,  'الكميلة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.number_field :quantity , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكميلة"}%>
+                
+              </div>
+              <span>/<span id="in_stock"></span></span>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :price,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.number_field :price , {class:"form-control", placeholder:"المبلغ", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :payment_method,  'payment Method', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :payment_method , {class:"form-control", placeholder:"Payment Method", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Payment Method"}%>
+              <%= f.label :payment_method,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :payment_method, ['cash', 'bank'], {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :payment_state,  'payment Method', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :payment_state , {class:"form-control", placeholder:"Payment State", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Payment State"}%>
+              <%= f.label :payment_state,  'حالة الدفع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%", onchange:"set_debt()" } %>
+              </div>
+              <div id="debt-div" hidden="hidden">
+                <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
+                <div class="col-sm-4 pull-right">
+                  <%= f.text_field :debt , {class:"form-control", value:0}%>
+                </div>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :state,  'State', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :state , {class:"form-control", placeholder:"State", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"State"}%>
+              <div class="col-sm-offset-2 col-sm-2 pull-right">
+                <%= f.submit "إتمام عملية البيع", class:"btn btn-primary btn-label-left" %>
               </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-2">
-                <%= f.submit class:"btn btn-primary btn-label-left" %>
-              </div>
-              <div class="col-sm-offset-1 col-sm-2">
+              <div class="col-sm-offset-1 col-sm-2 pull-right">
                 <button type="cancel" class="btn btn-default btn-label-left">
                 <span><i class="fa fa-clock-o txt-danger"></i></span>
-                  Cancel
+                  إلغاء
                 </button>
             </div>
           </div>
@@ -128,5 +139,22 @@ $(document).ready(function() {
   LoadBootstrapValidatorScript(DemoFormValidator);
   // Add drag-n-drop feature to boxes
   WinMove();
+  set_debt();
+  set_unit();
 });
+
+
+function set_debt() {
+  $('#purchase_debt').val(0)
+  if ($('#purchase_payment_state').val() == "آجل") {
+    $('#debt-div').show();
+  }
+  else {
+   $('#debt-div').hide();
+  }
+}
+function set_unit() {
+  $("#unit").val($('#id :selected').attr('unit'));
+  $("#in_stock").html($('#purchase_product_id :selected').attr('in_stock'));
+}
 </script>

@@ -1,9 +1,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="/">Dashboard</a></li>
-      <li><a href="#">Products</a></li>
-      <li><a href="#">Register Product</a></li>
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">المنتجات</a></li>
+      <li><a href="#">تسجيل.منتج</a></li>
     </ol>
   </div>
 </div>
@@ -13,7 +13,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-search"></i>
-          <span>Enter New Product Details</span>
+          <span>إدخال بيانات منتج جديد</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -29,6 +29,9 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
           <%= form_for(@product, html: {class: 'form-horizontal'}) do |f| %>
             <% if @product.errors.any? %>
               <div id="error_explanation">
@@ -43,48 +46,41 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :name,  'product Name', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :name , {class:"form-control", placeholder:"product Name", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"product Name"}%>
+              <%= f.label :name,  'اسم المنتج', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :name , {class:"form-control", placeholder:"اسم المنتج", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"اسم المنتج"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :unit,  'Unit', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :unit , {class:"form-control", placeholder:"Unit", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Unit"}%>
+              <%= f.label :unit,  'الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :unit , {class:"form-control", placeholder:"الوحدة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الوحدة"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :quantity,  'Quantity', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :quantity , {class:"form-control", placeholder:"Quantity", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Quantity"}%>
+              <%= f.label :quantity,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :quantity , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكمية"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :price_per_unit,  'Price Per Unit', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :price_per_unit , {class:"form-control", placeholder:"Price Per Unit", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"Price Per Unit"}%>
+              <%= f.label :price_per_unit,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :price_per_unit , {class:"form-control", placeholder:"سعر الوحدة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"سعر الوحدة"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :state,  'State', {class:"col-sm-2 control-label"}%>
-              <div class="col-sm-4">
-                <%= f.text_field :state , {class:"form-control", placeholder:"State", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"State"}%>
+              <div class="col-sm-offset-2 col-sm-2 pull-right">
+                <%= f.submit "تسجيل المنتج", class:"btn btn-primary btn-label-left" %>
               </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-sm-offset-2 col-sm-2">
-                <%= f.submit class:"btn btn-primary btn-label-left" %>
-              </div>
-              <div class="col-sm-offset-1 col-sm-2">
+              <div class="col-sm-offset-1 col-sm-2 pull-right">
                 <button type="cancel" class="btn btn-default btn-label-left">
                 <span><i class="fa fa-clock-o txt-danger"></i></span>
-                  Cancel
+                  إلغاء
                 </button>
             </div>
           </div>

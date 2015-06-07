@@ -3,19 +3,18 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="#">Alexink Egypt</a></li>
-      <li><a href="#">Materials</a></li>
-      <li><a href="#">Show Materials</a></li>
+      <li><a href="#">المواد الخام</a></li>
+      <li><a href="#">عرض المواد الخام</a></li>
     </ol>
   </div>
 </div>
-<p id="notice"><%= notice %></p>
 <div class="row">
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-linux"></i>
-          <span>List of materials bought</span>
+          <span>عرض عمليات الشراء</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -34,35 +33,32 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="Search Name" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_seller" value="Search Seller" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_price" value="Search Price" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_pay_method" value="Search Payment Method" class="search_init" /></label></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_supplier" value="البحث بالموزع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pay_method" value="البحث بطريقة الدفع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
             </tr>
           </thead>
           <tbody>
             <% @materials.each do |material| %>
-              <tr>
+              <tr data-href="<%= material_path(material) %>">
                 <td><%= material.name %></td>
-                <td><%= material.seller %></td>
+                <td><%= @suppliers.find(material.supplier_id).name %></td>
                 <td><%= material.price %></td>
                 <td><%= material.payment_method %></td>
-                <td><%= link_to 'Show', material, {class:"ajax-link"} %></td>
-                <td><%= link_to 'Edit', edit_material_path(material) %></td>
-                <td><%= link_to 'Destroy', material, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <td><%= material.in_stock %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Seller</th>
-              <th>Price</th>
-              <th>Payment Method</th>
+              <th>الاسم</th>
+              <th>الموزع</th>
+              <th>المبلغ</th>
+              <th>طريقة الدفع</th>
+              <th>كمية المخزون</th>
             </tr>
           </tfoot>
         </table>
@@ -87,5 +83,10 @@ $(document).ready(function() {
   LoadDataTablesScripts(AllTables);
   // Add Drag-n-Drop feature
   WinMove();
+});
+$("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
 });
 </script>

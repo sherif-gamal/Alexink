@@ -34,35 +34,32 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="Search Name" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_country" value="Search Country" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_privilege" value="Search Phone" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_email" value="Search Email" class="search_init" /></label></th>
-              <th></th>
-              <th></th>
-              <th></th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_privilege" value="البحث بالهاتف" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_email" value="البحث بالبريد الإليكتروني" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_credit" value="البحث بادين" class="search_init" /></label></th>
             </tr>
           </thead>
           <tbody>
             <% @suppliers.each do |supplier| %>
-              <tr data-href="<%= edit_supplier_path(supplier) %>">
+              <tr data-href="<%= supplier_path(supplier) %>">
                 <td><%= supplier.name %></td>
                 <td><%= supplier.country %></td>
                 <td><%= supplier.phone %></td>
                 <td><%= supplier.email %></td>
-                <td><%= link_to 'Show', supplier %></td>
-                <td><%= link_to 'Edit', edit_supplier_path(supplier) %></td>
-                <td><%= link_to 'Delete', supplier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <td><%= supplier.credit %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Phone</th>
-              <th>Email</th>
+              <th>الاسم</th>
+              <th>الدولة</th>
+              <th>الهاتف</th>
+              <th>البريد الإليكتروني</th>
+              <th>الدين</th>
             </tr>
           </tfoot>
         </table>

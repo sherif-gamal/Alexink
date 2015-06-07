@@ -6,6 +6,7 @@ class SuppliersController < ApplicationController
   def index
     @suppliers = Supplier.all
     super
+    flash.discard(:notice)
   end
 
   # GET /suppliers/1
@@ -28,15 +29,19 @@ class SuppliersController < ApplicationController
   # POST /suppliers
   # POST /suppliers.json
   def create
-    @supplier = Supplier.new(supplier_params)
+    if !validate_params(supplier_params) then
+      redirect_to "/suppliers/new", notice: 'تعذر إضافة الموزع. برجاء مراجعة المدخلات.'
+    else
+      @supplier = Supplier.new(supplier_params)
 
-    respond_to do |format|
-      if @supplier.save
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully created.' }
-        format.json { render :show, status: :created, location: @supplier }
-      else
-        format.html { render :new }
-        format.json { render json: @supplier.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @supplier.save
+          format.html { redirect_to suppliers_url, notice: 'Supplier was successfully created.' }
+          format.json { render :show, status: :created, location: @supplier }
+        else
+          format.html { redirect_to "/suppliers/new", notice: 'تعذر إضافة الموزع. برجاء مراجعة المدخلات.' }
+          format.json { render json: @supplier.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -73,6 +78,18 @@ class SuppliersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def supplier_params
-      params[:supplier]
+      params[:supplier].permit(:name, :country, :zip, :address, :phone, :email, :contact_person, :credit)
+    end
+
+    def validate_params(params)
+      if params[:name].present? && params[:country].present? && params[:email].present? && params[:contact_person].present? then
+        if params[:credit].present? && !is_float?(params[:credit])
+          return nil
+        end
+        if params[:zip].present? then
+          return is_int?(params[:zip])
+        end
+      end
+      return nil
     end
 end

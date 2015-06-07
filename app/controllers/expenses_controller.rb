@@ -6,6 +6,7 @@ class ExpensesController < ApplicationController
   def index
     @expenses = Expense.all
     super
+    flash.discard(:notice)
   end
 
   # GET /expenses/1
@@ -27,18 +28,56 @@ class ExpensesController < ApplicationController
 
   # POST /expenses
   # POST /expenses.json
+
   def create
-    @expense = Expense.new(expense_params)
+    if validate_params(expense_params) then
+      session[:params] = expense_params
+      redirect_to '/dashboard#/expenses/permission'
+    else
+      redirect_to "/expenses/new", notice: 'تعذر تسجيل عملية الصرف. برجاء مراجعة المدخلات'
+    end
+  end
+
+  def permission
+    @params = session[:params]
+    @permission_num = Permission.maximum(:id) || 0 + 1
+    session[:permission_num] = @permission_num
+    treasury = Treasury.first
+    if (@params['payment_method'] == "cash")
+      if (treasury.cash < (@params['price'].to_f - @params['debt'].to_f))
+        redirect_to "/expenses/new", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
+        return
+      end
+    elsif (treasury.bank < (@params['price'].to_f - @params['debt'].to_f))
+      redirect_to "/expenses/new", notice: 'المبلغ الموجود بالبنك أقل من المبلغ المطلوب'
+      return
+    end
+    render partial: 'permission'
+  end
+
+  def confirm
+    params = session[:params]
+    @expense = Expense.new(params)
 
     respond_to do |format|
       if @expense.save
-        format.html { redirect_to expenses_url, notice: 'Expense was successfully created.' }
+        Permission.create({})
+        treasury = Treasury.first
+        if (params['payment_method'] == "cash")
+          treasury.cash = treasury.cash - @expense.price + @expense.debt
+        else
+          treasury.bank = treasury.bank - @expense.price + @expense.debt
+        end
+        treasury.save
+        format.html { redirect_to expenses_url, notice: 'تم تسجيل عملية الصرف.' }
         format.json { render :show, status: :created, location: @expense }
       else
-        format.html { render :new }
+        format.html { redirect_to "/expenses/new", notice: 'تعذر تسجيل المصروف. برجاء مراجعة المدخلات' }
         format.json { render json: @expense.errors, status: :unprocessable_entity }
       end
     end
+    session[:params] = nil
+    session[:permission_num] = nil
   end
 
   # PATCH/PUT /expenses/1
@@ -46,6 +85,14 @@ class ExpensesController < ApplicationController
   def update
     respond_to do |format|
       if @expense.update(expense_params)
+        treasury = Treasury.first
+        if (params['payment_method'] == "cash")
+          treasury.cash = treasury.cash - @expense.debt + expense_params[:debt]
+        else
+          treasury.bank = treasury.bank - @expense.debt + expense_params[:debt]
+        end
+        treasury.save
+
         format.html { redirect_to expenses_url, notice: 'Expense was successfully updated.' }
         format.json { render :show, status: :ok, location: @expense }
       else
@@ -73,6 +120,13 @@ class ExpensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def expense_params
-      params.require(:expense).permit(:name, :unit, :quantity, :price, :seller, :payment_method, :payment_state, :state)
+      params.require(:expense).permit(:name, :price, :seller, :payment_method, :payment_state, :debt)
+    end
+
+    def validate_params(params)
+      if params[:name].present? && params[:seller].present? && params[:price].present? then
+        return is_float?(params[:price]) && is_float?(params[:debt])
+      end
+      return nil
     end
 end

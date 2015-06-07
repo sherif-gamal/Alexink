@@ -6,11 +6,13 @@ class ClientsController < ApplicationController
   def index
     @clients = Client.all
     super
+    flash.discard(:notice)
   end
 
   # GET /clients/1
   # GET /clients/1.json
   def show
+    @purchases = Purchase.all
     super
   end
 
@@ -28,15 +30,19 @@ class ClientsController < ApplicationController
   # POST /clients
   # POST /clients.json
   def create
-    @client = Client.new(client_params)
+    if !validate_params(client_params) then
+      redirect_to "/clients/new", notice: 'تعذر إضافة العميل. برجاء مراجعة المدخلات.'
+    else
+      @client = Client.new(client_params)
 
-    respond_to do |format|
-      if @client.save
-        format.html { redirect_to clients_url, notice: 'Client was successfully created.' }
-        format.json { render :show, status: :created, location: @client }
-      else
-        format.html { render :new }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @client.save
+          format.html { redirect_to clients_url, notice: 'تم إضافة العميل بنجاح.' }
+          format.json { render :show, status: :created, location: @client }
+        else
+          format.html { redirect_to "/clients/new", notice: 'تعذر إضافة العميل. برجاء مراجعة المدخلات.' }
+          format.json { render json: @client.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -44,15 +50,19 @@ class ClientsController < ApplicationController
   # PATCH/PUT /clients/1
   # PATCH/PUT /clients/1.json
   def update
-    respond_to do |format|
-      if @client.update(client_params)
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
-        format.json { render :show, status: :ok, location: @client }
-      else
-        format.html { render :edit }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+    if !validate_params(client_params) then
+      redirect_to "/clients/edit", notice: 'تعذر تعديل البيانات. برجاء مراجعة المدخلات'
+    else
+      respond_to do |format|
+        if @client.update(client_params)
+          format.html { redirect_to clients_url, notice: 'تم تعديل بيانات العميل.' }
+          format.json { render :show, status: :ok, location: @client }
+        else
+          format.html { render :edit }
+          format.json { render json: @client.errors, status: :unprocessable_entity }
+        end
       end
-    end
+    end 
   end
 
   # DELETE /clients/1
@@ -73,6 +83,15 @@ class ClientsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def client_params
-      params.require(:client).permit(:name, :country, :zip, :address, :phone, :email, :contact_person)
+      params.require(:client).permit(:name, :country, :zip, :address, :phone, :email, :contact_person, :debt)
+    end
+
+    def validate_params(params)
+      if params[:name].present? && params[:country].present? && params[:email].present? && params[:contact_person].present? then
+        if params[:zip].present? then
+          return is_int?(params[:zip]) && is_float?(params[:debt])
+        end
+      end
+      return nil
     end
 end
