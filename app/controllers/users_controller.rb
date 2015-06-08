@@ -32,10 +32,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to users_url, notice: 'Employee was successfully created.' }
+        format.html { redirect_to users_url, notice: 'تم تسجيل الموظف بنجاح.' }
         format.json { render partial: 'show', status: :created, location: @user }
       else
-        format.html { redirect_to '/dashboard#users/new'}
+        format.html { redirect_to '/dashboard#users/new', notice: 'تعذر تسجيل الموظف. برجاء مراجعة البيانات المدخلة.'}
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -46,10 +46,10 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'Employee was successfully updated.' }
+        format.html { redirect_to @user, notice: 'تم تعديل البيانات بنجاح.' }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html { render :edit }
+        format.html { redirect_to edit_user_path, notice: "تعذر تعديل البيانات" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -86,6 +86,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :occupation, :privilege, :address)
+      params.require(:user).permit(:name, :email, :password, :occupation, :department, :address, :password_confirmation)
     end
 end

@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
   
-  get '/dashboard/index'
+  match '/signin', :to => 'sessions#new', via: [:get]
+  match '/signout', :to => 'sessions#destroy', via: [:get]
   match '/dashboard', to: 'dashboard#index', via: [:get]
-  get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
-
-  get 'stock/index'
   match '/stock', to: 'stock#index', via: [:get]
-  get 'diaries/index'
   match '/diaries', to: 'diaries#index', via: [:get]
 
-  get '/users/login'
-  post '/users/authenticate'
+  get '/dashboard/index'
+  get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
+  get 'stock/index'
+  
+  get 'diaries/index'
 
   get 'materials/production'
   post 'materials/permit'
@@ -29,6 +29,8 @@ Rails.application.routes.draw do
   get 'treasury/show'
   put 'treasury/update'
 
+  resources :sessions, :only => [:new, :create, :destroy]
+  
   resources :users
 
   resources :treasury
@@ -49,7 +51,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'users#login'
+   root 'sessions#new'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

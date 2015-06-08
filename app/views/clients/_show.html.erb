@@ -145,9 +145,9 @@
           </thead>
           <tbody>
             <% @purchases.each do |purchase| %>
-              <tr data-href="<%= purchase_path(client) %>">
-                <td><%= @clients[purchase.client_id].name %></td>
-                <td><%= @products[purchase.product_id].name %></td>
+              <tr data-href="<%= purchase_path(purchase) %>">
+                <td><%= @client.name %></td>
+                <td><%= @products.find(purchase.product_id).name %></td>
                 <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
                 <td><%= purchase.payment_state %></td>
@@ -163,6 +163,7 @@
               <th>الكمية</th>
               <th>السعر</th>
               <th>حالة الدفع</th>
+              <th>المبلغ المتبقي</th>
             </tr>
           </tfoot>
         </table>
@@ -197,5 +198,11 @@ $(document).ready(function() {
   LoadBootstrapValidatorScript(clientValidator);
   // Add drag-n-drop feature to boxes
   WinMove();
+  $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
 });
+});
+
 </script>

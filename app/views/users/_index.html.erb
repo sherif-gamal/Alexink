@@ -37,29 +37,24 @@
               <th><label><input type="text" name="search_name" value="Search Name" class="search_init" /></label></th>
               <th><label><input type="text" name="search_occupation" value="Search Occupation" class="search_init" /></label></th>
               <th><label><input type="text" name="search_privilege" value="Search Privilege" class="search_init" /></label></th>
-              <th></th>
-              <th></th>
-              <th></th>
             </tr>
-          </thead>
+          </thead>  
           <tbody>
             <% @users.each do |user| %>
-              <tr data-href="<%= user_path(client) %>">
+              <tr data-href="<%= user_path(user) %>">
                 <td><%= user.name %></td>
                 <td><%= user.occupation %></td>
-                <td><%= user.privilege %></td>
-                <td><%= link_to 'Show', user %></td>
-                <td><%= link_to 'Edit', edit_user_path(user) %></td>
-                <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <% translations = {"Management" => "الإدارة", "Sales" => "المبيعات", "Purchases" => "المشتريات", "Stocks" => "المخازن"} %>
+                <td><%= translations[user.department] %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>Name</th>
-              <th>Occupation</th>
-              <th>Privilege</th>
+              <th>الاسم</th>
+              <th>الوظيفة</th>
+              <th>القسم</th>
             </tr>
           </tfoot>
         </table>
@@ -84,5 +79,10 @@ $(document).ready(function() {
   LoadDataTablesScripts(AllTables);
   // Add Drag-n-Drop feature
   WinMove();
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
 });
 </script>

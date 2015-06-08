@@ -29,6 +29,10 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
+
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
           <%= form_for(@user, html: {class: 'form-horizontal'}) do |f| %>
             <% if @user.errors.any? %>
               <div id="error_explanation">
@@ -63,6 +67,16 @@
                 <span class="fa fa-key txt-warning form-control-feedback"></span>
               </div>
             </div>
+
+            <div class="form-group">
+              <%= f.label :password_confirmation,  'تأكيد كلمة المرور', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 has-warning has-feedback pull-right">
+                <%= f.password_field :password_confirmation , {class:"form-control", placeholder:"Password", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"كلمة المرور"}%>
+                <span class="fa fa-key txt-warning form-control-feedback"></span>
+              </div>
+            </div>
+
+
             <div class="form-group">
               <%= f.label :occupation,  'الوظيفة', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
@@ -71,9 +85,9 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :privilege,  'القسم', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :department,  'القسم', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.number_field :privilege , {class:"form-control", placeholder:"القسم", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"القسم"}%>
+                <%= f.select :department , [["الإدارة", "Management"], ["المشتريات", "Purchases"], ["المبيعات", "Sales"], ["المخازن", "Stocks"]], {}, {class:"pull-right", style:"min-width:100%"}%>
               </div>
             </div>
             

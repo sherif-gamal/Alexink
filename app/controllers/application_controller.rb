@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  include SessionsHelper
   protect_from_forgery with: :exception
+
+  before_filter :require_login
 
   def index
     if request.xhr?
@@ -58,4 +61,12 @@ class ApplicationController < ActionController::Base
   def is_float?(param)
     true if Float(param) rescue false
   end
+
+  private
+
+    def require_login
+      unless signed_in?
+        redirect_to root_path
+      end
+    end
 end

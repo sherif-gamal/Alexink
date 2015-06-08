@@ -3,12 +3,15 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :email
-      t.string :password
       t.string :occupation
-      t.string :privilege
+      t.string :department
       t.string :address
+      t.string :encrypted_password
+      t.string :salt
 
       t.timestamps null: false
     end
+
+    add_index :users, :email, :unique => true
   end
 end

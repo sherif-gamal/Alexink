@@ -80,16 +80,16 @@
 									</div>
 									<i class="fa fa-angle-down pull-right"></i>
 									<div class="user-mini pull-right">
-										<span class="welcome">Welcome,</span>
-										<span>Eslam Talaat</span>
+										<span class="welcome">مرحباً,</span>
+										<span><%= current_user.name%></span>
 									</div>
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="#">
+										<%= link_to edit_user_path(current_user), class:"ajax-link" do%>
 											<i class="fa fa-user"></i>
 											<span>Profile</span>
-										</a>
+										<%end%>
 									</li>
 									<li>
 										<a href="ajax/page_messages.html" class="ajax-link">
@@ -98,27 +98,9 @@
 										</a>
 									</li>
 									<li>
-										<a href="ajax/gallery_simple.html" class="ajax-link">
-											<i class="fa fa-picture-o"></i>
-											<span>Albums</span>
-										</a>
-									</li>
-									<li>
-										<a href="ajax/calendar.html" class="ajax-link">
-											<i class="fa fa-tasks"></i>
-											<span>Tasks</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-cog"></i>
-											<span>Settings</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
+										<a href="/signout">
 											<i class="fa fa-power-off"></i>
-											<span>Logout</span>
+											<span>الخروج</span>
 										</a>
 									</li>
 								</ul>
@@ -250,7 +232,7 @@
 					</ul>
 				</li>
 
-				<li><a class="ajax-link" href="ajax/invoice.html">Invoice</a></li>
+<!-- 				<li><a class="ajax-link" href="ajax/invoice.html">Invoice</a></li>
 
 				<li>
 					<a class="ajax-link" href="ajax/calendar.html">
@@ -411,7 +393,7 @@
 							</ul>
 						</li>
 					</ul>
-				</li>
+				</li> -->
 			</ul>
 		</div>
 		<!--Start Content-->

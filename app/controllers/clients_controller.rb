@@ -12,7 +12,8 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
-    @purchases = Purchase.all
+    @purchases = Purchase.where(["client_id = ?", @client.id])
+    @products = Product.all
     super
   end
 
