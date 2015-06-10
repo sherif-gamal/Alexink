@@ -58,9 +58,9 @@ class ClientsController < ApplicationController
       respond_to do |format|
         if @client.update(client_params)
 
-          if client.debt != debt
+          if @client.debt != debt
             treasury = Treasury.first
-            treasury.cash = treasury.cash + (debt - client.debt)
+            treasury.cash = treasury.cash + (debt - @client.debt)
             treasury.save
           end
 
