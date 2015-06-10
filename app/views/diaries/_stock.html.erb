@@ -91,7 +91,7 @@
       <%transactions = @purchases + @productions%>
       <%transactions.sort { |a,b| a.created_at <=> b.created_at }%>
       <div class="box-content no-padding table-responsive">
-        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-1">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
               <th>التاريخ</th>
@@ -113,7 +113,7 @@
                 <tr data-href="<%= production_path(t) %>">
                   <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
                   <td>صرف مادة خام للصناعة</td>
-                  <td><%= raw_materials.find(t.raw_material_id) %></td>
+                  <td><%= @raw_materials.find(t.raw_material_id).name %></td>
                   <td><%= t.quantity %></td>
                 </tr>
               <% end %>

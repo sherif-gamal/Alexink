@@ -147,7 +147,7 @@
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= material.name %></td>
+                <td><%= @raw_materials.find(material.id).name %></td>
                 <td><%= @supplier.name %></td>
                 <td><%= material.price %></td>
                 <td><%= material.debt %></td>

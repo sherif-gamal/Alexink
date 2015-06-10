@@ -54,8 +54,17 @@ class ClientsController < ApplicationController
     if !validate_params(client_params) then
       redirect_to "/clients/edit", notice: 'تعذر تعديل البيانات. برجاء مراجعة المدخلات'
     else
+      debt = @client.debt
       respond_to do |format|
         if @client.update(client_params)
+
+          if client.debt != debt
+            treasury = Treasury.first
+            treasury.cash = treasury.cash + (debt - client.debt)
+            treasury.save
+          end
+
+
           format.html { redirect_to clients_url, notice: 'تم تعديل بيانات العميل.' }
           format.json { render :show, status: :ok, location: @client }
         else

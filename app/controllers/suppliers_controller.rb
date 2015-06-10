@@ -13,6 +13,7 @@ class SuppliersController < ApplicationController
   # GET /suppliers/1.json
   def show
     @materials = Material.where(["supplier_id = ?", @supplier.id])
+    @raw_materials = RawMaterial.all
     super
   end
 
