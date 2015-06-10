@@ -56,6 +56,20 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <%= f.label :phone,  'الهاتف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :phone , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :address , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
 
             <div class="form-group">
               <%= f.label :occupation,  'الوظيفة', {class:"col-sm-2 control-label pull-right"}%>
@@ -67,16 +81,10 @@
             <div class="form-group">
               <%= f.label :department,  'القسم', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.select :department , [["الإدارة", "Management"], ["المشتريات", "Purchases"], ["المبيعات", "Sales"], ["المخازن", "Stocks"]], {}, {class:"pull-right", style:"min-width:100%", disabled:true}%>
+                <%= f.select :department , [["الإدارة", "Management"], ["المشتريات", "Purchases"], ["المبيعات", "Sales"], ["المخازن", "Stocks"], ["الإنتاج", "Production"], ["الحسابات", "Accounting"]], {}, {class:"pull-right", style:"min-width:100%", disabled:true}%>
               </div>
             </div>
             
-            <div class="form-group">
-              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :address , {class:"form-control", disabled:true}%>
-              </div>
-            </div>
             <%if @user == current_user%><%= link_to 'تعديل', edit_user_path(@user) %> |<%end%>
 			<%= link_to 'حذف', @user, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
             </div>

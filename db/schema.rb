@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150605212429) do
+ActiveRecord::Schema.define(version: 20150610102107) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -33,20 +33,21 @@ ActiveRecord::Schema.define(version: 20150605212429) do
     t.string   "payment_method"
     t.string   "payment_state"
     t.float    "debt"
+    t.string   "user_name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.integer  "purchase_id"
+    t.float    "purchase_id"
+    t.float    "debt"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   create_table "materials", force: :cascade do |t|
-    t.string   "name"
+    t.integer  "raw_material_id"
     t.integer  "supplier_id"
-    t.string   "unit"
     t.float    "quantity"
     t.float    "price"
     t.string   "payment_method"
@@ -54,15 +55,28 @@ ActiveRecord::Schema.define(version: 20150605212429) do
     t.float    "debt"
     t.string   "state"
     t.integer  "in_stock"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "user_name"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
 
   create_table "permissions", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "transaction_type"
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "productions", force: :cascade do |t|
+    t.integer  "raw_material_id"
+    t.string   "user_name"
+    t.float    "quantity"
+    t.integer  "permission_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -71,6 +85,7 @@ ActiveRecord::Schema.define(version: 20150605212429) do
     t.float    "quantity"
     t.float    "price_per_unit"
     t.integer  "in_stock"
+    t.text     "description"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -85,12 +100,22 @@ ActiveRecord::Schema.define(version: 20150605212429) do
     t.string   "state"
     t.integer  "invoice_id"
     t.integer  "debt"
+    t.string   "user_name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
 
   add_index "purchases", ["client_id"], name: "index_purchases_on_client_id"
   add_index "purchases", ["product_id"], name: "index_purchases_on_product_id"
+
+  create_table "raw_materials", force: :cascade do |t|
+    t.string   "name"
+    t.string   "unit"
+    t.text     "description"
+    t.integer  "in_stock"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "suppliers", force: :cascade do |t|
     t.string   "name"
@@ -120,6 +145,7 @@ ActiveRecord::Schema.define(version: 20150605212429) do
     t.string   "address"
     t.string   "encrypted_password"
     t.string   "salt"
+    t.string   "phone"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
   end

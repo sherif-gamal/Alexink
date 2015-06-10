@@ -47,16 +47,30 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :name,  'اسم المادة', {class:"col-sm-2 control-label pull-right"}%>
+              <%= label_tag 'date',  'التاريخ', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :name , {class:"form-control", disabled:true}%>
+                <%= text_field_tag 'date', @material.created_at.strftime("%Y/%m/%d"), {class:"form-control", disabled:true}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :supplier_id,  'البائع', {class:"col-sm-2 control-label pull-right"}%>
+              <%= label_tag 'employee',  'الموظف', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :supplier_id, {class:"pull-right", disabled:true} %>
+                <%= text_field_tag 'user_name', @material.user_name, {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :raw_material_id,  'اسم المادة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :raw_material_id , @raw_materials.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :supplier_id,  'المورد', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :supplier_id, @suppliers.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true} %>
               </div>
             </div>
 
@@ -64,13 +78,6 @@
               <%= f.label :price,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :price , {class:"form-control", disabled:true}%>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :unit,  'الوحدة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :unit , {class:"form-control", disabled:true}%>
               </div>
             </div>
 

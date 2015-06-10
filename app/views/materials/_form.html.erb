@@ -29,8 +29,8 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-        <% if notice.present? %>
-        <h3 class="alert alert-danger"><%= notice%></h3>
+        <% if flash.now[:notice].present? %>
+        <h3 class="alert alert-danger"><%= flash.now[:notice]%></h3>
         <%end%>
           <%= form_for(@material, html: {class: 'form-horizontal'}) do |f| %>
             <% if @material.errors.any? %>
@@ -46,37 +46,30 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :name,  'اسم المادة', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :raw_material_id,  'اسم المادة', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :name , {class:"form-control", placeholder:"اسم المادة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"اسم المادة"}%>
+                <%= f.select :raw_material_id , @raw_materials.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"}%>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :supplier_id,  'البائع', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :supplier_id,  'المورد', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :supplier_id, @suppliers.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :price,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :price , {class:"form-control", placeholder:"المبلغ", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ"}%>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :unit,  'الوحدة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :unit , {class:"form-control", placeholder:"كجم", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الوحدة"}%>
-              </div>
-            </div>
-
-            <div class="form-group">
               <%= f.label :quantity,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :quantity , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكمية"}%>
+                <%= f.text_field :quantity , {class:"form-control", placeholder:"رقم", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكمية"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :price,  'المبلغ الكلي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :price , {class:"form-control", placeholder:"المبلغ الكلي", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ الكلي"}%>
               </div>
             </div>
 

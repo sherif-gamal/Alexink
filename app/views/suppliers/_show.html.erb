@@ -96,7 +96,7 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :credit,  'الدين', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :credit,  'الموقف', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :credit , {class:"form-control", disabled:true}%>
               </div>
@@ -107,6 +107,65 @@
           <% end %>
 
         
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>عرض عمليات الشراء</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th>الاسم</th>
+              <th>المورد</th>
+              <th>المبلغ</th>
+              <th>الموقف</th>
+              <th>كمية المخزون</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @materials.each do |material| %>
+              <tr data-href="<%= material_path(material) %>">
+                <td><%= material.name %></td>
+                <td><%= @supplier.name %></td>
+                <td><%= material.price %></td>
+                <td><%= material.debt %></td>
+                <td><%= material.in_stock %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_supplier" value="البحث بالمورد" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pay_state" value="البحث بالموقف" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   </div>

@@ -47,16 +47,30 @@
             <% end %>
 
             <div class="form-group">
+              <%= label_tag 'date',  'التاريخ', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'date', @purchase.created_at.strftime("%Y/%m/%d"), {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag 'employee',  'الموظف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'user_name', @purchase.user_name, {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
               <%= f.label :product_id,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {}, {class:"pull-right", disabled:true} %>
+                <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true} %>
               </div>
             </div>
 
             <div class="form-group">
               <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", disabled:true} %>
+                <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right",style:"min-width:100%", disabled:true} %>
               </div>
             </div>
 
@@ -93,7 +107,14 @@
                   <%= f.text_field :debt , {class:"form-control", disabled:true}%>
                 </div>
             </div>
-          <%= link_to 'تعديل', edit_purchase_path(@purchase) %>
+            <%= hidden_field_tag 'purchase_id', @purchase.id%>
+            <div class="col-xs-6 col-xs-offset-6">
+              <div class="col-xs-4">
+                <%= link_to 'طباعة الفاتورة', "/purchases/print_invoice/#{@purchase.id}", class:"btn btn-default btn-label-left"%>
+              </div>
+            </div>
+
+          <%= link_to 'تعديل', edit_purchase_path(@purchase)%>
           <% end %>
         </div>
       </div>
@@ -127,5 +148,7 @@ $(document).ready(function() {
   LoadBootstrapValidatorScript(DemoFormValidator);
   // Add drag-n-drop feature to boxes
   WinMove();
+
 });
+
 </script>

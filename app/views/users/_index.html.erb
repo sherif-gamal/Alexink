@@ -34,9 +34,9 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="Search Name" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_occupation" value="Search Occupation" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_privilege" value="Search Privilege" class="search_init" /></label></th>
+              <th>الاسم</th>
+              <th>الوظيفة</th>
+              <th>القسم</th>
             </tr>
           </thead>  
           <tbody>
@@ -52,9 +52,10 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>الوظيفة</th>
-              <th>القسم</th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_occupation" value="البحث بالوظيفة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_privilege" value="البحث بالقسم" class="البحث بالقسم" /></label></th>
+              
             </tr>
           </tfoot>
         </table>
@@ -65,7 +66,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

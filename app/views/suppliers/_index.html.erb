@@ -2,9 +2,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="#">Alexink Egypt</a></li>
-      <li><a href="#">Suppliers</a></li>
-      <li><a href="#">Show Suppliers</a></li>
+      <li><a href="#">الصفحة الرسمية</a></li>
+      <li><a href="#">الموردون</a></li>
+      <li><a href="#">عرض الموردين</a></li>
     </ol>
   </div>
 </div>
@@ -15,7 +15,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-linux"></i>
-          <span>List of all company suppliers</span>
+          <span>عرض جميع الموردين</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -34,11 +34,9 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_privilege" value="البحث بالهاتف" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_email" value="البحث بالبريد الإليكتروني" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_credit" value="البحث بادين" class="search_init" /></label></th>
+              <th>الاسم</th>
+              <th>الدولة</th>
+              <th>الموقف</th>
             </tr>
           </thead>
           <tbody>
@@ -46,8 +44,6 @@
               <tr data-href="<%= supplier_path(supplier) %>">
                 <td><%= supplier.name %></td>
                 <td><%= supplier.country %></td>
-                <td><%= supplier.phone %></td>
-                <td><%= supplier.email %></td>
                 <td><%= supplier.credit %></td>
               </tr>
             <% end %>
@@ -55,11 +51,9 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>الدولة</th>
-              <th>الهاتف</th>
-              <th>البريد الإليكتروني</th>
-              <th>الدين</th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_credit" value="البحث بالموقف" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -70,7 +64,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

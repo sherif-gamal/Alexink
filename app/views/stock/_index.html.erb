@@ -34,11 +34,10 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_unit" value="البحث بالوحدة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="البحث بسعر الوحدة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_state" value="البحث بالكمية بالمخزن" class="search_init" /></label></th>
+              <th>الاسم</th>
+              <th>الوحدة</th>
+              <th>سعر الوحدة</th>
+              <th>الكمية بالمخزن</th>
             </tr>
           </thead>
           <tbody>
@@ -46,7 +45,6 @@
               <tr data-href="<%= product_path(product) %>">
                 <td><%= product.name %></td>
                 <td><%= product.unit %></td>
-                <td><%= product.quantity %></td>
                 <td><%= product.price_per_unit %></td>
                 <td><%= product.in_stock %></td>
               </tr>
@@ -55,11 +53,10 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>الوحدة</th>
-              <th>الكمية</th>
-              <th>سعر الوحدة</th>
-              <th>الكمية بالمخزن</th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث بالوحدة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بسعر الوحدة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_state" value="البحث بالكمية بالمخزن" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -92,26 +89,26 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
+              <th>الاسم</th>
+              <th>كمية المخزون</th>
+              <th>الوحدة</th>
             </tr>
           </thead>
           <tbody>
-            <% @materials.each do |material| %>
-              <tr data-href="<%= material_path(material) %>">
-                <td><%= material.name %></td>
-                <td><%= material.price %></td>
-                <td><%= material.in_stock %></td>
+            <% @raw_materials.each do |raw_material| %>
+              <tr data-href="<%= raw_material_path(raw_material) %>">
+                <td><%= raw_material.name %></td>
+                <td><%= raw_material.unit %></td>
+                <td><%= raw_material.in_stock %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>المبلغ</th>
-              <th>كمية المخزون</th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث بالوحدة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -122,7 +119,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

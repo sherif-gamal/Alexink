@@ -7,6 +7,7 @@ class CreateExpenses < ActiveRecord::Migration
       t.string	:payment_method
       t.string	:payment_state
       t.float   :debt
+      t.string  :user_name
 
       t.timestamps null: false
     end

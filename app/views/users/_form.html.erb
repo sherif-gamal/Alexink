@@ -61,6 +61,20 @@
             </div>
 
             <div class="form-group">
+              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :address , {class:"form-control", placeholder:"العنوان", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"العنوان"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :phone,  'الهاتف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :phone , {class:"form-control", placeholder:"الهاتف", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الهاتف"}%>
+              </div>
+            </div>
+
+            <div class="form-group">
               <%= f.label :password,  'كلمة المرور', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 has-warning has-feedback pull-right">
                 <%= f.password_field :password , {class:"form-control", placeholder:"Password", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"كلمة المرور"}%>
@@ -87,14 +101,7 @@
             <div class="form-group">
               <%= f.label :department,  'القسم', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.select :department , [["الإدارة", "Management"], ["المشتريات", "Purchases"], ["المبيعات", "Sales"], ["المخازن", "Stocks"]], {}, {class:"pull-right", style:"min-width:100%"}%>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <%= f.label :address,  'العنوان', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :address , {class:"form-control", placeholder:"العنوان", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"العنوان"}%>
+                <%= f.select :department , [["الإدارة", "Management"], ["المشتريات", "Purchases"], ["المبيعات", "Sales"], ["المخازن", "Stocks"], ["الإنتاج", "Production"], ["الحسابات", "Accounting"]], {}, {class:"pull-right", style:"min-width:100%"}%>
               </div>
             </div>
 

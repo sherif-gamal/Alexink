@@ -96,7 +96,7 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :debt,  'الدين', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :debt,  'الموقف', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :debt , {class:"form-control", disabled:true}%>
               </div>
@@ -139,7 +139,6 @@
               <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
               <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
               <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_pstate" value="البحث بحالة الدفع" class="search_init" /></label></th>
               <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
             </tr>
           </thead>
@@ -150,7 +149,6 @@
                 <td><%= @products.find(purchase.product_id).name %></td>
                 <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
-                <td><%= purchase.payment_state %></td>
                 <td><%= purchase.debt %></td>
               </tr>
             <% end %>
@@ -162,7 +160,6 @@
               <th>المنج</th>
               <th>الكمية</th>
               <th>السعر</th>
-              <th>حالة الدفع</th>
               <th>المبلغ المتبقي</th>
             </tr>
           </tfoot>

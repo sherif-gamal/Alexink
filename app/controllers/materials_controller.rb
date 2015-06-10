@@ -1,20 +1,20 @@
 class MaterialsController < ApplicationController
-  before_action :set_material, only: [:show, :edit, :update, :destroy, :success]
+  before_action :set_material, only: [:show, :edit, :update, :destroy]
 
   # GET /materials
   # GET /materials.json
   def index
     @materials = Material.all
     @suppliers = Supplier.all
+    @raw_materials = RawMaterial.all
     super
-    flash.discard(:notice)
   end
-    
 
   # GET /materials/1
   # GET /materials/1.json
   def show
     @suppliers = Supplier.all
+    @raw_materials = RawMaterial.all
     super
   end
 
@@ -22,12 +22,14 @@ class MaterialsController < ApplicationController
   def new
     @material = Material.new
     @suppliers = Supplier.all
+    @raw_materials = RawMaterial.all
     super
   end
 
   # GET /materials/1/edit
   def edit
     @suppliers = Supplier.all
+    @raw_materials = RawMaterial.all
     super
   end
 
@@ -61,11 +63,14 @@ class MaterialsController < ApplicationController
             treasury.bank = treasury.bank - material_params['price'].to_f + material_params['debt'].to_f
           end
 
+          raw_material = RawMaterial.find(@material.raw_material_id)
+          raw_material.in_stock = raw_material.in_stock + @material.quantity
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
 
           supplier.save
           treasury.save
+          raw_material.save
           format.html { redirect_to materials_url, notice: 'تم أضافة عملية الشراء بنجاح.' }
           format.json { render :show, status: :created, location: @material }
         else
@@ -112,51 +117,6 @@ class MaterialsController < ApplicationController
   end
 
 
-  def confirm
-    params = session[:params]
-    material = Material.find(params['id'])
-    material.in_stock = material.quantity - params['quantity'].to_f
-    Permission.create({})
-    respond_to do |format|
-      if material.save
-         format.html { redirect_to materials_url, notice: 'تم تسجيل عملية الصناعة.' }
-      else
-        format.html { redirect_to materials_url, notice: 'تم تسجيل عملية الصناعة.' }
-      end
-    end
-  end
-
-  def production
-    @materials = Material.all
-    if request.xhr?
-      render partial: 'production'
-    else
-      redirect_to "/dashboard##{request.path}"
-    end
-  end
-
-  def permit
-    session[:params] = params
-    if request.xhr?
-      render partial: 'permission'
-    else
-      redirect_to "/dashboard#/materials/permission"
-    end
-  end
-
-  def permission
-    @params = session[:params]
-    @material = Material.find(@params['id'])
-    @permission_num = Permission.maximum(:id) || 0 + 1
-    session[:permission_num] = @permission_num
-    if (@material.in_stock >= @params['quantity'].to_f)
-      render partial: 'permission'
-    else
-      redirect_to '/materials/production', notice: "المتاح بالمخزن أقل من الكمية المطلوبة"
-    end
-  end
-
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_material
@@ -165,11 +125,11 @@ class MaterialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def material_params
-      params.require(:material).permit(:name, :unit, :quantity, :price, :supplier_id, :debt, :payment_method, :payment_state, :state)
+      params.require(:material).permit(:raw_material_id, :quantity, :price, :supplier_id, :debt, :payment_method, :payment_state, :state)
     end
 
     def validate_params(params)
-      if params[:name].present? && params[:supplier_id].present? && params[:price].present? && params[:unit].present? && params[:quantity].present? then
+      if params[:raw_material_id].present? && params[:supplier_id].present? && params[:price].present? && params[:quantity].present? then
         return is_float?(params[:price]) && is_float?(params[:quantity])
       end
       return nil

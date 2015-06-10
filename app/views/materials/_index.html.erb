@@ -2,7 +2,7 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="#">Alexink Egypt</a></li>
+      <li><a href="#">الصفحة الرئيسية</a></li>
       <li><a href="#">المواد الخام</a></li>
       <li><a href="#">عرض المواد الخام</a></li>
     </ol>
@@ -33,20 +33,22 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_supplier" value="البحث بالموزع" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_pay_method" value="البحث بطريقة الدفع" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
+              <th>التاريخ</th>
+              <th>الاسم</th>
+              <th>المورد</th>
+              <th>المبلغ</th>
+              <th>الموقف</th>
+              <th>كمية المخزون</th>
             </tr>
           </thead>
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= material.name %></td>
-                <td><%= @suppliers.find(material.supplier_id).name %></td>
+                <td><%= material.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= @raw_materials.find(material.raw_material_id).name %></td>
+                <td><%= @suppliers.find(material.supplier_id).name%></td>
                 <td><%= material.price %></td>
-                <td><%= material.payment_method %></td>
+                <td><%= material.debt %></td>
                 <td><%= material.in_stock %></td>
               </tr>
             <% end %>
@@ -54,11 +56,12 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>الموزع</th>
-              <th>المبلغ</th>
-              <th>طريقة الدفع</th>
-              <th>كمية المخزون</th>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_supplier" value="البحث بالمورد" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pay_state" value="البحث بالموقف" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -69,7 +72,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

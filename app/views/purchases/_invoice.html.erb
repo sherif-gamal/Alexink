@@ -24,24 +24,25 @@
 						<a href="mailto:#">info@alexinkegypt.net</a>
 					</address>
 				</div>
-				<div class="col-xs-6 text-right">
+				<div class="col-xs-6 text-center">
 					<address>
-						<strong><%= @client.name%></strong><br>
-						<%= @client.address%>, <br>
+						<%= @client.name%>
+						<%= @client.address%> <br>
 						<%= @client.zip%><br>
 						<%= @client.country%><br>
 						<abbr title="Phone">P:</abbr> <%= @client.phone%>
 					</address>
-					<h3 class="invoice-header">Invoice Number #<%= @invoice_num%></h3>
-					<p>Date: <%= Time.now.strftime("%m/%d/%Y")%></p>
+					<h3 class="invoice-header">فاتورة رقم<%= @purchase.invoice_id%></h3>
+					<p>التاريخ - <%= Time.now.strftime("%m/%d/%Y")%></p>
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xs-12">
-					<strong class="well col-xs-12">Product: <%= @product.name%></strong>
-					<strong class="well col-xs-6">Quantity: <%= @params['quantity']%></strong><br/>
-					<strong class="well col-xs-6">Price: <%= @params['price']%></strong>
-					<strong class="well col-xs-6">debt: <%= @params['debt']%></strong>
-					<strong class="well col-xs-6">Payment Method: <%= @params['payment_method']%></strong>
+					<strong class="well col-xs-12 text-center">المنتج - <%= @product.name%></strong>
+					<strong class="well col-xs-6 text-center">الكمية - <%= @purchase.quantity%></strong><br/>
+					<strong class="well col-xs-6 text-center">السعر - <%= @purchase.price%></strong>
+					<strong class="well col-xs-6 text-center">المبلغ المتبقي - <%= @purchase.debt%></strong>
+					<%translations = {"cash" => "نقدي", "bank" => "بنك"}%>
+					<strong class="well col-xs-6 text-center">طريقة الدفع - <%= translations[@purchase.payment_method]%></strong>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -70,13 +71,7 @@
 			doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
     		doc.save('sample-file.pdf');
 		}});
-		$.ajax({ url: '/purchases/confirm',
-		  type: 'POST',
-		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-		  success: function(response) {
-		  	window.location = "/purchases"
-		  }
-		});
+		window.location = "/purchases"
 	    
 	});
 

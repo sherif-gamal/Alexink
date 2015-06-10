@@ -1,29 +1,44 @@
 Rails.application.routes.draw do
-  
+
+  resources :productions
+
   match '/signin', :to => 'sessions#new', via: [:get]
   match '/signout', :to => 'sessions#destroy', via: [:get]
   match '/dashboard', to: 'dashboard#index', via: [:get]
   match '/stock', to: 'stock#index', via: [:get]
-  match '/diaries', to: 'diaries#index', via: [:get]
+  match '/status', to: 'status#index', via: [:get]
+  match '/diaries/treasury', to: 'diaries#treasury', via: [:get]
+  match '/diaries/transactions', to: 'diaries#transactions', via: [:get]
+  match '/diaries/stock', to: 'diaries#stock', via: [:get]
+  match '/invoices', to: 'invoices#purchases', via: [:get]
 
   get '/dashboard/index'
   get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
   get 'stock/index'
+
+  get 'permission/production/:id', to: 'permission#production'
+  get 'permission/product/:id', to: 'permission#product'
+  get 'permission/material/:id', to: 'permission#material'
+  get 'permission/purchase/:id', to: 'permission#purchase'
   
   get 'diaries/index'
 
-  get 'materials/production'
-  post 'materials/permit'
-  get 'materials/permission'
+  get 'raw_materials/production'
+  post 'raw_materials/permit'
+  get 'raw_materials/permission'
   post 'materials/confirm'
   post 'purchases/confirm'
+
+  get 'invoices/sales'
+  get 'invoices/purchases'
+  get 'permissions/additions'
+  get 'permissions/subtracttions'
 
   post 'expenses/confirm'
   get 'expenses/permission'
 
-  get 'materials/success'
-  get 'purchases/success'
   get 'purchases/invoice'
+  get 'purchases/print_invoice/:id', to: 'purchases#print_invoice'
   post 'materials/confirm'
   get 'treasury/addtotreasury'
   get 'treasury/show'
@@ -46,6 +61,7 @@ Rails.application.routes.draw do
   resources :products
 
   resources :materials
+  resources :raw_materials
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

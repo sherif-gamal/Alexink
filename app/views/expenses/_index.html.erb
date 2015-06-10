@@ -34,32 +34,29 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_seller" value="البحث بالبائع" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_pay_method" value="البحث بطريقة الدفع" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="البحث بالدين" class="search_init" /></label></th>
+              <th>التاريخ</th>
+              <th>الاسم</th>
+              <th>البائع</th>
+              <th>المبلغ</th>
             </tr>
           </thead>
           <tbody>
             <% @expenses.each do |expense| %>
               <tr data-href="<%= expense_path(expense) %>">
+                <td><%= expense.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= expense.name %></td>
                 <td><%= expense.seller %></td>
                 <td><%= expense.price %></td>
-                <td><%= expense.payment_method %></td>
-                <td><%= expense.debt %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>البائع</th>
-              <th>المبلغ</th>
-              <th>طريقة الدفع</th>
-              <th>الدين</th>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_seller" value="البحث بالبائع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -70,7 +67,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

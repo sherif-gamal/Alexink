@@ -7,3 +7,4 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Treasury.create(bank: 0, cash: 0)
+User.create(name: "عماد علي", email: "admin@alexinkegypt.net", department: "Management", password: "P@ssw0rd")

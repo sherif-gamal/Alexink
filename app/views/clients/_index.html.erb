@@ -2,7 +2,7 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="#">Alexink Egypt</a></li>
+      <li><a href="#">الصفحة الرئيسية</a></li>
       <li><a href="#">العملاء</a></li>
       <li><a href="#">عرض العملاء</a></li>
     </ol>
@@ -37,10 +37,9 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_phone" value="البحث بالهاتف" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="debt" class="search_init" /></label></th>
+              <th>الاسم</th>
+              <th>الدولة</th>
+              <th>الموقف</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +47,6 @@
               <tr data-href="<%= client_path(client) %>">
                 <td><%= client.name %></td>
                 <td><%= client.country %></td>
-                <td><%= client.phone %></td>
                 <td><%= client.debt %></td>
               </tr>
             <% end %>
@@ -56,10 +54,9 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>الاسم</th>
-              <th>الدولة</th>
-              <th>الهاتف</th>
-              <th>ديون</th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -70,7 +67,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

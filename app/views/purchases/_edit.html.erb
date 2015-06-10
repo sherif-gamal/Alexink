@@ -47,6 +47,20 @@
             <% end %>
 
             <div class="form-group">
+              <%= label_tag 'date',  'التاريخ', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'date', @purchase.created_at.strftime("%Y/%m/%d"), {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag 'employee',  'الموظف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'user_name', @purchase.user_name, {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
               <%= f.label :product_id,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true} %>

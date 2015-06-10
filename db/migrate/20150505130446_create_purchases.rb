@@ -10,6 +10,8 @@ class CreatePurchases < ActiveRecord::Migration
       t.string	:state
       t.integer :invoice_id
       t.integer :debt
+      t.string  :user_name
+      t.integer :permission_id
 
       t.timestamps null: false
     end

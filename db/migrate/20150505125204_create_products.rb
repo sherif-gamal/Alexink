@@ -6,6 +6,8 @@ class CreateProducts < ActiveRecord::Migration
       t.float 	:quantity
       t.float 	:price_per_unit
       t.integer	:in_stock
+      t.text    :description
+      t.integer :permission_id
 
       t.timestamps null: false
     end

@@ -1,0 +1,119 @@
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">حركات الصناعة</a></li>
+      <li><a href="#">المواد الخام</a></li>
+      <li><a href="#">عرض حركة الصناعة</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>بيانات حركة الصناعة</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+          <%= form_for(@production, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @production.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@production.errors.count, "error") %> prohibited this production from being saved:</h2>
+
+                <ul>
+                <% @production.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= label_tag 'date',  'التاريخ', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'date', @production.created_at.strftime("%Y/%m/%d"), {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= label_tag 'employee',  'الموظف', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= text_field_tag 'user_name', @production.user_name, {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :raw_production_id,  'المادة الخام', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.select :raw_production_id , @raw_materials.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :quantity,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :quantity , {class:"form-control", disabled:true}%>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :permission_id,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :permission_id, {class:"pull-right", disabled:true} %>
+              </div>
+            </div>
+
+          </div>
+          </div>
+          <% end %>
+
+        
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(DemoFormValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>
+<%= link_to 'تعديل', edit_production_path(@production) %>

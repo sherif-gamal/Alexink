@@ -38,63 +38,53 @@ class PurchasesController < ApplicationController
 
   def create
     if validate_params(purchase_params) then
-      session[:params] = purchase_params
-      redirect_to '/purchases/invoice'
-    else
-      redirect_to "/purchases/new", notice: 'تعذر تسجيل عملية البيع. برجاء مراجعة المدخلات'
-    end
-  end
-
-  def invoice
-    @params = session[:params]
-    @client = Client.find(@params['client_id'])
-    @product = Product.find(@params['product_id'])
-    @invoice_num = Invoice.maximum(:id) || 0 + 1
-    session[:invoice_num] = @invoice_num
-
-    if (@product.in_stock < @params['quantity'].to_f)
-      redirect_to '/purchases/new', notice: 'الكمية المتاحة بالمخزن من ذلك المنتج أقل من المطلوب'
-    else
-      super
-    end
-  end
-
-  def confirm
-    @purchase = Purchase.new(session[:params])
-    @purchase.invoice_id = session[:invoice_num]
-    respond_to do |format|
-      if @purchase.save
-         invoice = Invoice.create({purchase_id: @purchase.id})
+      purchase = Purchase.new(purchase_params)
+      purchase.user_name = current_user.name
+      product = Product.find(purchase.product_id)
+      if (product.in_stock < purchase.quantity.to_f)
+        redirect_to '/purchases/new', notice: 'الكمية المتاحة بالمخزن من ذلك المنتج أقل من المطلوب'
+        return
+      end
+      
+      if purchase.save
+         invoice = Invoice.create!({purchase_id: purchase.id})
+         purchase.invoice_id = invoice.id
+         purchase.save
          treasury = Treasury.first
-         p "aaaaaaaaaaaaaaaaaa"
          p treasury
-         if (@purchase.payment_method == "cash")
-          p 'zzzzzzzzzzzzzz'
-          treasury.cash = treasury.cash + @purchase.price - @purchase.debt
+         if (purchase.payment_method == "cash")
+          treasury.cash = treasury.cash + purchase.price - purchase.debt
           p treasury
          else
-          p 'yyyyyyyyyyyyyy'
-          treasury.bank = treasury.bank + @purchase.price - @purchase.debt
+          treasury.bank = treasury.bank + purchase.price - purchase.debt
           p treasury
          end
-         client = Client.find(@purchase.client_id)
-         client.debt = client.debt + @purchase.debt
-         product = Product.find(@purchase.product_id)
-         product.in_stock = product.in_stock - @purchase.quantity
+         client = Client.find(purchase.client_id)
+         client.debt = client.debt + purchase.debt
+         product = Product.find(purchase.product_id)
+         product.in_stock = product.in_stock - purchase.quantity
 
          treasury.save
          client.save
          product.save
 
-         format.html { redirect_to purchases_url, notice: 'تم تسجيل عملية البيع.' }
-         format.json { render :show, status: :created, location: @purchase }
-      else
-        format.html { render :new }
-        format.json { render json: @purchase.errors, status: :unprocessable_entity }
+         session[:purchase_id] = purchase.id
+
+         redirect_to '/purchases/invoice'
       end
     end
-    session[:param] = nil
-    session[:invoice_num] = nil
+  end
+
+  def print_invoice
+    session[:purchase_id] = params['id']
+    redirect_to '/purchases/invoice'
+  end
+
+  def invoice
+    @purchase = Purchase.find(session[:purchase_id])
+    @client = Client.find(@purchase.client_id)
+    @product = Product.find(@purchase.product_id)
+    super
   end
 
   # PATCH/PUT /purchases/1

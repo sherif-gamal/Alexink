@@ -34,22 +34,22 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_pstate" value="البحث بحالة الدفع" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
+              <th>التاريخ</th>
+              <th>العميل</th>
+              <th>المنتج</th>
+              <th>الكمية</th>
+              <th>السعر</th>
+              <th>الموقف</th>
             </tr>
           </thead>
           <tbody>
             <% @purchases.each do |purchase| %>
               <tr data-href="<%= purchase_path(purchase) %>">
+                <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
                 <td><%= @products.find(purchase.product_id).name %></td>
                 <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
-                <td><%= purchase.payment_state %></td>
                 <td><%= purchase.debt %></td>
               </tr>
             <% end %>
@@ -57,11 +57,12 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>العميل</th>
-              <th>المنج</th>
-              <th>الكمية</th>
-              <th>السعر</th>
-              <th>حالة الدفع</th>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -72,7 +73,7 @@
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
-  TestTable2();
+  setupTables();
   LoadSelect2Script(MakeSelect2);
 }
 function MakeSelect2(){

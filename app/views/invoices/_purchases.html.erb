@@ -1,0 +1,91 @@
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">الصفحة الرئيسية</a></li>
+      <li><a href="#">الفواتير</a></li>
+      <li><a href="#">عرض الفواتير</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>عرض جميع الفواتير</span>
+        </div>
+        <div class="box-icons">
+          <a class="collapse-link">
+            <i class="fa fa-chevron-up"></i>
+          </a>
+          <a class="expand-link">
+            <i class="fa fa-expand"></i>
+          </a>
+          <a class="close-link">
+            <i class="fa fa-times"></i>
+          </a>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>رقم الفاتورة</th>
+              <th>المنتج</th>
+              <th>العميل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @invoices.each do |invoice| %>
+            <%purchase = @purchases.find(invoice.purchase_id)%>
+              <tr data-href="<%= purchase_path(purchase) %>">
+                <td><%= invoice.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= invoice.id %></td>
+                <td><%= @products.find(purchase.product_id).name %></td>
+                <td><%= @clients.find(purchase.client_id).name %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_invoice" value="البحث برقم الفاتورة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_product" value="البحث بالمنتج" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_client" value="البحث بالعميل" class="search_init" /></label></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+</script>

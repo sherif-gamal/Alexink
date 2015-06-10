@@ -1575,9 +1575,15 @@ function TestTable1(){
 //
 // Function for table, located in element with id = datatable-2
 //
-function TestTable2(){
+
+function setupTables() {
+	TestTable2("datatable-1")
+	TestTable2("datatable-2")
+	TestTable2("datatable-3")
+}
+function TestTable2(table_id){
 	var asInitVals = [];
-	var oTable = $('#datatable-2').dataTable( {
+	var oTable = $('#'+table_id).dataTable( {
 		"aaSorting": [[ 0, "asc" ]],
 		"sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
 		"sPaginationType": "bootstrap",
@@ -1587,7 +1593,7 @@ function TestTable2(){
 		},
 		bAutoWidth: false
 	});
-	var header_inputs = $("#datatable-2 thead input");
+	var header_inputs = $("#"+table_id+" tfoot input");
 	header_inputs.on('keyup', function(){
 		/* Filter on the column (the index) of this element */
 		oTable.fnFilter( this.value, header_inputs.index(this) );
@@ -1608,32 +1614,41 @@ function TestTable2(){
 		asInitVals[i] = this.value;
 	});
 }
-//
-// Function for table, located in element with id = datatable-3
-//
+
 function TestTable3(){
-	$('#datatable-3').dataTable( {
+	var asInitVals = [];
+	var oTable = $('#datatable-3').dataTable( {
 		"aaSorting": [[ 0, "asc" ]],
-		"sDom": "T<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
+		"sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
 		"sPaginationType": "bootstrap",
 		"oLanguage": {
 			"sSearch": "",
 			"sLengthMenu": '_MENU_'
 		},
-		"oTableTools": {
-			"sSwfPath": "/javascripts/plugins/datatables/copy_csv_xls_pdf.swf",
-			"aButtons": [
-				"copy",
-				"print",
-				{
-					"sExtends":    "collection",
-					"sButtonText": 'Save <span class="caret" />',
-					"aButtons":    [ "csv", "xls", "pdf" ]
-				}
-			]
+		bAutoWidth: false
+	});
+	var header_inputs = $("#datatable-3 tfoot input");
+	header_inputs.on('keyup', function(){
+		/* Filter on the column (the index) of this element */
+		oTable.fnFilter( this.value, header_inputs.index(this) );
+	})
+	.on('focus', function(){
+		if ( this.className == "search_init" ){
+			this.className = "";
+			this.value = "";
+		}
+	})
+	.on('blur', function (i) {
+		if ( this.value == "" ){
+			this.className = "search_init";
+			this.value = asInitVals[header_inputs.index(this)];
 		}
 	});
+	header_inputs.each( function (i) {
+		asInitVals[i] = this.value;
+	});
 }
+
 /*-------------------------------------------
 	Functions for Dashboard page (dashboard.html)
 ---------------------------------------------*/

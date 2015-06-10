@@ -1,9 +1,8 @@
 class CreateMaterials < ActiveRecord::Migration
   def change
     create_table :materials do |t|
-      t.string 	:name
+      t.integer :raw_material_id
       t.integer :supplier_id
-      t.string 	:unit
       t.float 	:quantity
       t.float 	:price
       t.string	:payment_method
@@ -11,6 +10,8 @@ class CreateMaterials < ActiveRecord::Migration
       t.float   :debt
       t.string	:state
       t.integer :in_stock
+      t.string :user_name
+      t.integer :permission_id
 
       t.timestamps null: false
     end

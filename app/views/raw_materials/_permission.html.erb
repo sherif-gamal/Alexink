@@ -24,17 +24,20 @@
 						<a href="mailto:#">info@alexinkegypt.net</a>
 					</address>
 				</div>
-				<div class="col-xs-6 well text-right">
-					Permission for production process
+				<div class="col-xs-6 well text-center">
+					إذن خصم من المخزن للصناعة
 				</div>
-				<div class="col-xs-6 well text-right">
-					Permission #<%= @permission_num%>
+				<div class="col-xs-6 well text-center">
+					اذن رقم <%= @permission_num%>
+				</div>
+				<div class="col-xs-6 well text-center">
+					التاريخ <%= Time.now.strftime("%m/%d/%Y") %>
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xs-12">
-					<strong class="well col-xs-12">Material: <%= @material.name%></strong>
-					<strong class="well col-xs-6">Quantity: <%= @params['quantity']%></strong><br/>
-					<strong class="well col-xs-6">Remains in stock: <%= @material.quantity - @params['quantity'].to_f%></strong><br/>
+					<strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
+					<strong class="well col-xs-6" style="text-align: center;">الباقي بالمخزن: <%= @raw_material.in_stock - @permission.quantity.to_i%></strong><br/><br/>
+					<strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission.quantity%></strong>
 				</div>
 				<div class="clearfix"></div>
 			</div>
@@ -63,11 +66,11 @@
 			doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
     		doc.save('sample-file.pdf');
 		}});
-		$.ajax({ url: '/materials/confirm',
+		$.ajax({ url: '/raw_materials/confirm',
 		  type: 'POST',
 		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
 		  success: function(response) {
-		  	window.location = "/materials"
+		  	window.location = "/raw_materials"
 		  }
 		});
 	    
