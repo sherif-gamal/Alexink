@@ -60,7 +60,11 @@ class ClientsController < ApplicationController
 
           if @client.debt != debt
             treasury = Treasury.first
-            treasury.cash = treasury.cash + (debt - @client.debt)
+            if treasury.cash >= (debt - @client.debt) 
+              treasury.cash = treasury.cash + (debt - @client.debt)
+            else
+              treasury.bank = treasury.bank + (debt - @client.debt)
+            end
             treasury.save
           end
 
