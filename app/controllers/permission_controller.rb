@@ -3,7 +3,8 @@ class PermissionController < ApplicationController
 	def production
 		permission_id = params[:id]
 		@permission = Permission.find(permission_id)
-		@raw_materials = RawMaterial.all
+		production  = Production.find(@permission.transaction_id)
+		@raw_material = RawMaterial.find(production.raw_material_id)
 		if request.xhr?
 	      flash.discard(:notice)
 	      render partial: 'production'

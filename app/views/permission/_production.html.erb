@@ -35,9 +35,8 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-xs-12">
-          <%raw_material = @raw_materials.find(@permission.transaction_id)%>
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">الباقي بالمخزن: <%= raw_material.in_stock - @permission.quantity.to_i%></strong><br/><br/>
+          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">الباقي بالمخزن: <%= @raw_material.in_stock - @permission.quantity.to_i%></strong><br/><br/>
           <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission.quantity%></strong>
         </div>
         <div class="clearfix"></div>

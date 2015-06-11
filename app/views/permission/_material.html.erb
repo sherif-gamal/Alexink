@@ -24,7 +24,7 @@
             <a href="mailto:#">info@alexinkegypt.net</a>
           </address>
         </div>
-        <div class="col-xs-6 text-center">
+        <div class="col-xs-6 text-center well">
           <address>
             <%= @supplier.name%>
             <%= @supplier.address%> <br>
@@ -43,10 +43,8 @@
           التاريخ <%= @permission1.created_at.strftime("%m/%d/%Y") %>
         </div>
         <div class="clearfix"></div>
-        <div class="col-xs-12">
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission1.quantity.to_i%></strong><br/><br/>
-        </div>
+          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission1.quantity.to_i%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
         <div class="clearfix"></div>
       </div>
     </div>
@@ -70,7 +68,7 @@
             <a href="mailto:#">info@alexinkegypt.net</a>
           </address>
         </div>
-        <div class="col-xs-6 text-center">
+        <div class="col-xs-6 text-center well">
           <address>
             <%= @supplier.name%>
             <%= @supplier.address%> <br>
@@ -89,10 +87,8 @@
           التاريخ <%= @permission2.created_at.strftime("%m/%d/%Y") %>
         </div>
         <div class="clearfix"></div>
-        <div class="col-xs-12">
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">المبلغ: <%= @material.price - @material.debt%></strong><br/><br/>
-        </div>
+          <strong class="well col-xs-6" style="text-align: center;">المبلغ: <%= @material.price - @material.debt%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
         <div class="clearfix"></div>
       </div>
     </div>

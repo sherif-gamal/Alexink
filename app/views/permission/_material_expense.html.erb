@@ -25,6 +25,15 @@
             <a href="mailto:#">info@alexinkegypt.net</a>
           </address>
         </div>
+        <div class="col-xs-6 text-center well">
+          <address>
+            <%= @supplier.name%>
+            <%= @supplier.address%> <br>
+            <%= @supplier.zip%><br>
+            <%= @supplier.country%><br>
+            <abbr title="Phone">P:</abbr> <%= @supplier.phone%>
+          </address>
+        </div>
         <div class="col-xs-6 well text-center">
           اذن صرف مبلغ من الخزنة لشراء مادة خام
         </div>
@@ -35,10 +44,8 @@
           التاريخ <%= @permission.created_at.strftime("%m/%d/%Y") %>
         </div>
         <div class="clearfix"></div>
-        <div class="col-xs-12">
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">المبلغ: <%= @material.price - @material.debt%></strong><br/><br/>
-        </div>
+          <strong class="well col-xs-6" style="text-align: center;">المبلغ: <%= @material.price - @material.debt%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
         <div class="clearfix"></div>
       </div>
     </div>

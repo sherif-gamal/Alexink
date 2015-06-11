@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150610102107) do
     t.string   "state"
     t.integer  "in_stock"
     t.string   "user_name"
+    t.integer  "permission_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
@@ -86,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150610102107) do
     t.float    "price_per_unit"
     t.integer  "in_stock"
     t.text     "description"
+    t.integer  "permission_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
@@ -101,6 +103,7 @@ ActiveRecord::Schema.define(version: 20150610102107) do
     t.integer  "invoice_id"
     t.integer  "debt"
     t.string   "user_name"
+    t.integer  "permission_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

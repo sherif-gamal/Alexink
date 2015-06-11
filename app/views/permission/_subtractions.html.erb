@@ -41,7 +41,7 @@
           </thead>
           <tbody>
             <% @production_permissions.each do |permission| %>
-              <%production = @production_permissions.find(permission.transaction_id)%>
+              <%production = @productions.find(permission.transaction_id)%>
               <%url = "/permission/production/#{permission.id}"%>
               <tr data-href=<%=url%>>
                 <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
