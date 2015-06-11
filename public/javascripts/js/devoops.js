@@ -1577,10 +1577,14 @@ function TestTable1(){
 //
 
 function setupTables() {
+	// var t = jQuery('table').dataTable();
+	// t.fnDestroy()
 	TestTable2("datatable-1")
 	TestTable2("datatable-2")
 	TestTable2("datatable-3")
 }
+
+
 function TestTable2(table_id){
 	var asInitVals = [];
 	var oTable = $('#'+table_id).dataTable( {

@@ -48,6 +48,7 @@ class PurchasesController < ApplicationController
       
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
+         permission = Permission.create!({transaction_type: 4, transaction_id: purchase.id, quantity: purchase.quantity})
          purchase.invoice_id = invoice.id
          purchase.save
          treasury = Treasury.first
@@ -70,7 +71,7 @@ class PurchasesController < ApplicationController
 
          session[:purchase_id] = purchase.id
 
-         redirect_to '/purchases/invoice'
+         redirect_to "/permission/purchase/#{permission.id}/#{invoice.id}"
       end
     end
   end

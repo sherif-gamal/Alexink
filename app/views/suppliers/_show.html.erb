@@ -3,8 +3,8 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="/">الصفحة الرئيسية</a></li>
-      <li><a href="#">الموزعين</a></li>
-      <li><a href="#">تعديل.موزع</a></li>
+      <li><a href="#">الموردين</a></li>
+      <li><a href="#">عرض بيانات المورد</a></li>
     </ol>
   </div>
 </div>
@@ -14,7 +14,7 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-search"></i>
-          <span>بيانات الموزع</span>
+          <span>بيانات المورد</span>
         </div>
         <div class="box-icons">
           <a class="collapse-link">
@@ -147,7 +147,7 @@
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= @raw_materials.find(material.id).name %></td>
+                <td><%= @raw_materials.find(material.raw_material_id).name %></td>
                 <td><%= @supplier.name %></td>
                 <td><%= material.price %></td>
                 <td><%= material.debt %></td>
@@ -197,5 +197,28 @@ $(document).ready(function() {
   LoadBootstrapValidatorScript(DemoFormValidator);
   // Add drag-n-drop feature to boxes
   WinMove();
+    // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
 });
+
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+
+
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+</script>
 </script>

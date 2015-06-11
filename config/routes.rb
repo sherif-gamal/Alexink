@@ -18,7 +18,10 @@ Rails.application.routes.draw do
 
   get 'permission/production/:id', to: 'permission#production'
   get 'permission/product/:id', to: 'permission#product'
-  get 'permission/material/:id', to: 'permission#material'
+  get 'permission/material_stock/:id', to: 'permission#material_stock'
+  get 'permission/material_expense/:id', to: 'permission#material_expense'
+  get 'permission/material/:id1/:id2', to: 'permission#material'
+  get 'permission/purchase/:id1/:id2', to: 'permission#purchase_with_invoice'
   get 'permission/purchase/:id', to: 'permission#purchase'
   
   get 'diaries/index'
@@ -31,8 +34,8 @@ Rails.application.routes.draw do
 
   get 'invoices/sales'
   get 'invoices/purchases'
-  get 'permissions/additions'
-  get 'permissions/subtracttions'
+  get 'permission/additions'
+  get 'permission/subtractions'
 
   post 'expenses/confirm'
   get 'expenses/permission'

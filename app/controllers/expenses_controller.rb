@@ -58,6 +58,7 @@ class ExpensesController < ApplicationController
   def confirm
     params = session[:params]
     @expense = Expense.new(params)
+    @expense.user_name = current_user.name
 
     respond_to do |format|
       if @expense.save

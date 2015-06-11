@@ -2,13 +2,13 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="index.html">الصفحة الرئيسية</a></li>
-      <li><a href="#">حركات الصناعة</a></li>
-      <li><a href="#">اذن.صرف.مادة.خام</a></li>
+      <li><a href="#">حركات البيع</a></li>
+      <li><a href="#">أذونات حركة البيع</a></li>
     </ol>
   </div>
 </div>
 <div class="row"  dir="ltr">
-  <div class="col-xs-8 col-xs-offset-2" id="invoice">
+  <div class="col-xs-8 col-xs-offset-2" id="permission">
     <div class="box">
       <div class="box-content">
         <div class="col-xs-6">
@@ -24,8 +24,17 @@
             <a href="mailto:#">info@alexinkegypt.net</a>
           </address>
         </div>
+        <div class="col-xs-6 text-center">
+          <address>
+            <%= @client.name%>
+            <%= @client.address%> <br>
+            <%= @client.zip%><br>
+            <%= @client.country%><br>
+            <abbr title="Phone">P:</abbr> <%= @client.phone%>
+          </address>
+        </div>
         <div class="col-xs-6 well text-center">
-          اذن صرف مادة خام للصناعة
+          اذن خصم منتج من المخزن
         </div>
         <div class="col-xs-6 well text-center">
           اذن رقم <%= @permission.id%>
@@ -35,21 +44,21 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-xs-12">
-          <%raw_material = @raw_materials.find(@permission.transaction_id)%>
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">الباقي بالمخزن: <%= raw_material.in_stock - @permission.quantity.to_i%></strong><br/><br/>
-          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission.quantity%></strong>
+          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @product.name%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission.quantity.to_i%></strong><br/><br/>
         </div>
         <div class="clearfix"></div>
       </div>
     </div>
   </div>
 </div>
+
 <div class="col-xs-6 col-xs-offset-6">
-          <div class="col-xs-4">
-            <a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
-          </div>
-        </div>
+    <div class="col-xs-4">
+      <a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
+    </div>
+  </div>
+
 
 <%= javascript_include_tag 'js/jspdf.min' %>
 <%= javascript_include_tag 'js/html2canvas' %>
@@ -62,12 +71,11 @@
       }
   };
   $('#print').click(function () {
-    html2canvas(document.querySelector("#invoice"), { onrendered: function(canvas) {
-      console.log(canvas.toDataURL());
+    html2canvas(document.querySelector("#permission"), { onrendered: function(canvas) {
       doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
         doc.save('sample-file.pdf');
     }});
-    window.location = "/productions"
+    window.location = "/purchases"
       
   });
 

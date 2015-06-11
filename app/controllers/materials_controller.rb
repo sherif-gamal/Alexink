@@ -45,6 +45,7 @@ class MaterialsController < ApplicationController
       end
       @material = Material.new(params)
       @material.in_stock = params[:quantity]
+      @material.user_name = current_user.name
       treasury = Treasury.first
       if (params['payment_method'] == "cash")
         if (treasury.cash < (params['price'].to_f - params['debt'].to_f))
@@ -67,11 +68,13 @@ class MaterialsController < ApplicationController
           raw_material.in_stock = raw_material.in_stock + @material.quantity
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
+          permission1 = Permission.create!({transaction_type: 1, transaction_id: @material.id, quantity: @material.quantity})
+          permission2 = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: @material.quantity})
 
           supplier.save
           treasury.save
           raw_material.save
-          format.html { redirect_to materials_url, notice: 'تم أضافة عملية الشراء بنجاح.' }
+          format.html { redirect_to "/permission/material/#{permission1.id}/#{permission2.id}" }
           format.json { render :show, status: :created, location: @material }
         else
           format.html { redirect_to "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات' }

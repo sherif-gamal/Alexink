@@ -1,0 +1,131 @@
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="#">حركات شراء</a></li>
+      <li><a href="#">أذونات حركة الشراء</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row"  dir="ltr">
+  <div class="col-xs-8 col-xs-offset-2" id="permission">
+    <div class="box">
+      <div class="box-content">
+        <div class="col-xs-6">
+          <address>
+            <strong>Alexink Egypt</strong><br>
+            6 Aziz Fahmy St. Sporting, Alexandria, <br>
+            Alexandria<br>
+            Egypt <br>
+            <abbr title="Phone">P:</abbr> (+2) 03-5469692
+          </address>
+          <address>
+            <strong>Email</strong><br>
+            <a href="mailto:#">info@alexinkegypt.net</a>
+          </address>
+        </div>
+        <div class="col-xs-6 text-center">
+          <address>
+            <%= @supplier.name%>
+            <%= @supplier.address%> <br>
+            <%= @supplier.zip%><br>
+            <%= @supplier.country%><br>
+            <abbr title="Phone">P:</abbr> <%= @supplier.phone%>
+          </address>
+        </div>
+        <div class="col-xs-6 well text-center">
+          اذن دخول مادة خام للمخزن
+        </div>
+        <div class="col-xs-6 well text-center">
+          اذن رقم <%= @permission1.id%>
+        </div>
+        <div class="col-xs-6 well text-center">
+          التاريخ <%= @permission1.created_at.strftime("%m/%d/%Y") %>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12">
+          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission1.quantity.to_i%></strong><br/><br/>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row"  dir="ltr">
+  <div class="col-xs-8 col-xs-offset-2" id="invoice">
+    <div class="box">
+      <div class="box-content">
+        <div class="col-xs-6">
+          <address>
+            <strong>Alexink Egypt</strong><br>
+            6 Aziz Fahmy St. Sporting, Alexandria, <br>
+            Alexandria<br>
+            Egypt <br>
+            <abbr title="Phone">P:</abbr> (+2) 03-5469692
+          </address>
+          <address>
+            <strong>Email</strong><br>
+            <a href="mailto:#">info@alexinkegypt.net</a>
+          </address>
+        </div>
+        <div class="col-xs-6 text-center">
+          <address>
+            <%= @supplier.name%>
+            <%= @supplier.address%> <br>
+            <%= @supplier.zip%><br>
+            <%= @supplier.country%><br>
+            <abbr title="Phone">P:</abbr> <%= @supplier.phone%>
+          </address>
+        </div>
+        <div class="col-xs-6 well text-center">
+          اذن صرف مبلغ من الخزنة لشراء مادة خام
+        </div>
+        <div class="col-xs-6 well text-center">
+          اذن رقم <%= @permission2.id%>
+        </div>
+        <div class="col-xs-6 well text-center">
+          التاريخ <%= @permission2.created_at.strftime("%m/%d/%Y") %>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12">
+          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @raw_material.name%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">المبلغ: <%= @material.price - @material.debt%></strong><br/><br/>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="col-xs-6 col-xs-offset-6">
+    <div class="col-xs-4">
+      <a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
+    </div>
+  </div>
+
+
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
+<script>
+  //require 'jspdf'
+  var doc = new jsPDF();
+  var specialElementHandlers = {
+      '#editor': function (element, renderer) {
+          return true;
+      }
+  };
+  $('#print').click(function () {
+    html2canvas(document.querySelector("#permission"), { onrendered: function(canvas) {
+      doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
+        doc.save('sample-file.pdf');
+    }});
+    html2canvas(document.querySelector("#invoice"), { onrendered: function(canvas) {
+      doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
+        doc.save('sample-file.pdf');
+    }});
+    window.location = "/materials"
+      
+  });
+
+</script>

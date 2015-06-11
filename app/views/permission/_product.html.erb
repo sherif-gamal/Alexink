@@ -2,8 +2,8 @@
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="index.html">الصفحة الرئيسية</a></li>
-      <li><a href="#">حركات الصناعة</a></li>
-      <li><a href="#">اذن.صرف.مادة.خام</a></li>
+      <li><a href="#">المنتجات</a></li>
+      <li><a href="#">إذن.إضافة.منتج.للمخزن</a></li>
     </ol>
   </div>
 </div>
@@ -35,10 +35,8 @@
         </div>
         <div class="clearfix"></div>
         <div class="col-xs-12">
-          <%raw_material = @raw_materials.find(@permission.transaction_id)%>
-          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= raw_material.name%></strong>
-          <strong class="well col-xs-6" style="text-align: center;">الباقي بالمخزن: <%= raw_material.in_stock - @permission.quantity.to_i%></strong><br/><br/>
-          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @permission.quantity%></strong>
+          <strong class="well col-xs-12" style="text-align: center;">المادة الخام: <%= @product.name%></strong>
+          <strong class="well col-xs-6" style="text-align: center;">الكمية: <%= @product.quantity%></strong>
         </div>
         <div class="clearfix"></div>
       </div>
@@ -67,7 +65,7 @@
       doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
         doc.save('sample-file.pdf');
     }});
-    window.location = "/productions"
+    window.location = "/products"
       
   });
 

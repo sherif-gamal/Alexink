@@ -33,7 +33,7 @@
 						<abbr title="Phone">P:</abbr> <%= @client.phone%>
 					</address>
 					<h3 class="invoice-header">فاتورة رقم<%= @purchase.invoice_id%></h3>
-					<p>التاريخ - <%= Time.now.strftime("%m/%d/%Y")%></p>
+					<p>التاريخ - <%= @purchase.created_at.strftime("%m/%d/%Y")%></p>
 				</div>
 				<div class="clearfix"></div>
 				<div class="col-xs-12">

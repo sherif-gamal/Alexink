@@ -72,7 +72,7 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :permission_id,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :permission_id,  'رقم الإذن', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :permission_id, {class:"pull-right", disabled:true} %>
               </div>
@@ -116,4 +116,3 @@ $(document).ready(function() {
   WinMove();
 });
 </script>
-<%= link_to 'تعديل', edit_production_path(@production) %>

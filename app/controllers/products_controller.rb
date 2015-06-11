@@ -36,7 +36,9 @@ class ProductsController < ApplicationController
       @product.in_stock = @product.quantity
       respond_to do |format|
         if @product.save
-          format.html { redirect_to products_url, notice: 'تم تسجيل المنتج بنجاح.' }
+          permission = Permission.create!({transaction_type: 3, transaction_id: @product.id, quantity: @product.quantity})
+
+          format.html { redirect_to "/permission/product/#{permission.id}" }
           format.json { render :show, status: :created, location: @product }
         else
           redirect_to "/products/new", notice: 'تعذر إضافة المنتج. برجاء مراجعة المدخلات.'
