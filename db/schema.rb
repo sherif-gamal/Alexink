@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.float    "purchase_id"
+    t.integer  "purchase_id"
     t.float    "debt"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
 
   create_table "permissions", force: :cascade do |t|
-    t.string   "transaction_type"
+    t.integer  "transaction_type"
     t.integer  "transaction_id"
     t.integer  "quantity"
     t.datetime "created_at",       null: false

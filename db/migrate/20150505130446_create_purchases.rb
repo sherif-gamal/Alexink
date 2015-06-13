@@ -1,9 +1,9 @@
 class CreatePurchases < ActiveRecord::Migration
   def change
     create_table :purchases do |t|
-      t.string :product_ids, array: true
-      t.string 	:quantities, array: true
-      t.string 	:prices, array: true
+      t.string :product_ids
+      t.string 	:quantities
+      t.string 	:prices
       t.integer :client_id
       t.string	:payment_method
       t.string	:payment_state
