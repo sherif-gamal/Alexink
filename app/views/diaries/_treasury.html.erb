@@ -16,17 +16,7 @@
           <i class="fa fa-linux"></i>
           <span>يوميات المدخلات</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -34,29 +24,36 @@
           <thead>
             <tr>
               <th>التاريخ</th>
-              <th>العميل</th>
-              <th>المنتج</th>
-              <th>السعر</th>
-              <th>المبلغ المتبقي</th>
+              <th>عن طريق</th>
+              <th>الوصف</th>
+              <th>المبلغ</th>
             </tr>
           </thead>
           <tbody>
              <% sum = 0%>
-            <% @purchases.each do |purchase| %>
-              <%sum = sum + purchase.price - purchase.debt%>
-              <tr data-href="<%= purchase_path(purchase) %>">
-                <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
-                <td><%= @clients.find(purchase.client_id).name %></td>
-                <td><%= @products.find(purchase.product_id).name %></td>
-                <td><%= purchase.price %></td>
-                <td><%= purchase.debt %></td>
-              </tr>
+            <% @treasury_additions.each do |a| %>
+              <%sum = sum + a.amount%>
+              <%if a.transaction_type == ApplicationController::PURCHASE%>
+                <%m = Purchase.find(a.transaction_id)%>
+                <%t = Client.find(m.client_id)%>
+                <tr data-href="<%= purchase_path(m) %>">
+              <%elsif a.transaction_type == ApplicationController::CLIENT%>
+                <%t = Client.find(a.transaction_id)%>
+                <tr data-href="<%= client_path(t) %>">
+              <%elsif a.transaction_type == ApplicationController::MANUAL%>
+                <%t = User.find(a.transaction_id)%>
+                <tr>
+              <%end%>
+                  <td><%= a.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= t.name%></td>
+                  <td><%= a.description %></td>
+                  <td><%= a.amount %></td>
+                </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th><label></label></th>
               <th><label></label></th>
               <th><label></label></th>
               <th><label></label></th>
@@ -76,63 +73,47 @@
           <i class="fa fa-linux"></i>
           <span>يوميات المخرجات</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
-        <%transactions = @materials + @expenses%>
-        <%transactions.sort { |a,b| a.created_at <=> b.created_at }%>
-        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-3">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
               <th>التاريخ</th>
-              <th>النوع</th>
-              <th>الاسم</th>
-              <th>المورد</th>
+              <th>عن طريق</th>
+              <th>الوصف</th>
               <th>المبلغ</th>
-              <th>المبلغ المتبقي</th>
             </tr>
           </thead>
           <tbody>
-            <% sum = 0%>
-            <% transactions.each do |t| %>
-              <%sum = sum + t.price - t.debt%>
-              <%if t.is_a? Material%>
-                <tr data-href="<%= material_path(t) %>">
-                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
-                  <td>مادة خام</td>
-                  <td><%= @raw_materials.find(t.raw_material_id).name %></td>
-                  <td><%= @suppliers.find(t.supplier_id).name %></td>
-                  <td><%= t.price %></td>
-                  <td><%= t.debt %></td>
-                </tr>
-              <%else%>
+             <% sum = 0%>
+            <% @treasury_subtractions.each do |a| %>
+              <%sum = sum - a.amount%>
+              <%if a.transaction_type == ApplicationController::MATERIAL%>
+                <%m = Material.find(a.transaction_id)%>
+                <%t = RawMaterial.find(m.raw_material_id)%>
+                <tr data-href="<%= material_path(m) %>">
+              <%elsif a.transaction_type == ApplicationController::SUPPLIER%>
+                <%t = Supplier.find(a.transaction_id)%>
+                <tr data-href="<%= supplier_path(t) %>">
+              <%elsif a.transaction_type == ApplicationController::EXPENSE%>
+                <%t = Expense.find(a.transaction_id)%>
                 <tr data-href="<%= expense_path(t) %>">
-                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
-                  <td>مصروفات</td>
-                  <td><%= t.name %></td>
-                  <td><%= t.seller %></td>
-                  <td><%= t.price %></td>
-                  <td><%= t.debt %></td>
-                </tr>
+              <%elsif a.transaction_type == ApplicationController::MANUAL%>
+                <%t = User.find(a.transaction_id)%>
+                <tr>
               <%end%>
+                  <td><%= a.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= t.name%></td>
+                  <td><%= a.description %></td>
+                  <td><%= - a.amount %></td>
+                </tr>
             <% end %>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <th><label></label></th>
-              <th><label></label></th>
               <th><label></label></th>
               <th><label></label></th>
               <th><label></label></th>

@@ -7,7 +7,7 @@
 		</ol>
 	</div>
 </div>
-<div class="row" dir="rtl">
+<div class="row" dir="rtl" id="invoice">
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-content">
@@ -89,3 +89,21 @@
 		</div>
 	</div>
 </div>
+<div class="col-xs-6 col-xs-offset-6">
+					<div class="col-xs-4">
+						<a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
+					</div>
+				</div>
+
+<script src="../javascripts/js/jspdf.min.js">
+<script src="../javascripts/js/html2canvas.js">
+<script>
+	$('#print').click(function () {
+		html2canvas(document.querySelector("#invoice"), { onrendered: function(canvas) {
+			console.log(canvas.toDataURL());
+			doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
+    		doc.save('sample-file.pdf');
+		}});
+	    
+	});
+</script>

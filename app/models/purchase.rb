@@ -4,6 +4,11 @@ class Purchase < ActiveRecord::Base
 
 	before_save :verify_payment_state
 
+	serialize :product_ids
+	serialize :quantities
+	serialize :prices
+
+
 
 	private
 		def verify_payment_state

@@ -17,17 +17,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض جميع عمليات البيع</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -36,8 +26,6 @@
             <tr>
               <th>التاريخ</th>
               <th>العميل</th>
-              <th>المنتج</th>
-              <th>الكمية</th>
               <th>السعر</th>
               <th>الموقف</th>
             </tr>
@@ -47,8 +35,6 @@
               <tr data-href="<%= purchase_path(purchase) %>">
                 <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
-                <td><%= @products.find(purchase.product_id).name %></td>
-                <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
                 <td><%= purchase.debt %></td>
               </tr>
@@ -59,8 +45,6 @@
             <tr>
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
               <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
               <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
             </tr>

@@ -51,7 +51,7 @@
 <%= javascript_include_tag 'js/html2canvas' %>
 <script>
 	//require 'jspdf'
-	var doc = new jsPDF();
+	var doc = new jsPDF('p', 'pt', 'a4');
 	var specialElementHandlers = {
 	    '#editor': function (element, renderer) {
 	        return true;

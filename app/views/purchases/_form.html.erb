@@ -15,17 +15,7 @@
           <i class="fa fa-search"></i>
           <span>إتمام عملية بيع</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -46,35 +36,37 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :product_id,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.select :product_id, @products.collect {|p| [p.name, p.id, {'in_stock' => p.in_stock}]}, {}, {class:"pull-right", style:"min-width:100%", onchange:"set_unit()"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
               <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
+            <div id="products">
+              <div id="product" style="border: 1px solid #000; border-radius:10px;">
+                <div class="form-group">
+                  <%= f.label :product_ids,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= select_tag "product_ids[]", options_for_select(@products.collect {|p| [p.name, p.id, {'in_stock' => p.in_stock}]}),  {class:"pull-right", style:"min-width:100%"}%>
+                  </div>
+                </div>
 
-            <div class="form-group">
-              <%= f.label :quantity,  'الكميلة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.number_field :quantity , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكميلة"}%>
-                
+                <div class="form-group">
+                  <%= f.label :quantities,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= f.text_field :quantities , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكميلة", multiple:true}%>
+                    
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :prices,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= f.text_field :prices , {class:"form-control", placeholder:"السعر", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ", multiple:true}%>
+                  </div>
+                </div>
               </div>
-              <span>/<span id="in_stock"></span></span>
             </div>
-
-            <div class="form-group">
-              <%= f.label :price,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.number_field :price , {class:"form-control", placeholder:"المبلغ", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ"}%>
-              </div>
-            </div>
-
+            <div style="cursor: pointer;" id="add-product"><span class="glyphicon glyphicon-plus"></span></div>
             <div class="form-group">
               <%= f.label :payment_method,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
@@ -85,7 +77,7 @@
             <div class="form-group">
               <%= f.label :payment_state,  'حالة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%", onchange:"set_debt()" } %>
+                <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%" } %>
               </div>
               <div id="debt-div" hidden="hidden">
                 <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
@@ -140,7 +132,6 @@ $(document).ready(function() {
   // Add drag-n-drop feature to boxes
   WinMove();
   set_debt();
-  set_unit();
 });
 
 
@@ -153,8 +144,12 @@ function set_debt() {
    $('#debt-div').hide();
   }
 }
-function set_unit() {
-  $("#unit").val($('#id :selected').attr('unit'));
-  $("#in_stock").html($('#purchase_product_id :selected').attr('in_stock'));
-}
+
+$("#add-product").click(function() {
+  var div = document.getElementById('product'),
+      clone = div.cloneNode(true); // true means clone all childNodes and all event handlers
+  clone.id = "some_id";
+  document.getElementById('products').appendChild(clone);
+});
+
 </script>

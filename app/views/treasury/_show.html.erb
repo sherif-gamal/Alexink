@@ -15,17 +15,7 @@
 					<i class="fa fa-search"></i>
 					<span>عرض الخزنة</span>
 				</div>
-				<div class="box-icons">
-					<a class="collapse-link">
-						<i class="fa fa-chevron-up"></i>
-					</a>
-					<a class="expand-link">
-						<i class="fa fa-expand"></i>
-					</a>
-					<a class="close-link">
-						<i class="fa fa-times"></i>
-					</a>
-				</div>
+
 				<div class="no-move"></div>
 			</div>
 			<div class="box-content">
@@ -33,25 +23,27 @@
 					<div class="form-group">
 						<label class="col-sm-2 control-label pull-right">الرصيد البنك</label>
 						<div class="col-sm-4 pull-right">
-							<%= text_field_tag 'bank' , @treasury.bank, {class:"form-control", onchange: "updateSum()"}%>
+							<%= text_field_tag 'bank' , @treasury.bank, {class:"form-control", onchange: "updateSum()", disabled:current_user.department != "Management"}%>
 						</div>
 					</div><br/>
 					<div class="form-group">
 						<label class="col-sm-2 control-label pull-right">رصيد الكاش</label>
 						<div class="col-sm-4 pull-right">
-							<%= text_field_tag 'cash' , @treasury.cash,{class:"form-control", onchange: "updateSum()"}%>
+							<%= text_field_tag 'cash' , @treasury.cash,{class:"form-control", onchange: "updateSum()", disabled:current_user.department != "Management"}%>
 						</div>
 					</div><br/>
 					<hr align="right" class="style-seven"></hr>
 					<div class="form-group">
 						<label class="col-sm-2 control-label pull-right">الرصيد الكلي</label>
 						<div class="col-sm-4 pull-right">
-							<input type="text" class="form-control" id="sum" value= <%= @treasury.cash + @treasury.bank%> data-toggle="tooltip" data-placement="bottom" title="Tooltip for last name">
+							<input type="text" class="form-control" id="sum" value= <%= @treasury.cash + @treasury.bank%> disabled='disabled'>
 						</div>
 					</div><br/>
-					<div class="form-group">
-						<%= submit_tag "تعديل", class:"btn btn-primary btn-label-left" %>
-					</div>
+					<%if current_user.department == "Management"%>
+						<div class="form-group">
+							<%= submit_tag "تعديل", class:"btn btn-primary btn-label-left" %>
+						</div>
+					<%end%>
 					</div>
 					</div>
 				<% end %>

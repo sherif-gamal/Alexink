@@ -16,17 +16,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض جميع الفواتير</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -42,10 +32,18 @@
           <tbody>
             <% @invoices.each do |invoice| %>
             <%purchase = @purchases.find(invoice.purchase_id)%>
-              <tr data-href="<%= purchase_path(purchase) %>">
+            <%url = "/purchases/invoice/#{invoice.id}"%>
+              <tr data-href="<%= url %>">
                 <td><%= invoice.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= invoice.id %></td>
-                <td><%= @products.find(purchase.product_id).name %></td>
+                <td>
+                  <ul>
+                    <%products = @products.find(purchase.product_ids)%>
+                    <%products.each do |p|%>
+                      <li><%= p.name %></li>
+                    <%end%>
+                  </ul>
+                </td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
               </tr>
             <% end %>

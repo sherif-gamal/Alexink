@@ -54,7 +54,7 @@
 <%= javascript_include_tag 'js/html2canvas' %>
 <script>
 	//require 'jspdf'
-	var doc = new jsPDF();
+	var doc = new jsPDF('p', 'pt', 'a4');
 	var specialElementHandlers = {
 	    '#editor': function (element, renderer) {
 	        return true;
@@ -63,7 +63,7 @@
 	$('#print').click(function () {
 		html2canvas(document.querySelector("#invoice"), { onrendered: function(canvas) {
 			console.log(canvas.toDataURL());
-			doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 200, 200);
+			doc.addImage(canvas.toDataURL(), 'JPEG', 10, 10, 210, 297);
     		doc.save('sample-file.pdf');
 		}});
 		$.ajax({ url: '/raw_materials/confirm',

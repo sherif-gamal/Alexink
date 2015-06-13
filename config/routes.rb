@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/dashboard/index'
   get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
   get 'stock/index'
+  match '/taxes', to: 'taxes#index', via: [:get]
+  match '/taxes', to: 'taxes#index', via: [:post]
 
   get 'permission/production/:id', to: 'permission#production'
   get 'permission/product/:id', to: 'permission#product'
@@ -23,6 +25,7 @@ Rails.application.routes.draw do
   get 'permission/material/:id1/:id2', to: 'permission#material'
   get 'permission/purchase/:id1/:id2', to: 'permission#purchase_with_invoice'
   get 'permission/purchase/:id', to: 'permission#purchase'
+  get 'permission/expense/:id', to: 'permission#expense'
   
   get 'diaries/index'
 
@@ -40,8 +43,7 @@ Rails.application.routes.draw do
   post 'expenses/confirm'
   get 'expenses/permission'
 
-  get 'purchases/invoice'
-  get 'purchases/print_invoice/:id', to: 'purchases#print_invoice'
+  get 'purchases/invoice/:id', to: 'purchases#invoice'
   post 'materials/confirm'
   get 'treasury/addtotreasury'
   get 'treasury/show'

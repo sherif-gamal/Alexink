@@ -34,13 +34,15 @@ class DiariesController < ApplicationController
 	end
 
 	def treasury
-		@materials = Material.order(created_at: :desc)
-		@expenses = Expense.order(created_at: :desc)
-		@purchases = Purchase.order(created_at: :desc)
-		@clients = Client.all
-		@products = Product.all
-		@suppliers = Product.all
-		@raw_materials = RawMaterial.all
+		# @materials = Material.order(created_at: :desc)
+		# @expenses = Expense.order(created_at: :desc)
+		# @purchases = Purchase.order(created_at: :desc)
+		# @clients = Client.all
+		# @products = Product.all
+		# @suppliers = Supplier.all
+		# @raw_materials = RawMaterial.all
+		@treasury_additions = TreasuryDiary.where("amount > ?", 0)
+		@treasury_subtractions = TreasuryDiary.where("amount < ?", 0)
 		if request.xhr?
       		render partial: 'treasury'
     	else

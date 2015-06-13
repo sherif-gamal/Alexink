@@ -16,23 +16,10 @@
           <i class="fa fa-search"></i>
           <span>بيانات المورد</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-         <% if notice.present? %>
-        <h3 class="alert alert-danger"><%= notice%></h3>
-        <%end%>
           <%= form_for(@supplier, html: {class: 'form-horizontal'}) do |f| %>
             <% if @supplier.errors.any? %>
               <div id="error_explanation">
@@ -120,17 +107,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض عمليات الشراء من المورد</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">

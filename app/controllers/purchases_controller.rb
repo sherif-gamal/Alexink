@@ -37,69 +37,81 @@ class PurchasesController < ApplicationController
   # POST /purchases.json
 
   def create
-    if validate_params(purchase_params) then
-      purchase = Purchase.new(purchase_params)
+    _params = purchase_params
+    if validate_params(_params) then
+      purchase = Purchase.new(_params)
       purchase.user_name = current_user.name
-      product = Product.find(purchase.product_id)
-      if (product.in_stock < purchase.quantity.to_f)
-        redirect_to '/purchases/new', notice: 'الكمية المتاحة بالمخزن من ذلك المنتج أقل من المطلوب'
-        return
+      products = Product.find(_params['product_ids'])
+      products.each_with_index do |product, i|
+        if (product.in_stock < _params['quantities'][i].to_f)
+          redirect_to '/purchases/new', notice: 'الكمية المتاحة بالمخزن من ذلك المنتج أقل من المطلوب'
+          return
+        end
       end
-      
+      purchase.price = 0
+      purchase.prices.each do |price|
+        purchase.price = purchase.price + price.to_f
+      end
+
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
-         permission = Permission.create!({transaction_type: 4, transaction_id: purchase.id, quantity: purchase.quantity})
+         permission = Permission.create!({transaction_type: 4, transaction_id: purchase.id})
          purchase.invoice_id = invoice.id
          purchase.save
-         treasury = Treasury.first
-         p treasury
-         if (purchase.payment_method == "cash")
-          treasury.cash = treasury.cash + purchase.price - purchase.debt
-          p treasury
-         else
-          treasury.bank = treasury.bank + purchase.price - purchase.debt
-          p treasury
+         update_treasury(purchase.payment_method, purchase.price - purchase.debt, PURCHASE, purchase.id, "عملية بيع", 0)
+         if purchase.debt == 0
+          add_tax(purchase.payment_method, PURCHASE, purchase.id, purchase.price)
          end
+         # treasury = Treasury.first
+         # if (purchase.payment_method == "cash")
+         #  treasury.cash = treasury.cash + purchase.price - purchase.debt
+         # else
+         #  treasury.bank = treasury.bank + purchase.price - purchase.debt
+         # end
          client = Client.find(purchase.client_id)
          client.debt = client.debt + purchase.debt
-         product = Product.find(purchase.product_id)
-         product.in_stock = product.in_stock - purchase.quantity
+         products.each_with_index do |product, i|
+          product.in_stock = product.in_stock - purchase.quantities[i].to_f
+          product.save
+         end
 
-         treasury.save
+         # treasury.save
          client.save
-         product.save
-
-         session[:purchase_id] = purchase.id
 
          redirect_to "/permission/purchase/#{permission.id}/#{invoice.id}"
       end
+    else
+      redirect_to '/purchases/new', notice: 'حدث خطأ في معالجة الطلب. برجاء مراجعة المدخلات'
     end
   end
 
-  def print_invoice
-    session[:purchase_id] = params['id']
-    redirect_to '/purchases/invoice'
-  end
-
   def invoice
-    @purchase = Purchase.find(session[:purchase_id])
+    @invoice = Invoice.find(params[:id])
+    @purchase = Purchase.find(@invoice.purchase_id)
     @client = Client.find(@purchase.client_id)
-    @product = Product.find(@purchase.product_id)
+    @products = Product.find(@purchase.product_ids)
     super
   end
 
   # PATCH/PUT /purchases/1
   # PATCH/PUT /purchases/1.json
   def update
+    debt = @purchase.debt
     respond_to do |format|
       if @purchase.update(purchase_params)
-        treasury = Treasury.first
-        if (params['payment_method'] == "cash")
-          treasury.cash = treasury.cash + (@purchase.debt - purchase_params[:debt].to_f)
-        else
-          treasury.bank = treasury.bank + (@purchase.debt - purchase_params[:debt].to_f)
+        if (debt != @purchase.debt)
+          update_treasury(params['payment_method'], debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0)
         end
-        treasury.save
+        if debt > 0 && @purchase.debt == 0
+          add_tax(@purchase.payment_method, PURCHASE, @purchase.id, @purchase.price)
+        end
+        # treasury = Treasury.first
+        # if (params['payment_method'] == "cash")
+        #   treasury.cash = treasury.cash + (@purchase.debt - purchase_params[:debt].to_f)
+        # else
+        #   treasury.bank = treasury.bank + (@purchase.debt - purchase_params[:debt].to_f)
+        # end
+        # treasury.save
         client = Client.find(@purchase.client_id)
         client.debt = client.debt - (@purchase.debt - purchase_params[:debt].to_f)
         client.save
@@ -131,13 +143,22 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      params.require(:purchase).permit(:product_id, :payment_method, :payment_state, :quantity, :price, :client_id, :payment_method, :payment_state, :state, :debt)
+      _params = params.require(:purchase).permit(:payment_method, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
+      _params[:product_ids] = params[:product_ids]
+      p _params
     end
 
-    def validate_params(params)
-      if params[:product_id].present? && params[:client_id].present? && params[:price].present? && params[:quantity].present? then
-        return is_float?(params[:price]) && is_float?(params[:quantity])
+    def validate_params(params)  
+      params[:prices].each do |price|
+        if !is_float?(price)
+          return nil
+        end
       end
-      return nil
+      params[:quantities].each do |quantity|
+        if !is_float?(quantity)
+          return nil
+        end
+      end
+      return true
     end
 end

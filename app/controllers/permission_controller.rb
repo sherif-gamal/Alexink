@@ -3,11 +3,23 @@ class PermissionController < ApplicationController
 	def production
 		permission_id = params[:id]
 		@permission = Permission.find(permission_id)
-		production  = Production.find(@permission.transaction_id)
-		@raw_material = RawMaterial.find(production.raw_material_id)
+		@production  = Production.find(@permission.transaction_id)
+		@raw_material = RawMaterial.find(@production.raw_material_id)
 		if request.xhr?
 	      flash.discard(:notice)
 	      render partial: 'production'
+	    else
+	      redirect_to "/dashboard##{request.path}"
+	    end
+	end
+
+	def expense
+		permission_id = params[:id]
+		@permission = Permission.find(permission_id)
+		@expense  = Expense.find(@permission.transaction_id)
+		if request.xhr?
+	      flash.discard(:notice)
+	      render partial: 'expense'
 	    else
 	      redirect_to "/dashboard##{request.path}"
 	    end
@@ -61,7 +73,7 @@ class PermissionController < ApplicationController
 		permission_id = params[:id]
 		@permission = Permission.find(permission_id)
 		@purchase = Purchase.find(@permission.transaction_id)
-		@product = Product.find(@purchase.product_id)
+		@products = Product.find(@purchase.product_ids)
 		@client = Client.find(@purchase.client_id)
 		
 		if request.xhr?
@@ -78,7 +90,7 @@ class PermissionController < ApplicationController
 		@permission = Permission.find(permission_id)
 		@invoice = Invoice.find(invoice_id)
 		@purchase = Purchase.find(@permission.transaction_id)
-		@product = Product.find(@purchase.product_id)
+		@products = Product.find(@purchase.product_ids)
 		@client = Client.find(@purchase.client_id)
 		
 		if request.xhr?

@@ -51,9 +51,14 @@ class SuppliersController < ApplicationController
   # PATCH/PUT /suppliers/1
   # PATCH/PUT /suppliers/1.json
   def update
+    credit = @supplier.credit
     respond_to do |format|
       if @supplier.update(supplier_params)
-        format.html { redirect_to @supplier, notice: 'Supplier was successfully updated.' }
+        if params["affects_treasury"] && @supplier.credit != credit
+          update_treasury(params['payment_method'], -credit + @supplier.credit, SUPPLIER, @supplier.id, "تعديل موقف مورد", 0)  
+        end
+
+        format.html { redirect_to suppliers_url, notice: 'تم تعديل بيانات الموزع.' }
         format.json { render :show, status: :ok, location: @supplier }
       else
         format.html { render :edit }

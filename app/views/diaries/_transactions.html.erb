@@ -17,17 +17,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض عمليات البيع</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -36,27 +26,49 @@
             <tr>
               <th>التاريخ</th>
               <th>العميل</th>
-              <th>المنج</th>
+              <th>المنجات</th>
               <th>الكمية</th>
               <th>السعر</th>
-              <th>حالة الدفع</th>
               <th>المبلغ المتبقي</th>
             </tr>
           </thead>
           <tbody>
             <% @purchases.each do |purchase| %>
               <tr data-href="<%= purchase_path(purchase) %>">
+                <%products = @products.find(purchase.product_ids)%>
+                <%quantities = purchase.quantities%>
                 <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
-                <td><%= @products.find(purchase.product_id).name %></td>
-                <td><%= purchase.quantity %></td>
+                <td>
+                  <ul>
+                    <%products.each do |p|%>
+                      <li><%= p.name %></li>
+                    <%end%>
+                  </ul>
+                </td>
+                <td>
+                  <ul>
+                    <%quantities.each do |q|%>
+                      <li><%= q %></li>
+                    <%end%>
+                  </ul>
+                </td>
                 <td><%= purchase.price %></td>
-                <td><%= purchase.payment_state %></td>
                 <td><%= purchase.debt %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_name" value="البحث باسم العميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_supplier" value="البحث بالمنتج" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالكمية" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_pay_state" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
@@ -72,17 +84,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض عمليات الشراء</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -135,17 +137,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض المصروفات</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
@@ -167,12 +159,20 @@
                 <td><%= expense.name %></td>
                 <td><%= expense.seller %></td>
                 <td><%= expense.price %></td>
-                <td><%= expense.payment_method %></td>
                 <td><%= expense.debt %></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_supplier" value="البحث بالبائع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>

@@ -1,0 +1,83 @@
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="index.html">الصفحة الرئيسية</a></li>
+      <li><a href="#">المصروفات</a></li>
+      <li><a href="#">اذن.صرف.نقدية</a></li>
+    </ol>
+  </div>
+</div>
+<%=hidden_field_tag "permission_id", (sprintf '%06d', @permission.id)%>
+<div class="row"  dir="ltr">
+  <div class="col-xs-8 col-xs-offset-2" id="permission">
+      <div class="box-content">
+        <div>
+          <div class="col-xs-5 text-center">
+            <br/>
+            <div>سجل تجاري رقم: 4274</div>
+            <div>بطاقة ضريبية رقم: 954-197-374</div>
+            <div>ملف ضريبي رقم: 00-00-250-00123-5</div>
+            <br/>
+            <strong >No <%=sprintf '%06d', @permission.id%></strong>
+          </div>
+
+          <div class="col-xs-2">
+            <%= image_tag "img/logo.png", style:"margin-bottom:20px;"%>
+            <div class="text-center block">إذن صرف نقدية</div>
+          </div>
+          <div class="col-xs-5 pull-right" style="text-align:center;">
+              <div><strong>اسكندرية للأحبار المتخصصة والكيماويات</strong></div>
+              <div align=center>ش.م.م</div>
+              <div>6 شارع عزيز فهمي - سبورتنج</div>
+              <div>الإسكندرية - مصر</div>
+              <div>ت : 035469692 - 01004814814816</div>
+              <div>Email: info@alexinkegypt.net</div>
+              <div>تحريراً في : <%= @expense.created_at.strftime("%Y/%m/%d")%></div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="col-xs-12 pull-right text-right" dir="rtl" style="margin-top: 20px;">يصرف للسادة شركة: <span style="border-bottom: 1px dotted;"><%=@expense.seller%></span></div>
+        <div class="col-xs-12">
+
+          <table border="2" dir="rtl" class="col-xs-12 pull-right">
+            <tr>
+              <th class="text-center">البيان</th>
+              <th style="width: 70px" class="text-center">المبلغ</th>
+            </tr>
+            <tr>
+              <td class="text-center"><%=@expense.name%></th>
+              <td style="width: 70px" class="text-center"><%=@expense.price%></th>
+            </tr>
+          </table>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-6 col-xs-offset-6">
+    <div class="col-xs-4">
+      <a href"" class="btn btn-default btn-label-left" id="print-1"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
+    </div>
+  </div>
+
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
+<script>
+replaceDigits();
+  //require 'jspdf'
+  var doc = new jsPDF('p', 'pt', 'a4');
+  var specialElementHandlers = {
+      '#editor': function (element, renderer) {
+          return true;
+      }
+  };
+  $('#print-1').click(function () {
+      var doc = new jsPDF('p', 'pt', 'a4');
+    html2canvas(document.querySelector("#permission"), { onrendered: function(canvas) {
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+        doc.save('Permission - ' + $("#permission_id").val() + '.pdf');
+    }});
+  });
+
+</script>

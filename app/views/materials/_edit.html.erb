@@ -16,17 +16,7 @@
           <i class="fa fa-search"></i>
           <span>بيانات عملية الشراء</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -105,14 +95,14 @@
             <div class="form-group">
                 <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-4 pull-right">
-                  <%= f.text_field :debt , {class:"form-control"}%>
+                  <%= f.text_field :debt , {class:"form-control", disabled:@material.debt <= 0}%>
                 </div>
             </div>
 
             <div class="form-group">
                 <%= f.label :in_stock,  'المخزون', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-4 pull-right">
-                  <%= f.text_field :in_stock , {class:"form-control"}%>
+                  <%= f.text_field :in_stock , {class:"form-control", disabled:@material.in_stock <= 0}%>
                 </div>
             </div>
 
@@ -148,6 +138,34 @@
 function DemoSelect2(){
   $('#s2_with_tag').select2({placeholder: "Select OS"});
   $('#s2_country').select2();
+}
+
+function validator() {
+    $('#new_material').bootstrapValidator({
+    message: 'برجاء مراجعة المدخل',
+    fields: {
+      'material[debt]': {
+        validators: {
+          notEmpty: {
+            message: 'لا يمكن أن يكون فارغاً'
+          },
+          digits: {
+            message: 'اأرقام فقط'
+          }
+        }
+      },
+      'material[in_stock]': {
+        validators: {
+          notEmpty: {
+            message: 'المخزون لا يمكن أن يكون فارغاً'
+          },
+          digits: {
+            message: 'اأرقام فقط'
+          }
+        }
+      }
+    }
+  });
 }
 // Run timepicker
 function DemoTimePicker(){

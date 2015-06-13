@@ -1,0 +1,101 @@
+<div class="row">
+	<div id="breadcrumb" class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="index.html">الصفحة الرئيسية</a></li>
+			<li><a href="#">الإقرار الضريبي</a></li>
+		</ol>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<div class="box">
+			<div class="box-header">
+				<div class="box-name">
+					<i class="fa fa-search"></i>
+					<span>الإقرار الضريبي</span>
+				</div>
+
+				<div class="no-move"></div>
+			</div>
+			<div class="box-content">
+				<div class="col-sm-2">
+					حتى
+					<input type="text" id="input_date-2" class="form-control" placeholder="تاريخ النهاية" value="<%=@_end.strftime("%m/%d/%Y")%>">
+				</div>
+				<div class="col-sm-2">
+					بداية من
+					<input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">
+					
+				</div>
+				<%= form_tag('#', method:'put', html: {class: 'form-horizontal'}) do %>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">ضريبة المبيعات</label>
+						<div class="col-sm-4 pull-right">
+							<%= text_field_tag 'debt' , @debt, {class:"form-control", disabled:true}%>
+						</div>
+					</div><br/>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">ضريبة المشتريات</label>
+						<div class="col-sm-4 pull-right">
+							<%= text_field_tag 'credit' , @credit,{class:"form-control", disabled:true}%>
+						</div>
+					</div><br/>
+					<hr align="right" class="style-seven"></hr>
+					<div class="form-group">
+						<label class="col-sm-2 control-label pull-right">الفرق</label>
+						<div class="col-sm-4 pull-right">
+							<input type="text" class="form-control" id="sum" value= <%= @debt - @credit%> disabled='disabled'>
+						</div>
+					</div><br/>
+					</div>
+					</div>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+	$('#s2_with_tag').select2({placeholder: "Select OS"});
+	$('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+	$('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+	// Create Wysiwig editor for textare
+	TinyMCEStart('#wysiwig_simple', null);
+	TinyMCEStart('#wysiwig_full', 'extreme');
+	// Add slider for change test input length
+	FormLayoutExampleInputLength($( ".slider-style" ));
+	// Initialize datepicker
+	$('#input_date').datepicker({setDate: new Date()});
+	// Load Timepicker plugin
+	LoadTimePickerScript(DemoTimePicker);
+	// Add tooltip to form-controls
+	$('.form-control').tooltip();
+	LoadSelect2Script(DemoSelect2);
+	// Load example of form validation
+	LoadBootstrapValidatorScript(DemoFormValidator);
+	// Add drag-n-drop feature to boxes
+	WinMove();
+	$('#input_date').datepicker({setDate: new Date()});
+	$('#input_date-2').datepicker({setDate: new Date()});
+	var f = function() {
+		$.ajax({ url: 'taxes',
+		  type: 'POST',
+		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+		  data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val()},
+		  success: function(response) {
+		    $('#ajax-content').html(response);
+		  }
+		});
+	}
+	$('#input_date-2').change(f)
+	$('#input_date').change(f)
+});
+
+</script>

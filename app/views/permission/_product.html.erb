@@ -31,7 +31,7 @@
           اذن رقم <%= @permission.id%>
         </div>
         <div class="col-xs-6 well text-center">
-          التاريخ <%= @permission.created_at.strftime("%m/%d/%Y") %>
+          التاريخ <%= @permission.created_at.strftime("%d/%m/%Y") %>
         </div>
         <div class="clearfix"></div>
           <strong class="well col-xs-6" style="text-align: center;">المادة الخام: <%= @product.name%></strong>
@@ -51,7 +51,7 @@
 <%= javascript_include_tag 'js/html2canvas' %>
 <script>
   //require 'jspdf'
-  var doc = new jsPDF();
+  var doc = new jsPDF('p', 'pt', 'a4');
   var specialElementHandlers = {
       '#editor': function (element, renderer) {
           return true;

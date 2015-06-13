@@ -16,17 +16,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض مدخلات المخزن</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <%transactions = @materials + @products%>
@@ -75,17 +65,7 @@
           <i class="fa fa-linux"></i>
           <span>عرض مخرجات المخزن</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <%transactions = @purchases + @productions%>
@@ -106,8 +86,22 @@
                 <tr data-href="<%= purchase_path(t) %>">
                   <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
                   <td>صرف منتج</td>
-                  <td><%= @products.find(t.product_id).name %></td>
-                  <td><%= t.quantity %></td>
+                  <%products = @products.find(t.product_ids)%>
+                  <%quantities = t.quantities%>
+                  <td>
+                    <ul>
+                      <%products.each do |p|%>
+                        <li><%= p.name %></li>
+                      <%end%>
+                    </ul>
+                  </td>
+                  <td>
+                    <ul>
+                      <%quantities.each do |q|%>
+                        <li><%= q %></li>
+                      <%end%>
+                    </ul>
+                  </td>
                 </tr>
               <%else%>
                 <tr data-href="<%= production_path(t) %>">

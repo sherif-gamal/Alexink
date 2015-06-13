@@ -16,17 +16,7 @@
           <i class="fa fa-search"></i>
           <span>تعديل عملية بيع</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -61,51 +51,58 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :product_id,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.select :product_id, @products.collect {|p| [p.name, p.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true} %>
-              </div>
-            </div>
-
-            <div class="form-group">
               <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%", disabled:true} %>
               </div>
             </div>
 
-            <div class="form-group">
-              <%= f.label :quantity,  'الكميلة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :quantity , {class:"form-control", disabled:true}%>
-              </div>
-            </div>
+             <div id="products">
+              <%@purchase.product_ids.each_with_index do |p, i|%>
+                <div id="product" style="border: 1px solid #000; border-radius:10px;">
+                  <div class="form-group">
+                    <%= f.label :product_ids,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
+                    <div class="col-sm-4 pull-right">
+                      <%= text_field_tag "product_ids[]", @products.find(p).name, {class:"form-control", disabled:true}%>
+                    </div>
+                  </div>
 
-            <div class="form-group">
-              <%= f.label :price,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :price , {class:"form-control", disabled:true}%>
-              </div>
+                  <div class="form-group">
+                    <%= f.label :quantities,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+                    <div class="col-sm-4 pull-right">
+                      <%= text_field_tag "quantities" , @purchase.quantities[i], {class:"form-control", disabled:true}%>
+                      
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.label :prices,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
+                    <div class="col-sm-4 pull-right">
+                      <%= text_field_tag "prices" , @purchase.prices[i], {class:"form-control", disabled:true}%>
+                    </div>
+                  </div>
+                </div>
+                <%end%>
             </div>
 
             <div class="form-group">
               <%= f.label :payment_method,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :payment_method, {class:"pull-right", disabled:true} %>
+                <%= f.text_field :payment_method, {class:"form-control pull-right", disabled:true} %>
               </div>
             </div>
 
             <div class="form-group">
               <%= f.label :payment_state,  'حالة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :payment_state, {class:"pull-right", disabled:true} %>
+                <%= f.text_field :payment_state, {class:"form-control pull-right", disabled:true} %>
               </div>
             </div>
 
             <div class="form-group">
                 <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-4 pull-right">
-                  <%= f.text_field :debt , {class:"form-control"}%>
+                  <%= f.text_field :debt , {class:"form-control", disabled: @purchase.debt <= 0}%>
                 </div>
             </div>
 

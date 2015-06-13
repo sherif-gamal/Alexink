@@ -1,0 +1,150 @@
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">الصفحة الرئيسية</a></li>
+      <li><a href="#">اليوميات</a></li>
+      <li><a href="#">يوميات الخزنة</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>يوميات المدخلات</span>
+        </div>
+
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>العميل</th>
+              <th>المنتج</th>
+              <th>السعر</th>
+              <th>المبلغ المتبقي</th>
+            </tr>
+          </thead>
+          <tbody>
+             <% sum = 0%>
+            <% @purchases.each do |purchase| %>
+              <%sum = sum + purchase.price - purchase.debt%>
+              <tr data-href="<%= purchase_path(purchase) %>">
+                <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= @clients.find(purchase.client_id).name %></td>
+                <td><%= @products.find(purchase.product_id).name %></td>
+                <td><%= purchase.price %></td>
+                <td><%= purchase.debt %></td>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label>الإجمالي = <%=sum%></label></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>يوميات المخرجات</span>
+        </div>
+
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <%transactions = @materials + @expenses%>
+        <%transactions.sort { |a,b| a.created_at <=> b.created_at }%>
+        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-3">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>النوع</th>
+              <th>الاسم</th>
+              <th>المورد</th>
+              <th>المبلغ</th>
+              <th>المبلغ المتبقي</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% sum = 0%>
+            <% transactions.each do |t| %>
+              <%sum = sum + t.price - t.debt%>
+              <%if t.is_a? Material%>
+                <tr data-href="<%= material_path(t) %>">
+                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
+                  <td>مادة خام</td>
+                  <td><%= @raw_materials.find(t.raw_material_id).name %></td>
+                  <td><%= @suppliers.find(t.supplier_id).name %></td>
+                  <td><%= t.price %></td>
+                  <td><%= t.debt %></td>
+                </tr>
+              <%else%>
+                <tr data-href="<%= expense_path(t) %>">
+                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
+                  <td>مصروفات</td>
+                  <td><%= t.name %></td>
+                  <td><%= t.seller %></td>
+                  <td><%= t.price %></td>
+                  <td><%= t.debt %></td>
+                </tr>
+              <%end%>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label></label></th>
+              <th><label>الإجمالي = <%=sum%></label></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+});
+</script>

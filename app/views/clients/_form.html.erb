@@ -15,17 +15,7 @@
           <i class="fa fa-search"></i>
           <span>بيانات العميل</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -97,7 +87,7 @@
             <div class="form-group">
               <%= f.label :debt,  'الموقف', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :debt , {class:"form-control", placeholder:"مستحفاتنا لدى العميل", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"مستحفاتنا لدى العميل"}%>
+                <%= f.text_field :debt, {class:"form-control", placeholder:"مستحفاتنا لدى العميل", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"مستحفاتنا لدى العميل", value:0}%>
               </div>
             </div>
 
@@ -130,6 +120,68 @@ function DemoSelect2(){
 function DemoTimePicker(){
   $('#input_time').timepicker({setDate: new Date()});
 }
+function validator() {
+    $('#new_client').bootstrapValidator({
+    message: 'برجاء مراجعة المدخل',
+    fields: {
+      'client[name]': {
+        message: 'الاسم غير مقبول',
+        validators: {
+          notEmpty: {
+            message: 'لا يمكن أن يكون الاسم فارغاً'
+          },
+          stringLength: {
+            min: 3,
+            max: 30,
+            message: 'اسم العميل لابد أن يكون محصوراً بين 3 إلى 30 حرف  '
+          }
+        }
+      },
+      'client[country]': {
+        validators: {
+          notEmpty: {
+            message: 'لابد من إدخال الدولة'
+          }
+        }
+      },
+      'client[address]': {
+        validators: {
+          notEmpty: {
+            message: 'لابد من إدخال العنوان'
+          }
+        }
+      },
+      'client[email]': {
+        validators: {
+          emailAddress: {
+            message: 'البريد الإليكتروني غير صحيح'
+          }
+        }
+      },
+      'client[phone]': {
+        validators: {
+          digits: {
+            message: 'الهاتف يتكون من أرقام فقط'
+          }
+        }
+      },
+      'client[zip]': {
+        validators: {
+          digits: {
+            message: 'أرقام فقط'
+          }
+        }
+      },
+      'client[debt]': {
+        validators: {
+          numeric: {
+            message: 'أرقام فقط'
+          }
+        }
+      }
+    }
+  });
+}
 $(document).ready(function() {
   // Create Wysiwig editor for textare
   TinyMCEStart('#wysiwig_simple', null);
@@ -144,7 +196,7 @@ $(document).ready(function() {
   $('.form-control').tooltip();
   LoadSelect2Script(DemoSelect2);
   // Load example of form validation
-  LoadBootstrapValidatorScript(clientValidator);
+  LoadBootstrapValidatorScript(validator);
   // Add drag-n-drop feature to boxes
   WinMove();
 });

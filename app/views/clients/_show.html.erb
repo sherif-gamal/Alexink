@@ -16,17 +16,7 @@
           <i class="fa fa-search"></i>
           <span>بيانات العميل</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -118,36 +108,22 @@
           <i class="fa fa-linux"></i>
           <span>عرض عمليات البيع للعميل</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_unit" value="البحث المنتج" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_quantity" value="البحث بالكمية" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
+              <th>العميل</th>
+              <th>السعر</th>
+              <th>المبلغ المتبقي</th>
             </tr>
           </thead>
           <tbody>
             <% @purchases.each do |purchase| %>
               <tr data-href="<%= purchase_path(purchase) %>">
                 <td><%= @client.name %></td>
-                <td><%= @products.find(purchase.product_id).name %></td>
-                <td><%= purchase.quantity %></td>
                 <td><%= purchase.price %></td>
                 <td><%= purchase.debt %></td>
               </tr>
@@ -156,11 +132,9 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>العميل</th>
-              <th>المنج</th>
-              <th>الكمية</th>
-              <th>السعر</th>
-              <th>المبلغ المتبقي</th>
+              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -178,7 +152,18 @@ function DemoSelect2(){
 function DemoTimePicker(){
   $('#input_time').timepicker({setDate: new Date()});
 }
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
 $(document).ready(function() {
+  LoadDataTablesScripts(AllTables);
   // Create Wysiwig editor for textare
   TinyMCEStart('#wysiwig_simple', null);
   TinyMCEStart('#wysiwig_full', 'extreme');
@@ -201,5 +186,7 @@ $(document).ready(function() {
     $(this).toggleClass('hover');
 });
 });
+
+
 
 </script>

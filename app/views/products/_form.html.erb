@@ -15,17 +15,7 @@
           <i class="fa fa-search"></i>
           <span>إدخال بيانات منتج جديد</span>
         </div>
-        <div class="box-icons">
-          <a class="collapse-link">
-            <i class="fa fa-chevron-up"></i>
-          </a>
-          <a class="expand-link">
-            <i class="fa fa-expand"></i>
-          </a>
-          <a class="close-link">
-            <i class="fa fa-times"></i>
-          </a>
-        </div>
+
         <div class="no-move"></div>
       </div>
       <div class="box-content">
@@ -107,6 +97,49 @@ function DemoSelect2(){
 function DemoTimePicker(){
   $('#input_time').timepicker({setDate: new Date()});
 }
+
+function validator() {
+    $('#new_product').bootstrapValidator({
+    message: 'برجاء مراجعة المدخل',
+    fields: {
+      'product[name]': {
+        message: 'الاسم غير مقبول',
+        validators: {
+          notEmpty: {
+            message: 'الاسم لا يمكن أن يكون فارغاً'
+          },
+          stringLength: {
+            min: 3,
+            max: 30,
+            message: 'الاسم من 3 إلى 30 حرف'
+          }
+        }
+      },
+      'product[unit]': {
+        validators: {
+          notEmpty: {
+            message: 'لابد من إدخال الوحدة'
+          }
+        }
+      },
+      'product[quantity]': {
+        validators: {
+          numeric: {
+            message: 'أرقام فقط'
+          }
+        }
+      },
+      'product[price_per_unit]': {
+        validators: {
+          numeric: {
+            message: 'أرقام فقط'
+          }
+        }
+      }
+    }
+  });
+}
+
 $(document).ready(function() {
   // Create Wysiwig editor for textare
   TinyMCEStart('#wysiwig_simple', null);
@@ -121,7 +154,7 @@ $(document).ready(function() {
   $('.form-control').tooltip();
   LoadSelect2Script(DemoSelect2);
   // Load example of form validation
-  LoadBootstrapValidatorScript(DemoFormValidator);
+  LoadBootstrapValidatorScript(validator);
   // Add drag-n-drop feature to boxes
   WinMove();
 });

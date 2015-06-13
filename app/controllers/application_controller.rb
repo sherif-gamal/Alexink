@@ -6,6 +6,15 @@ class ApplicationController < ActionController::Base
 
   before_filter :require_login
 
+  # 1 = Material, 2 = Purchase, 3 = Supplier, 4 = Client, 5 = Manual
+  MATERIAL = 1
+  PURCHASE = 2
+  SUPPLIER = 3
+  CLIENT = 4
+  MANUAL = 5
+  EXPENSE = 6
+
+
   def index
     if request.xhr?
       flash.discard(:notice)
@@ -71,6 +80,27 @@ class ApplicationController < ActionController::Base
 
   def is_float?(param)
     true if Float(param) rescue false
+  end
+
+  def update_treasury(method, amount, transaction_type, transaction_id, description, is_tax)
+    treasury = Treasury.first
+    if method == "cash"
+      treasury.cash = treasury.cash + amount
+    elsif method == "bank"
+      treasury.bank = treasury.bank + amount
+    end
+    treasury.save
+    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax)
+  end
+
+  def add_tax(method, transaction_type, transaction_id, price)
+    if transaction_type == MATERIAL
+      amount = (price * 0.1 - price * 0.005).round(2)
+      update_treasury(method, - amount, transaction_type, transaction_id, "ضريبة مشتريات", 1)
+    elsif transaction_type == PURCHASE
+      amount = (price * 0.1 + price * 0.005).round(2)
+      update_treasury(method, amount, transaction_type, transaction_id, "ضريبة مشتريات", 1)
+    end
   end
 
   private

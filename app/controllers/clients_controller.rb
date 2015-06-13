@@ -35,7 +35,9 @@ class ClientsController < ApplicationController
       redirect_to "/clients/new", notice: 'تعذر إضافة العميل. برجاء مراجعة المدخلات.'
     else
       @client = Client.new(client_params)
-
+      if (client_params['debt'].blank?)
+        @client.debt = 0
+      end
       respond_to do |format|
         if @client.save
           format.html { redirect_to clients_url, notice: 'تم إضافة العميل بنجاح.' }
@@ -57,15 +59,8 @@ class ClientsController < ApplicationController
       debt = @client.debt
       respond_to do |format|
         if @client.update(client_params)
-
-          if @client.debt != debt
-            treasury = Treasury.first
-            if treasury.cash >= (debt - @client.debt) 
-              treasury.cash = treasury.cash + (debt - @client.debt)
-            else
-              treasury.bank = treasury.bank + (debt - @client.debt)
-            end
-            treasury.save
+          if params["affects_treasury"] && @client.debt != debt
+            update_treasury(params['payment_method'], (debt - @client.debt), CLIENT, @client.id, "تعديل موقف العميل", 0)
           end
 
 
@@ -101,9 +96,10 @@ class ClientsController < ApplicationController
     end
 
     def validate_params(params)
-      if params[:name].present? && params[:country].present? && params[:email].present? && params[:contact_person].present? then
+      p params
+      if params[:name].present? && params[:country].present? && params[:address].present? then
         if params[:zip].present? then
-          return is_int?(params[:zip]) && is_float?(params[:debt])
+          return is_int?(params[:zip]) && (params[:debt].blank? || is_float?(params[:debt]))
         end
       end
       return nil
