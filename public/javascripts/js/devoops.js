@@ -1591,6 +1591,7 @@ function TestTable2(table_id){
 		"aaSorting": [[ 0, "asc" ]],
 		"sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
 		"sPaginationType": "bootstrap",
+		"bDestroy": true,
 		"oLanguage": {
 			"sSearch": "",
 			"sLengthMenu": '_MENU_'
