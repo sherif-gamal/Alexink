@@ -4,9 +4,9 @@ class Purchase < ActiveRecord::Base
 
 	before_save :verify_payment_state
 
-	serialize :product_ids
-	serialize :quantities
-	serialize :prices
+	serialize :product_ids, Array
+	serialize :quantities, Array
+	serialize :prices, Array
 
 
 
