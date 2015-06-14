@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   match '/stock', to: 'stock#index', via: [:get]
   match '/status', to: 'status#index', via: [:get]
   match '/diaries/treasury', to: 'diaries#treasury', via: [:get]
+  match '/diaries/treasury', to: 'diaries#treasury', via: [:post]
   match '/diaries/transactions', to: 'diaries#transactions', via: [:get]
   match '/diaries/stock', to: 'diaries#stock', via: [:get]
   match '/invoices', to: 'invoices#purchases', via: [:get]
@@ -39,12 +40,14 @@ Rails.application.routes.draw do
   get 'invoices/purchases'
   get 'permission/additions'
   get 'permission/subtractions'
+  get 'permission/treasury'
 
   post 'expenses/confirm'
   get 'expenses/permission'
 
   get 'purchases/invoice/:id', to: 'purchases#invoice'
   post 'materials/confirm'
+  get 'materials/new_internal'
   get 'treasury/addtotreasury'
   get 'treasury/show'
   put 'treasury/update'

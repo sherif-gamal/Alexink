@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150612105219) do
+ActiveRecord::Schema.define(version: 20150614003137) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.integer  "debt"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.text     "bank"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -59,6 +60,9 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.integer  "permission_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "currency"
+    t.string   "due_date"
+    t.integer  "internal"
   end
 
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
@@ -84,12 +88,11 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.string   "name"
     t.string   "unit"
     t.float    "quantity"
-    t.float    "price_per_unit"
     t.integer  "in_stock"
     t.text     "description"
     t.integer  "permission_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -107,6 +110,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.float    "price"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "due_date"
   end
 
   add_index "purchases", ["client_id"], name: "index_purchases_on_client_id"
@@ -131,6 +135,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.integer  "credit"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.text     "bank"
   end
 
   create_table "treasuries", force: :cascade do |t|
@@ -148,6 +153,7 @@ ActiveRecord::Schema.define(version: 20150612105219) do
     t.string   "description"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
+    t.string   "p_method"
   end
 
   create_table "users", force: :cascade do |t|

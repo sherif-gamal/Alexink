@@ -80,12 +80,12 @@ class ProductsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def product_params
-      params.require(:product).permit(:name, :unit, :quantity, :price_per_unit, :in_stock, :description)
+      params.require(:product).permit(:name, :unit, :quantity, :in_stock, :description)
     end
 
     def validate_params(params)
-      if params[:name].present? && params[:unit].present? && params[:quantity].present? && params[:price_per_unit].present? then
-          return is_float?(params[:quantity]) && is_float?(params[:price_per_unit]) && (params[:in_stock].blank? || is_float?(params[:in_stock]))
+      if params[:name].present? && params[:unit].present? && params[:quantity].present? then
+          return is_float?(params[:quantity]) && (params[:in_stock].blank? || is_float?(params[:in_stock]))
       end
       return nil
     end

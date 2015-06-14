@@ -53,14 +53,15 @@
 					    <th style="width: 60px" class="text-center">جنيه</th>
 					  </tr>
 					  <%@products.each_with_index do |p, i|%>
-					  	<tr>
-						  	<td class="text-center"><%=sprintf '%02d', (@purchase.prices[i].to_f - @purchase.prices[i].to_i).to_i%></td>
-						  	<td class="text-center"><%=@purchase.prices[i].to_i%></td>
-						  	<td class="text-center"><%=sprintf '%02d', (p.price_per_unit - p.price_per_unit.to_i).to_i%></td>
-						  	<td class="text-center"><%=p.price_per_unit.to_i%></td>
-						  	<td class="text-center"><%=@purchase.quantities[i]%></td>
-						  	<td class="text-center"><%=p.name%></td>
-						  </tr>
+						  <tr>
+			                <%price_i = @purchase.prices[i].to_f * @purchase.quantities[i].to_f%>
+			                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i).to_i%></td>
+			                <td class="text-center"><%=price_i.to_i%></td>
+			                <td class="text-center"><%=sprintf '%02d', (@purchase.prices[i].to_f - @purchase.prices[i].to_i).to_i%></td>
+			                <td class="text-center"><%=@purchase.prices[i].to_i%></td>
+			                <td class="text-center"><%=@purchase.quantities[i]%></td>
+			                <td class="text-center"><%=p.name%></td>
+			              </tr>
 					  <%end%>
 					  <%(15 - @products.count).times.each do |i|%>
 						  <tr>
@@ -73,7 +74,7 @@
 						  </tr>
 					  <%end%>
 					  <tr>
-					  	<td class="text-center"><%=sprintf '%02d', (@purchase.price.to_f - @purchase.price.to_i).to_i%></td>
+					  	<td class="text-center"><%=sprintf '%02d', (@purchase.price.to_f - @purchase.price.to_i) * 100%></td>
 					  	<td class="text-center"><%=@purchase.price.to_i%></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
@@ -81,26 +82,26 @@
 					  	<td class="text-center">الإجمالي</td>
 					  </tr>
 					  <tr>
-					  	<%price_plus_10 = (@purchase.price + @purchase.price * 0.1)%>
-					  	<td class="text-center"><%=sprintf '%02d', (price_plus_10 - price_plus_10.to_i).to_i%></td>
-					  	<td class="text-center"><%=price_plus_10.to_i%></td>
+					  	<%addition = @purchase.price * 0.1%>
+					  	<td class="text-center"><%=sprintf '%02d', (addition - addition.to_i) * 100%></td>
+					  	<td class="text-center"><%=addition.to_i%></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center">يضاف 10% ض.م</td>
 					  </tr>
 					  <tr>
-					  	<%price_minus_5 = (@purchase.price - @purchase.price * 0.005)%>
-					  	<td class="text-center"><%=sprintf '%02d', (price_minus_5 - price_minus_5.to_i).to_i%></td>
-					  	<td class="text-center"><%=price_minus_5%></td>
+					  	<%subtraction = @purchase.price * 0.005%>
+					  	<td class="text-center"><%=sprintf '%02d', (subtraction - subtraction.to_i) * 100%></td>
+					  	<td class="text-center"><%=subtraction.to_i%></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center">يخصم 0.5% ض.أ.ص</td>
 					  </tr>
 					  <tr>
-					  	<%total = @purchase.price + price_plus_10 - price_minus_5%>
-					  	<td class="text-center"><%=sprintf '%02d', (total - total.to_i).to_i%></td>
+					  	<%total = @purchase.price + addition - subtraction%>
+					  	<td class="text-center"><%=sprintf '%02d', (total - total.to_i) * 100%></td>
 					  	<td class="text-center"><%=total.to_i%></td>
 					  	<td class="text-center"></td>
 					  	<td class="text-center"></td>
@@ -129,7 +130,7 @@
 </div>
 <div class="col-xs-6 col-xs-offset-6">
 					<div class="col-xs-4">
-						<a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
+						<a href"" class="btn btn-default btn-label-left" id="print"><span><i class="fa fa-floppy-o"></i></span> طباعة</a>
 					</div>
 				</div>
 

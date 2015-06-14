@@ -36,13 +36,14 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :client_id,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
             <div id="products">
               <div id="product" style="border: 1px solid #000; border-radius:10px;">
+                <span  style="cursor: pointer;" class="pull-left glyphicon glyphicon-minus"  id="delete-product" onclick="f()"></span>
                 <div class="form-group">
                   <%= f.label :product_ids,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
                   <div class="col-sm-4 pull-right">
@@ -59,14 +60,14 @@
                 </div>
 
                 <div class="form-group">
-                  <%= f.label :prices,  'المبلغ', {class:"col-sm-2 control-label pull-right"}%>
+                  <%= f.label :prices,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
                   <div class="col-sm-4 pull-right">
-                    <%= f.text_field :prices , {class:"form-control", placeholder:"السعر", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ", multiple:true}%>
+                    <%= f.text_field :prices , {class:"form-control", placeholder:"سعر الوحدة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"سعر الوحدة", multiple:true}%>
                   </div>
                 </div>
               </div>
             </div>
-            <div style="cursor: pointer;" id="add-product"><span class="glyphicon glyphicon-plus"></span></div>
+            <div><span  style="cursor: pointer;" class="glyphicon glyphicon-plus"  id="add-product"></span></div>
             <div class="form-group">
               <%= f.label :payment_method,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
@@ -76,13 +77,18 @@
 
             <div class="form-group">
               <%= f.label :payment_state,  'حالة الدفع', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%" } %>
+              <div class="col-sm-2 pull-right">
+                <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%", onchange:"set_debt()" } %>
               </div>
               <div id="debt-div" hidden="hidden">
                 <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-2 pull-right">
                   <%= f.text_field :debt , {class:"form-control", value:0}%>
+                </div>
+
+                <%= f.label :due_date,  'تاريخ الاستحقاق', {class:"col-sm-2 control-label pull-right"}%>
+                <div class="col-sm-2 pull-right">
+                  <%= f.date_field :due_date , {class:"form-control"}%>
                 </div>
               </div>
             </div>
@@ -144,12 +150,21 @@ function set_debt() {
    $('#debt-div').hide();
   }
 }
-
-$("#add-product").click(function() {
+var i = 1
+$("#add-product").click(function(e) {
   var div = document.getElementById('product'),
       clone = div.cloneNode(true); // true means clone all childNodes and all event handlers
-  clone.id = "some_id";
+  clone.id = "add-product" + i++;
   document.getElementById('products').appendChild(clone);
+  $("#"+clone.id+" span").attr('id', "delete-product"+i)
+  $("#"+clone.id+" select").val(1);
+  $("#"+clone.id+" input").val('');
 });
+
+function f() {
+  if (event.target.id != 'delete-product') {
+    document.getElementById('products').removeChild(event.target.parentNode);
+  }
+}
 
 </script>

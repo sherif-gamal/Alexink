@@ -8,7 +8,26 @@
     </ol>
   </div>
 </div>
-<div class="row">
+<div>
+  <div class="col-sm-2">
+    حتى
+    <input type="text" id="input_date-2" class="form-control" placeholder="تاريخ النهاية" value="<%=@_end.strftime("%m/%d/%Y")%>">
+  </div>
+  <div class="col-sm-2">
+    بداية من
+    <input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">  
+  </div>
+  <div class="col-sm-2">
+    الطريقة
+    <select id='method' onchange="f()">
+      <option value="all" <%= "selected='selected'" if @p_method == 'all'%>>all</value>
+      <option value="cash" <%= "selected='selected'" if @p_method == 'cash'%>>cash</value>
+      <option value="bank" <%= "selected='selected'" if @p_method == 'bank'%>>bank</value>
+    </select>
+  </div>
+</div>
+
+<div class="row" id="table1">
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
@@ -57,7 +76,12 @@
   </div>
 </div>
 
-<div class="row">
+<div class="col-xs-6 col-xs-offset-6">
+  <div class="col-xs-4">
+    <div class="btn btn-default btn-label-left" id="print-1"><span><i class="fa fa-floppy-o"></i></span> طباعة يوميات المدخلات</div>
+  </div>
+</div>
+<div class="row" id="table2">
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
@@ -119,7 +143,13 @@
     </div>
   </div>
 </div>
-
+<div class="col-xs-6 col-xs-offset-6">
+  <div class="col-xs-4">
+    <div class="btn btn-default btn-label-left" id="print-2"><span><i class="fa fa-floppy-o"></i></span> طباعة يوميات المخرجات</div>
+  </div>
+</div>
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
 
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
@@ -133,7 +163,25 @@ function MakeSelect2(){
     $(this).find('label input[type=text]').attr('placeholder', 'Search');
   });
 }
+
+var f = function() {
+    $.ajax({ url: '/diaries/treasury',
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'p_method' : $("#method option:selected").val()},
+      success: function(response) {
+        $('#ajax-content').html(response);
+      }
+    });
+}
 $(document).ready(function() {
+
+  $('#input_date').datepicker({setDate: new Date()});
+  $('#input_date-2').datepicker({setDate: new Date()});
+  
+  $('#input_date-2').change(f)
+  $('#input_date').change(f)
+
   // Load Datatables and run plugin on tables 
   LoadDataTablesScripts(AllTables);
   // Add Drag-n-Drop feature
@@ -144,6 +192,22 @@ $(document).ready(function() {
     $(this).toggleClass('hover');
 });
 });
+$('#print-1').click(function () {
+  var doc = new jsPDF('p', 'pt', 'a4');
+    html2canvas($("#table1"), { onrendered: function(canvas) {
+      console.log(canvas.toDataURL());
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+        doc.save('stock-inputs.pdf');
+    }});
+  });
 
+$('#print-2').click(function () {
+    var doc = new jsPDF('p', 'pt', 'a4');
+    html2canvas(document.querySelector("#table2"), { onrendered: function(canvas) {
+      console.log(canvas.toDataURL());
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+        doc.save('stock-outputs.pdf');
+    }});  
+  });
 
 </script>

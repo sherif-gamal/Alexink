@@ -49,10 +49,13 @@ class PurchasesController < ApplicationController
         end
       end
       purchase.price = 0
-      purchase.prices.each do |price|
-        purchase.price = purchase.price + price.to_f
+      purchase.prices.each_with_index do |price, i|
+        purchase.price = purchase.price + price.to_f * purchase.quantities[i].to_f
       end
-
+      if _params['debt'].present? && purchase.price < _params['debt'].to_f
+        redirect_to '/purchases/new', notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر الإجمالي'
+        return
+      end
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
          permission = Permission.create!({transaction_type: 4, transaction_id: purchase.id})
@@ -100,7 +103,7 @@ class PurchasesController < ApplicationController
     respond_to do |format|
       if @purchase.update(purchase_params)
         if (debt != @purchase.debt)
-          update_treasury(params['payment_method'], debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0)
+          update_treasury(@purchase.payment_method, debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0)
         end
         if debt > 0 && @purchase.debt == 0
           add_tax(@purchase.payment_method, PURCHASE, @purchase.id, @purchase.price)
@@ -143,7 +146,7 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      _params = params.require(:purchase).permit(:payment_method, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
+      _params = params.require(:purchase).permit(:payment_method, :due_date, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
       _params[:product_ids] = params[:product_ids]
       p _params
     end
@@ -152,10 +155,14 @@ class PurchasesController < ApplicationController
       params[:prices].each do |price|
         if !is_float?(price)
           return nil
+        elsif price.to_f < 0
+          return nil
         end
       end
       params[:quantities].each do |quantity|
         if !is_float?(quantity)
+          return nil
+        elsif quantity.to_f < 0
           return nil
         end
       end

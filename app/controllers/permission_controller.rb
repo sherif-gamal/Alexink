@@ -141,4 +141,16 @@ class PermissionController < ApplicationController
 	      redirect_to "/dashboard##{request.path}"
 	    end
 	end
+
+	def treasury
+		@permissions = Permission.where("transaction_type == 5 or transaction_type == 6")
+		@expenses = Expense.all
+		@materials = Material.all
+		if request.xhr?
+	      flash.discard(:notice)
+	      render partial: 'treasury'
+	    else
+	      redirect_to "/dashboard##{request.path}"
+	    end
+	end
 end

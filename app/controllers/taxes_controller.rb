@@ -9,7 +9,7 @@ class TaxesController < ApplicationController
 		if params['_end'].present?
 			@_end = Date.strptime(params['_end'], "%m/%d/%Y")
 		else
-			@_end = 0.day.ago
+			@_end = DateTime.tomorrow
 		end
 		taxes = TreasuryDiary.where("created_at > ? and created_at <= ? and is_tax = ?", @_start, @_end, 1).where(:transaction_type => [PURCHASE, MATERIAL])
 		@debt = 0

@@ -52,10 +52,14 @@ class SuppliersController < ApplicationController
   # PATCH/PUT /suppliers/1.json
   def update
     credit = @supplier.credit
+    if !check_treasury('cash', debt - material_params[:debt].to_f)
+      redirect_to "/suppliers/#{@supplier.id}/edit", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
+      return
+    end
     respond_to do |format|
       if @supplier.update(supplier_params)
         if params["affects_treasury"] && @supplier.credit != credit
-          update_treasury(params['payment_method'], -credit + @supplier.credit, SUPPLIER, @supplier.id, "تعديل موقف مورد", 0)  
+          update_treasury('cash', -credit + @supplier.credit, SUPPLIER, @supplier.id, "تعديل موقف مورد", 0)  
         end
 
         format.html { redirect_to suppliers_url, notice: 'تم تعديل بيانات الموزع.' }
@@ -85,7 +89,7 @@ class SuppliersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def supplier_params
-      params[:supplier].permit(:name, :country, :zip, :address, :phone, :email, :contact_person, :credit)
+      params[:supplier].permit(:name, :country, :zip, :address, :phone, :email, :contact_person, :credit, :bank)
     end
 
     def validate_params(params)

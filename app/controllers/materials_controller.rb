@@ -26,6 +26,18 @@ class MaterialsController < ApplicationController
     super
   end
 
+  def new_internal
+    @material = Material.new
+    @suppliers = Supplier.all
+    @raw_materials = RawMaterial.all
+    if request.xhr?
+      flash.discard(:notice)
+      render partial: 'new_internal'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
+  end
+
   # GET /materials/1/edit
   def edit
     @suppliers = Supplier.all
@@ -37,23 +49,23 @@ class MaterialsController < ApplicationController
   # POST /materials.json
  def create
     if !validate_params(material_params) then
-      redirect_to "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات'
+      redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات'
     else
       params = material_params
-      if(!params[:debt])
-        !params[:debt] = 0
+      if(!params['debt'])
+        params['debt'] = 0
       end
       @material = Material.new(params)
       @material.in_stock = params[:quantity]
       @material.user_name = current_user.name
-      treasury = Treasury.first
-      if (params['payment_method'] == "cash")
-        if (treasury.cash < (params['price'].to_f - params['debt'].to_f))
-          redirect_to "/materials/new", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
-          return
-        end
-      elsif (treasury.bank < (params['price'].to_f - params['debt'].to_f))
-        redirect_to "/materials/new", notice: 'المبلغ الموجود بالبنك أقل من المبلغ المطلوب'
+
+      if @material.debt > @material.price
+        redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
+        return
+      end
+
+      if !check_treasury(material_params[:payment_method], (params['price'].to_f - params['debt'].to_f))
+        redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
         return
       end
       respond_to do |format|
@@ -68,7 +80,7 @@ class MaterialsController < ApplicationController
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
           permission1 = Permission.create!({transaction_type: 1, transaction_id: @material.id, quantity: @material.quantity})
-          permission2 = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: @material.quantity})
+          permission2 = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: @material.price - @material.debt})
 
           supplier.save
           raw_material.save
@@ -87,10 +99,15 @@ class MaterialsController < ApplicationController
   def update
     in_stock = @material.in_stock
     debt = @material.debt
+    if !check_treasury(@material.payment_method, debt - material_params[:debt].to_f)
+      redirect_to "/materials/#{@material.id}/edit", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
+      return
+    end
     respond_to do |format|
       if @material.update(material_params)
+        money = debt - material_params[:debt].to_f
         if (debt != @material.debt)
-          update_treasury(params['payment_method'], - debt + @material.debt, MATERIAL, @material.id, "تعديل موقف عملية شراء", 0)
+          update_treasury(@material.payment_method, - money, MATERIAL, @material.id, "تعديل موقف عملية شراء", 0)
         end
         if debt > 0 && @material.debt == 0
           add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
@@ -100,11 +117,14 @@ class MaterialsController < ApplicationController
           raw_material.in_stock = raw_material.in_stock - (in_stock - @material.in_stock)
         end
         
+        
         supplier = Supplier.find(@material.supplier_id)
-        supplier.credit = supplier.credit - @material.debt + material_params[:debt].to_f
+        supplier.credit = supplier.credit - money
         supplier.save
 
-        format.html { redirect_to @material, notice: 'تم تعديل عملية الشراء بنجاح.' }
+        permission = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: money})
+
+        format.html { redirect_to "/permission/material_expense/#{permission.id}", notice: 'تم تعديل عملية الشراء بنجاح.' }
         format.json { render :show, status: :ok, location: @material }
       else
         format.html { render :edit }
@@ -132,12 +152,14 @@ class MaterialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def material_params
-      params.require(:material).permit(:raw_material_id, :quantity, :price, :supplier_id, :debt, :payment_method, :payment_state, :state, :in_stock)
+      pms = params.require(:material).permit(:raw_material_id, :quantity, :price, :supplier_id, :debt, :payment_method, :payment_state, :state, :in_stock, :currency, :due_date, :internal)
+      pms[:internal] = params[:internal]
+      return pms
     end
 
     def validate_params(params)
       if params[:raw_material_id].present? && params[:supplier_id].present? && params[:price].present? && params[:quantity].present? then
-        return is_float?(params[:price]) && is_float?(params[:quantity]) && (!params[:debt] || (is_float?(params[:debt]) && params[:debt].to_f <= params[:price].to_f))
+        return is_float?(params[:price]) && is_float?(params[:quantity])
       end
       return nil
     end

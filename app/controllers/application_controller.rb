@@ -86,11 +86,12 @@ class ApplicationController < ActionController::Base
     treasury = Treasury.first
     if method == "cash"
       treasury.cash = treasury.cash + amount
+      p treasury
     elsif method == "bank"
       treasury.bank = treasury.bank + amount
     end
     treasury.save
-    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax)
+    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax, p_method: method)
   end
 
   def add_tax(method, transaction_type, transaction_id, price)
@@ -101,6 +102,16 @@ class ApplicationController < ActionController::Base
       amount = (price * 0.1 + price * 0.005).round(2)
       update_treasury(method, amount, transaction_type, transaction_id, "ضريبة مشتريات", 1)
     end
+  end
+
+  def check_treasury(method, amount)
+    treasury = Treasury.first
+    if method == 'cash'
+      return nil unless treasury.cash > amount
+    elsif method == 'bank'
+      return nil unless treasury.bank > amount
+    end
+    return true
   end
 
   private
