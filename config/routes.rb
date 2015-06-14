@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   match '/diaries/treasury', to: 'diaries#treasury', via: [:get]
   match '/diaries/treasury', to: 'diaries#treasury', via: [:post]
   match '/diaries/transactions', to: 'diaries#transactions', via: [:get]
+  match '/diaries/transactions', to: 'diaries#transactions', via: [:post]
   match '/diaries/stock', to: 'diaries#stock', via: [:get]
+  match '/diaries/stock', to: 'diaries#stock', via: [:post]
   match '/invoices', to: 'invoices#purchases', via: [:get]
 
   get '/dashboard/index'

@@ -143,7 +143,7 @@ class PermissionController < ApplicationController
 	end
 
 	def treasury
-		@permissions = Permission.where("transaction_type == 5 or transaction_type == 6")
+		@permissions = Permission.where("transaction_type = 5 or transaction_type = 6")
 		@expenses = Expense.all
 		@materials = Material.all
 		if request.xhr?

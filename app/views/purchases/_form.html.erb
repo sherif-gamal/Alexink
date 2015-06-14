@@ -22,7 +22,7 @@
         <% if notice.present? %>
         <h3 class="alert alert-danger"><%= notice%></h3>
         <%end%>
-          <%= form_for(@purchase, html: {class: 'form-horizontal'}) do |f| %>
+          <%= form_for(@purchase, html: {class: 'form-horizontal',  onsubmit:"return validate()" }) do |f| %>
             <% if @purchase.errors.any? %>
               <div id="error_explanation">
                 <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
@@ -36,7 +36,7 @@
             <% end %>
 
             <div class="form-group">
-              <%= f.label :client_id,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :client_id,  'العميل', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :client_id, @clients.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
@@ -95,7 +95,7 @@
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">
-                <%= f.submit "إتمام عملية البيع", class:"btn btn-primary btn-label-left" %>
+                <%= f.submit "إتمام عملية البيع", class:"btn btn-primary btn-label-left"%>
               </div>
               <div class="col-sm-offset-1 col-sm-2 pull-right">
                 <button type="cancel" class="btn btn-default btn-label-left">
@@ -140,7 +140,19 @@ $(document).ready(function() {
   set_debt();
 });
 
-
+function validate() {
+  var ids = $("select[id^='product_ids'] :selected");
+  var hash = {};
+  for (var i = 0; i < ids.length; i++) {
+    console.log(hash)
+    if(hash[ids[i].text] == 1) {
+      $(".box-content").prepend("<h3 class='alert alert-danger'>لا يمكن اختيار نفس المنتج أكتر من مرة!</h3>")
+      return false;
+    }
+    hash[ids[i].text] = 1;
+  }
+  return true;
+}
 function set_debt() {
   $('#purchase_debt').val(0)
   if ($('#purchase_payment_state').val() == "آجل") {

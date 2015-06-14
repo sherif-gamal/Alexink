@@ -17,14 +17,6 @@
     بداية من
     <input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">  
   </div>
-  <div class="col-sm-2">
-    الطريقة
-    <select id='method' onchange="f()">
-      <option value="all" <%= "selected='selected'" if @p_method == 'all'%>>all</value>
-      <option value="cash" <%= "selected='selected'" if @p_method == 'cash'%>>cash</value>
-      <option value="bank" <%= "selected='selected'" if @p_method == 'bank'%>>bank</value>
-    </select>
-  </div>
 </div>
 
 <div class="row" id="table1">
@@ -165,7 +157,7 @@ function MakeSelect2(){
 }
 
 var f = function() {
-    $.ajax({ url: '/diaries/treasury',
+    $.ajax({ url: '/diaries/stock',
       type: 'POST',
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'p_method' : $("#method option:selected").val()},

@@ -25,7 +25,6 @@
             <tr>
               <th>الاسم</th>
               <th>الوحدة</th>
-              <th>سعر الوحدة</th>
               <th>الكمية بالمخزن</th>
             </tr>
           </thead>
@@ -34,7 +33,6 @@
               <tr data-href="<%= product_path(product) %>">
                 <td><%= product.name %></td>
                 <td><%= product.unit %></td>
-                <td><%= product.price_per_unit %></td>
                 <td><%= product.in_stock %></td>
               </tr>
             <% end %>
@@ -44,7 +42,6 @@
             <tr>
               <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
               <th><label><input type="text" name="search_unit" value="البحث بالوحدة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="البحث بسعر الوحدة" class="search_init" /></label></th>
               <th><label><input type="text" name="search_state" value="البحث بالكمية بالمخزن" class="search_init" /></label></th>
             </tr>
           </tfoot>
