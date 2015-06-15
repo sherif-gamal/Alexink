@@ -64,6 +64,7 @@
                 <%= f.text_field :in_stock , {class:"form-control", disabled:true}%>
               </div>
             </div>
+            <%= link_to 'تعديل', edit_raw_material_path(@raw_material) %>
           </div>
           <% end %>
       </div>
@@ -101,4 +102,4 @@ $(document).ready(function() {
 </script>
 
 
-<%= link_to 'تعديل', edit_raw_material_path(@raw_material) %> |
+
