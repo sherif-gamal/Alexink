@@ -52,7 +52,7 @@ class SuppliersController < ApplicationController
   # PATCH/PUT /suppliers/1.json
   def update
     credit = @supplier.credit
-    if !check_treasury('cash', debt - material_params[:debt].to_f)
+    if !check_treasury('cash', credit - material_params[:debt].to_f)
       redirect_to "/suppliers/#{@supplier.id}/edit", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
       return
     end
