@@ -112,7 +112,7 @@ class MaterialsController < ApplicationController
         if debt > 0 && @material.debt == 0
           add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
         end
-        if (in_stock = @material.in_stock)
+        if (in_stock > @material.in_stock)
           raw_material = RawMaterial.find(@material.raw_material_id)
           raw_material.in_stock = raw_material.in_stock - (in_stock - @material.in_stock)
         end
@@ -121,10 +121,13 @@ class MaterialsController < ApplicationController
         supplier = Supplier.find(@material.supplier_id)
         supplier.credit = supplier.credit - money
         supplier.save
+        if debt > @material.debt
+          permission = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: money})
 
-        permission = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: money})
-
-        format.html { redirect_to "/permission/material_expense/#{permission.id}", notice: 'تم تعديل عملية الشراء بنجاح.' }
+          format.html { redirect_to "/permission/material_expense/#{permission.id}", notice: 'تم تعديل عملية الشراء بنجاح.' }
+        else
+          format.html { redirect_to @material }
+        end
         format.json { render :show, status: :ok, location: @material }
       else
         format.html { render :edit }
