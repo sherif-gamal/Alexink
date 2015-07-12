@@ -27,6 +27,7 @@
               <th>التاريخ</th>
               <th>العميل</th>
               <th>السعر</th>
+              <th>العملة</th>
               <th>الموقف</th>
             </tr>
           </thead>
@@ -36,6 +37,7 @@
                 <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
                 <td><%= purchase.price %></td>
+                <td><%= purchase.currency %></td>
                 <td><%= purchase.debt %></td>
               </tr>
             <% end %>
@@ -46,6 +48,7 @@
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
               <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_currency" value="البحث بالعملة" class="search_init" /></label></th>
               <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
             </tr>
           </tfoot>

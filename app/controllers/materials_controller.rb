@@ -55,9 +55,10 @@ class MaterialsController < ApplicationController
       if(!params['debt'])
         params['debt'] = 0
       end
-      @material = Material.new(params)
+      @material = Material.new(material_params)
       @material.in_stock = params[:quantity]
       @material.user_name = current_user.name
+      @material.price = @material.quantity * params['price_per_unit']
 
       if @material.debt > @material.price
         redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
@@ -71,16 +72,16 @@ class MaterialsController < ApplicationController
       respond_to do |format|
         if @material.save
           update_treasury(@material.payment_method, -material_params['price'].to_f + material_params['debt'].to_f, MATERIAL, @material.id, "عملية شراء", 0)
-          if @material.debt == 0
-            add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
-          end
+          # if @material.debt == 0
+          #   add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
+          # end
 
           raw_material = RawMaterial.find(@material.raw_material_id)
           raw_material.in_stock = raw_material.in_stock + @material.quantity
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
-          permission1 = Permission.create!({transaction_type: 1, transaction_id: @material.id, quantity: @material.quantity})
-          permission2 = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: @material.price - @material.debt})
+          permission1 = AddMaterialPermission.create!({transaction_id: @material.id, quantity: @material.quantity})
+          permission2 = ReleaseMoneyPermission.create!({transaction_id: @material.id, quantity: @material.price - @material.debt})
 
           supplier.save
           raw_material.save
@@ -122,7 +123,7 @@ class MaterialsController < ApplicationController
         supplier.credit = supplier.credit - money
         supplier.save
         if debt > @material.debt
-          permission = Permission.create!({transaction_type: 5, transaction_id: @material.id, quantity: money})
+          permission = ReleaseMoneyPermission.create!({transaction_id: @material.id, quantity: money})
 
           format.html { redirect_to "/permission/material_expense/#{permission.id}", notice: 'تم تعديل عملية الشراء بنجاح.' }
         else

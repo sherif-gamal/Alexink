@@ -96,9 +96,8 @@
             <div class="form-group">
               <%= f.label :debt,  'الموقف', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :debt , {class:"form-control"}%>
+                <%= f.text_field :debt , {class:"form-control", disabled:true}%>
               </div>
-              <%=check_box_tag "affects_treasury"%> تعديل الموقف يؤثر في الخزنة
             </div>
 
 

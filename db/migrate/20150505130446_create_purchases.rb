@@ -13,6 +13,7 @@ class CreatePurchases < ActiveRecord::Migration
       t.string  :user_name
       t.integer :permission_id
       t.float   :price
+      t.integer :calc_sub_tax
 
       t.timestamps null: false
     end

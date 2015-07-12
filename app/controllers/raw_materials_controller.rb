@@ -4,7 +4,7 @@ class RawMaterialsController < ApplicationController
   # GET /raw_materials
   # GET /raw_materials.json
   def index
-    @raw_materials = RawMaterial.all
+    @raw_materials = RawMaterial.where.not(deleted: 1)
     super
   end
 
@@ -59,7 +59,7 @@ class RawMaterialsController < ApplicationController
   # DELETE /raw_materials/1
   # DELETE /raw_materials/1.json
   def destroy
-    @raw_material.destroy
+    @raw_material.deleted = 1
     respond_to do |format|
       format.html { redirect_to raw_materials_url, notice: 'تم حذف المادة الخام بنجاح.' }
       format.json { head :no_content }

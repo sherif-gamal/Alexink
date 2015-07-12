@@ -68,30 +68,39 @@
               </div>
             </div>
             <div><span  style="cursor: pointer;" class="glyphicon glyphicon-plus"  id="add-product"></span></div>
+            
+            <div class="form-group">
+              <%= f.label :currency,  'عملة الدفع', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :currency , {class:"form-control", placeholder:"عملة الدفع", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"عملة الدفع"}%>
+              </div>
+              <%= f.check_box :calc_sub_tax, {class:"col-sm-2 control-label pull-right"}%> حساب ضريبة الخصم
+            </div>
             <div class="form-group">
               <%= f.label :payment_method,  'طريقة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.select :payment_method, ['cash', 'bank'], {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
+
+              <%= label_tag "", "رقم الشيك", {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-2 pull-right">
+                <%= text_field_tag "cheque_num", "" , {class:"form-control"}%>
+              </div>
             </div>
 
             <div class="form-group">
               <%= f.label :payment_state,  'حالة الدفع', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-2 pull-right">
+              <div class="col-sm-4 pull-right">
                 <%= f.select :payment_state, ['تم الدفع', 'آجل'],{}, {class:"pull-right", style:"min-width:100%", onchange:"set_debt()" } %>
               </div>
               <div id="debt-div" hidden="hidden">
-                <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
+                <%= label_tag "paid_label",  'المبلغ المدفوع', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-2 pull-right">
-                  <%= f.text_field :debt , {class:"form-control", value:0}%>
-                </div>
-
-                <%= f.label :due_date,  'تاريخ الاستحقاق', {class:"col-sm-2 control-label pull-right"}%>
-                <div class="col-sm-2 pull-right">
-                  <%= f.date_field :due_date , {class:"form-control"}%>
+                  <%= text_field_tag "paid_amount" , "", {class:"form-control", value:0}%>
                 </div>
               </div>
             </div>
+
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">

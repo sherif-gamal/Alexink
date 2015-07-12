@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614003137) do
+ActiveRecord::Schema.define(version: 20150701141702) do
+
+  create_table "add_material_permissions", force: :cascade do |t|
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "add_product_permissions", force: :cascade do |t|
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -25,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.text     "bank"
+    t.integer  "deleted"
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -67,12 +82,11 @@ ActiveRecord::Schema.define(version: 20150614003137) do
 
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
 
-  create_table "permissions", force: :cascade do |t|
-    t.integer  "transaction_type"
+  create_table "production_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
     t.integer  "quantity"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "productions", force: :cascade do |t|
@@ -93,6 +107,7 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.integer  "permission_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "deleted"
   end
 
   create_table "purchases", force: :cascade do |t|
@@ -108,8 +123,10 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.string   "user_name"
     t.integer  "permission_id"
     t.float    "price"
+    t.integer  "calc_sub_tax"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.string   "currency"
     t.string   "due_date"
   end
 
@@ -122,6 +139,28 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.integer  "in_stock"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "deleted"
+  end
+
+  create_table "release_material_permissions", force: :cascade do |t|
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "release_money_permissions", force: :cascade do |t|
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  create_table "release_product_permissions", force: :cascade do |t|
+    t.integer  "transaction_id"
+    t.integer  "quantity"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -136,6 +175,7 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.text     "bank"
+    t.integer  "deleted"
   end
 
   create_table "treasuries", force: :cascade do |t|
@@ -151,6 +191,7 @@ ActiveRecord::Schema.define(version: 20150614003137) do
     t.integer  "is_tax"
     t.float    "amount"
     t.string   "description"
+    t.string   "cheque_num"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "p_method"

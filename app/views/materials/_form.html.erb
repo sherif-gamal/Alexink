@@ -57,9 +57,9 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :price,  'المبلغ الكلي', {class:"col-sm-2 control-label pull-right"}%>
+              <%= label_tag 'price_per_unit',  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :price , {class:"form-control", placeholder:"المبلغ الكلي", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ الكلي"}%>
+                <%= text_field_tag 'price_per_unit' , '', {class:"form-control", placeholder:"المبلغ الكلي", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ الكلي"}%>
               </div>
 
               <%= f.label :currency,  'عملة الدفع', {class:"col-sm-2 control-label pull-right"}%>

@@ -73,7 +73,7 @@
             </div>
 
             <%= link_to 'تعديل', edit_product_path(@product) %></td>
-
+            <%= link_to 'حذف', @product, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
           </div>
           <% end %>
       </div>

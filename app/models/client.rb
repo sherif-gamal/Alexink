@@ -1,10 +1,11 @@
 class Client < ActiveRecord::Base
 	has_many :purchases
 
-	before_save :init_debt
+	before_save :validate
 
 	private
-		def init_debt
-			self.debt |= 0
+		def validate
+			self.debt ||= 0
+			self.deleted  ||= 0
 		end
 end

@@ -98,8 +98,6 @@
   </div>
 </div>
 
-
-
 <div class="col-xs-6 col-xs-offset-6">
     <div class="col-xs-4">
       <a href"" class="btn btn-default btn-label-left" id="print-1"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
@@ -264,6 +262,8 @@
               <td class="text-center"></td>
               <td class="text-center">يضاف 10% ض.م</td>
             </tr>
+            <%subtraction = 0%>
+            <%if @purchase.calc_sub_tax == 1%>
             <tr>
               <%subtraction = @purchase.price * 0.005%>
               <td class="text-center"><%=sprintf '%02d', (subtraction - subtraction.to_i) * 100%></td>
@@ -273,6 +273,7 @@
               <td class="text-center"></td>
               <td class="text-center">يخصم 0.5% ض.أ.ص</td>
             </tr>
+            <%end%>
             <tr>
               <%total = @purchase.price + addition - subtraction%>
               <td class="text-center"><%=sprintf '%02d', (total - total.to_i) * 100%></td>

@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.where.not(deleted: 1)
     super
     flash.discard(:notice)
   end
@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
       @product.in_stock = @product.quantity
       respond_to do |format|
         if @product.save
-          permission = Permission.create!({transaction_type: 3, transaction_id: @product.id, quantity: @product.quantity})
+          permission = AddProductPermission.create!({transaction_id: @product.id, quantity: @product.quantity})
 
           format.html { redirect_to "/permission/product/#{permission.id}" }
           format.json { render :show, status: :created, location: @product }
@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.destroy
+    @product.deleted = 1
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }

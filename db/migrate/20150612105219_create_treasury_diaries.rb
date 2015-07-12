@@ -7,6 +7,7 @@ class CreateTreasuryDiaries < ActiveRecord::Migration
       t.integer :is_tax
       t.float :amount
       t.string :description
+      t.string :cheque_num
 
       t.timestamps null: false
     end

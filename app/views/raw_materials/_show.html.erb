@@ -65,6 +65,7 @@
               </div>
             </div>
             <%= link_to 'تعديل', edit_raw_material_path(@raw_material) %>
+            <%= link_to 'حذف', @raw_material, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
           </div>
           <% end %>
       </div>

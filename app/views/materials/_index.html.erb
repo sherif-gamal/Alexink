@@ -28,6 +28,7 @@
               <th>المورد</th>
               <th>المبلغ</th>
               <th>النوع</th>
+              <th>العملة</th>
               <th>كمية المخزون</th>
             </tr>
           </thead>
@@ -39,6 +40,7 @@
                 <td><%= @suppliers.find(material.supplier_id).name%></td>
                 <td><%= material.price %></td>
                 <td><%= material.internal == 0 ? "خارجية" : "داخلية" %></td>
+                <td><%= material.currency %></td>
                 <td><%= material.in_stock %></td>
               </tr>
             <% end %>
@@ -51,6 +53,7 @@
               <th><label><input type="text" name="search_supplier" value="البحث بالمورد" class="search_init" /></label></th>
               <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_pay_state" value="البحث بالنوع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_currency" value="البحث بالعملة" class="search_init" /></label></th>
               <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
             </tr>
           </tfoot>

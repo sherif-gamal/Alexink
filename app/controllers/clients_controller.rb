@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.all
+    @clients = Client.where.not(deleted: 1)
     super
     flash.discard(:notice)
   end
@@ -12,7 +12,13 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
-    @purchases = Purchase.where(["client_id = ?", @client.id])
+    purchases = Purchase.where(["client_id = ?", @client.id])
+    diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id))
+    d = TreasuryDiary.where(transaction_type: 4, transaction_id: @client.id)
+    diaries = diaries + d
+
+    @both = purchases + diaries
+    @both = @both.sort_by{|e| e.created_at}
     @products = Product.all
     super
   end
@@ -77,7 +83,12 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.json
   def destroy
-    @client.destroy
+    purchases = Purchase.where("client_id = ?", @client.id)
+    if purchases.empty?
+      @client.destroy
+    else
+      @client.deleted = 1
+    end
     respond_to do |format|
       format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
       format.json { head :no_content }

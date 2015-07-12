@@ -101,7 +101,7 @@
 
             <% end %>
             <%= link_to 'تعديل', edit_client_path(@client) %> |
-			
+			      <%= link_to 'حذف', @client, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
             </div>
       </div>
     </div>
@@ -122,28 +122,67 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th>العميل</th>
-              <th>السعر</th>
-              <th>المبلغ المتبقي</th>
+              <th>مدين</th>
+              <th>دائن</th>
+              <th>الرصيد</th>
+              <th>البيان</th>
+              <th>رقم الفاتورة</th>
+              <th>تاريخ الفاتورة</th>
+              <th>رقم الشيك</th>
+              <th>تاريخ استحقاق الشيك</th>
+              <th>مبيعات</th>
+              <th>ضريبة مبيعات</th>
+              <th>ضريبة خصم</th>
             </tr>
           </thead>
           <tbody>
-            <% @purchases.each do |purchase| %>
-              <tr data-href="<%= purchase_path(purchase) %>">
-                <td><%= @client.name %></td>
-                <td><%= purchase.price %></td>
-                <td><%= purchase.debt %></td>
-              </tr>
+            <%debt = 0%>
+            <%total_debt = 0%>
+            <%total_credit = 0%>
+            <%total_price = 0%>
+            <%total_added_tax = 0%>
+            <%total_sub_tax = 0%>
+            <% @both.each do |e| %>
+              <%if e.is_a? Purchase%>
+                <tr data-href="<%= purchase_path(e) %>">
+                  <td><%=f e.price_with_taxes %></td>
+                  <td></td>
+                  <% debt = debt + e.price_with_taxes %>
+                  <td><%=f debt %></td>
+                  <td>مبيعات</td>
+                  <td><%= e.invoice_id%></td>
+                  <td><%=d e.created_at%></td>
+                  <td></td>
+                  <td></td>
+                  <td><%=f e.price%></td>
+                  <td><%=f e.added_tax%></td>
+                  <td><%=f e.sub_tax%></td>
+                </tr>
+                <%total_debt = total_debt + e.price_with_taxes%>
+                <%total_price = total_price + e.price%>
+                <%total_added_tax = total_added_tax + e.added_tax%>
+                <%total_sub_tax = total_sub_tax + e.sub_tax%>
+              <%else%>
+                <tr>
+                  <td></td>
+                  <td><%=f e.amount%></td>
+                  <% debt = debt - e.amount %>
+                  <td><%=f debt %></td>
+                  <td>تحصيل</td>
+                  <td></td>
+                  <td></td>
+                  <td><%=e.cheque_num%></td>
+                  <td><%=d e.created_at%></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <% total_credit = total_credit + e.amount %>
+              <%end%>
             <% end %>
+            
             </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالعميل" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_ppunit" value="البحث بالسعر" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="البحث بالمبلغ المتبقي" class="search_init" /></label></th>
-            </tr>
-          </tfoot>
         </table>
       </div>
     </div>
@@ -170,7 +209,6 @@ function MakeSelect2(){
   });
 }
 $(document).ready(function() {
-  LoadDataTablesScripts(AllTables);
   // Create Wysiwig editor for textare
   TinyMCEStart('#wysiwig_simple', null);
   TinyMCEStart('#wysiwig_full', 'extreme');

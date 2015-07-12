@@ -21,7 +21,7 @@ class PurchasesController < ApplicationController
   # GET /purchases/new
   def new
     @purchase = Purchase.new
-    @clients = Client.all
+    @clients = Client.where.not(deleted: 1)
     @products = Product.all
     super
   end
@@ -52,19 +52,22 @@ class PurchasesController < ApplicationController
       purchase.prices.each_with_index do |price, i|
         purchase.price = purchase.price + price.to_f * purchase.quantities[i].to_f
       end
-      if _params['debt'].present? && purchase.price < _params['debt'].to_f
-        redirect_to '/purchases/new', notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر الإجمالي'
+      if _params['debt'].present? && purchase.price < _params['paid_amount'].to_f
+        redirect_to '/purchases/new', notice: 'لا يمكن أن يكون المبلغ المدفوع أكبر من السعر الكلي'
         return
       end
+      p params
+      p _params
+      purchase.debt = purchase.price_with_taxes - params["paid_amount"].to_f
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
-         permission = Permission.create!({transaction_type: 4, transaction_id: purchase.id})
+         permission = ReleaseProductPermission.create!({transaction_id: purchase.id})
          purchase.invoice_id = invoice.id
          purchase.save
-         update_treasury(purchase.payment_method, purchase.price - purchase.debt, PURCHASE, purchase.id, "عملية بيع", 0)
-         if purchase.debt == 0
-          add_tax(purchase.payment_method, PURCHASE, purchase.id, purchase.price)
-         end
+         update_treasury(purchase.payment_method, params["paid_amount"].to_f, PURCHASE, purchase.id, "عملية بيع", 0, params["cheque_num"])
+         # if purchase.debt == 0
+         #  add_tax(purchase.payment_method, PURCHASE, purchase.id, purchase.price)
+         # end
          # treasury = Treasury.first
          # if (purchase.payment_method == "cash")
          #  treasury.cash = treasury.cash + purchase.price - purchase.debt
@@ -103,11 +106,11 @@ class PurchasesController < ApplicationController
     respond_to do |format|
       if @purchase.update(purchase_params)
         if (debt != @purchase.debt)
-          update_treasury(@purchase.payment_method, debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0)
+          update_treasury(@purchase.payment_method, debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0, params["cheque_num"])
         end
-        if debt > 0 && @purchase.debt == 0
-          add_tax(@purchase.payment_method, PURCHASE, @purchase.id, @purchase.price)
-        end
+        # if debt > 0 && @purchase.debt == 0
+        #   add_tax(@purchase.payment_method, PURCHASE, @purchase.id, @purchase.price)
+        # end
         # treasury = Treasury.first
         # if (params['payment_method'] == "cash")
         #   treasury.cash = treasury.cash + (@purchase.debt - purchase_params[:debt].to_f)
@@ -116,7 +119,7 @@ class PurchasesController < ApplicationController
         # end
         # treasury.save
         client = Client.find(@purchase.client_id)
-        client.debt = client.debt - (@purchase.debt - purchase_params[:debt].to_f)
+        client.debt = client.debt - (debt - purchase_params[:debt].to_f)
         client.save
 
         format.html { redirect_to purchases_url, notice: 'Purchase was successfully updated.' }
@@ -146,7 +149,7 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      _params = params.require(:purchase).permit(:payment_method, :due_date, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
+      _params = params.require(:purchase).permit(:payment_method, :calc_sub_tax, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
       _params[:product_ids] = params[:product_ids]
       p _params
     end

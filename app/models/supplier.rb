@@ -4,6 +4,6 @@ class Supplier < ActiveRecord::Base
 
 	private
 		def init_credit
-			self.credit |= 0
+			self.credit ||= 0
 		end
 end

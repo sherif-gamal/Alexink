@@ -8,6 +8,20 @@ class Purchase < ActiveRecord::Base
 	serialize :quantities, Array
 	serialize :prices, Array
 
+	def price_with_taxes
+		after_add = price + price * 0.1
+		if calc_sub_tax
+			after_sub = after_add - price * 0.005
+		end
+	end
+
+	def added_tax
+		price * 0.1
+	end
+
+	def sub_tax
+		price * 0.005
+	end
 
 
 	private

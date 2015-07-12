@@ -20,9 +20,6 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-        <% if notice.present? %>
-        <h3 class="alert alert-danger"><%= notice%></h3>
-        <%end%>
           <%= form_for(@purchase, html: {class: 'form-horizontal'}) do |f| %>
             <% if @purchase.errors.any? %>
               <div id="error_explanation">

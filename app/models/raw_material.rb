@@ -1,10 +1,11 @@
 class RawMaterial < ActiveRecord::Base
 
-	before_save :init_stock
+	before_save :validate
 
 
 	private
-		def init_stock
-			self.in_stock |= 0
+		def validate
+			self.in_stock ||= 0
+			self.deleted ||= 0
 		end
 end
