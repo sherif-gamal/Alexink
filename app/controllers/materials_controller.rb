@@ -23,6 +23,7 @@ class MaterialsController < ApplicationController
     @material = Material.new
     @suppliers = Supplier.all
     @raw_materials = RawMaterial.all
+    @internal = nil
     super
   end
 
@@ -30,9 +31,10 @@ class MaterialsController < ApplicationController
     @material = Material.new
     @suppliers = Supplier.all
     @raw_materials = RawMaterial.all
+    @internal = true
     if request.xhr?
       flash.discard(:notice)
-      render partial: 'new_internal'
+      render partial: 'new'
     else
       redirect_to "/dashboard##{request.path}"
     end
@@ -49,7 +51,7 @@ class MaterialsController < ApplicationController
   # POST /materials.json
  def create
     if !validate_params(material_params) then
-      redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات'
+      redirect_to !material_params['currency'] ? "/materials/new_internal" : "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات'
     else
       params = material_params
       if(!params['debt'])
@@ -65,12 +67,12 @@ class MaterialsController < ApplicationController
       end
 
       if @material.debt > @material.price
-        redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
+        redirect_to !material_params['currency'] ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
         return
       end
 
       if !check_treasury(material_params[:payment_method], (params['price'].to_f - params['debt'].to_f))
-        redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
+        redirect_to !material_params['currency'] ? "/materials/new_internal" : "/materials/new", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
         return
       end
       respond_to do |format|
