@@ -1,0 +1,2 @@
+module PurchasePaymentDetailHelper
+end

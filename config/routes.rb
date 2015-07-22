@@ -13,9 +13,12 @@ Rails.application.routes.draw do
   match '/diaries/transactions', to: 'diaries#transactions', via: [:post]
   match '/diaries/stock', to: 'diaries#stock', via: [:get]
   match '/diaries/stock', to: 'diaries#stock', via: [:post]
+  match '/diaries/diaries', to: 'diaries#diaries', via: [:get]
+  match '/diaries/diaries', to: 'diaries#diaries', via: [:post]
   match '/invoices', to: 'invoices#purchases', via: [:get]
 
   get '/dashboard/index'
+  get '/clients/status'
   get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
   get 'stock/index'
   match '/taxes', to: 'taxes#index', via: [:get]
@@ -30,7 +33,8 @@ Rails.application.routes.draw do
   get 'permission/purchase/:id', to: 'permission#purchase'
   get 'permission/expense/:id', to: 'permission#expense'
   
-  get 'diaries/index'
+  get 'diaries/index', to: 'diaries#diaries'
+  post 'diaries/index', to: 'diaries#diaries'
 
   get 'raw_materials/production'
   post 'raw_materials/permit'
@@ -54,6 +58,14 @@ Rails.application.routes.draw do
   get 'treasury/show'
   put 'treasury/update'
 
+
+  get 'expense_payment_detail/:id', to: 'expense_payment_detail#edit'
+  put 'expense_payment_detail/:id', to: 'expense_payment_detail#update'
+  get 'purchase_payment_detail/:id', to: 'purchase_payment_detail#edit'
+  put 'purchase_payment_detail/:id', to: 'purchase_payment_detail#update'
+  get 'material_payment_detail/:id', to: 'material_payment_detail#edit'
+  put 'material_payment_detail/:id', to: 'material_payment_detail#update'
+
   resources :sessions, :only => [:new, :create, :destroy]
   
   resources :users
@@ -72,6 +84,9 @@ Rails.application.routes.draw do
 
   resources :materials
   resources :raw_materials
+  resources :purchase_payment_detail
+  resources :expense_payment_detail
+  resources :material_payment_detail
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

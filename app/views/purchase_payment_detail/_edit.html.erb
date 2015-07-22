@@ -1,0 +1,422 @@
+<%= render "layouts/ajaxify" %>
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">المصروفات</a></li>
+      <li><a href="#">تعديل بيانات الدفع</a></li>
+    </ol>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-search"></i>
+          <span>تفاصيل المصروفات</span>
+        </div>
+
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content">
+        <% if notice.present? %>
+        <h3 class="alert alert-danger"><%= notice%></h3>
+        <%end%>
+          <%= form_for(@purchase, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @purchase.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@purchase.errors.count, "error") %> prohibited this purchase from being saved:</h2>
+
+                <ul>
+                <% @purchase.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <div class="form-group">
+              <%= f.label :treasury_debt,  'دائن خزنة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :treasury_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :treasury_credit,  'مدين خزنة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :treasury_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :bnp_debt,  'دائن بنك بي إن بي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :bnp_credit,  'مدين بنك بي إن بي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_debt,  'دائن بنك أبو ظبي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :abu_dhabi_credit,  'مدين بنك أبو ظبي', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_credit, {class:"pull-right"} %>
+              </div>
+            </div>           
+
+
+            <div class="form-group">
+              <%= f.label :operation_expense_debt,  'دائن م. تشغيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :operation_expense_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :operation_expense_credit,  'مدين م. تشغيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :operation_expense_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :sale_expense_debt,  'دائن م. بيعية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sale_expense_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :sale_expense_credit,  'مدين م. بيعية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sale_expense_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :general_managerial_debt,  'دائن م. عمومية وإدارية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :general_managerial_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :general_managerial_credit,  'مدين م. عمومية وإدارية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :general_managerial_credit, {class:"pull-right"} %>
+              </div>              
+            </div>
+
+            <div class="form-group">
+              <%= f.label :creditor_debt,  'دائن موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :creditor_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :creditor_credit,  'مدين موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :creditor_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :purchases_debt,  'دائن مشتريات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :purchases_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :purchases_credit,  'مدين مشتريات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :purchases_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :das_debt,  'دائن ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :das_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :das_credit,  'مدين ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :das_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :clients_debt,  'دائن عملاء', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :clients_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :clients_credit,  'مدين عملاء', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :clients_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :sales_debt,  'دائن مبيعات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sales_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :sales_credit,  'مدين مبيعات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sales_credit, {class:"pull-right"} %>
+              </div>              
+            </div>
+
+            <div class="form-group">
+              <%= f.label :sales_tax_debt,  'دائن ض مبيعات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sales_tax_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :sales_tax_credit,  'مدين ض مبيعات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :sales_tax_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :aq_debt,  'دائن أ . ق', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :aq_credit,  'مدين أ . ق', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :e3temadat_mostanadeya_debt,  'دائن اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :e3temadat_mostanadeya_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :e3temadat_mostanadeya_credit,  'مدين اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :e3temadat_mostanadeya_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :outer_suppliers_debt,  'دائن موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :outer_suppliers_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :outer_suppliers_credit,  'مدين موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :outer_suppliers_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :osool_sabta_debt,  'دائن اصول ث', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :osool_sabta_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :osool_sabta_credit,  'مدين اصول ث', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :osool_sabta_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :m_moshtarayat_debt,  'دائن م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :m_moshtarayat_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :m_moshtarayat_credit,  'مدين م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :m_moshtarayat_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :bnp_euro_debt,  'دائن بنك بي ان بي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_euro_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :bnp_euro_credit,  'مدين بنك بي ان بي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_euro_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :fx_difference_debt,  'دائن فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :fx_difference_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :fx_difference_credit,  'مدين فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :fx_difference_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :aq_rasm_ta7seel_debt,  'دائن ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_rasm_ta7seel_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :aq_rasm_ta7seel_credit,  'مدين ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_rasm_ta7seel_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :income_tax_debt,  'دائن ضرائب علي الدخل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :income_tax_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :income_tax_credit,  'مدين ضرائب علي الدخل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :income_tax_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :rental_debt,  'دائن ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :rental_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :rental_credit,  'مدين ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :rental_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :contributor_creditor_debt,  'دائن دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :contributor_creditor_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :contributor_creditor_credit,  'مدين دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :contributor_creditor_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :bnp_dollar_debt,  'دائن بي ان بي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_dollar_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :bnp_dollar_credit,  'مدين بي ان بي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_dollar_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_dollar_debt,  'دائن ابو ظبي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_dollar_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :abu_dhabi_dollar_credit,  'مدين ابو ظبي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_dollar_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :supplier_debt,  'دائن موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :supplier_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :supplier_credit,  'مدين موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :supplier_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_euro_debt,  'دائن ابو ظبي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_euro_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :abu_dhabi_euro_credit,  'مدين ابو ظبي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_euro_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :other_debt,  'دائن ا . اخري', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :other_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :other_credit,  'مدين ا . اخري', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :other_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-2 col-sm-2 pull-right">
+                <%= f.submit "تعديل البيانات", class:"btn btn-primary btn-label-left" %>
+              </div>
+              <div class="col-sm-offset-1 col-sm-2 pull-right">
+                <button type="cancel" class="btn btn-default btn-label-left">
+                <span><i class="fa fa-clock-o txt-danger"></i></span>
+                  إلغاء
+                </button>
+            </div>
+            </div>
+          </div>
+          </div>
+          <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Select2 plugin on elements
+function DemoSelect2(){
+  $('#s2_with_tag').select2({placeholder: "Select OS"});
+  $('#s2_country').select2();
+}
+// Run timepicker
+function DemoTimePicker(){
+  $('#input_time').timepicker({setDate: new Date()});
+}
+$(document).ready(function() {
+  // Create Wysiwig editor for textare
+  TinyMCEStart('#wysiwig_simple', null);
+  TinyMCEStart('#wysiwig_full', 'extreme');
+  // Add slider for change test input length
+  FormLayoutExampleInputLength($( ".slider-style" ));
+  // Initialize datepicker
+  $('#input_date').datepicker({setDate: new Date()});
+  // Load Timepicker plugin
+  LoadTimePickerScript(DemoTimePicker);
+  // Add tooltip to form-controls
+  $('.form-control').tooltip();
+  LoadSelect2Script(DemoSelect2);
+  // Load example of form validation
+  LoadBootstrapValidatorScript(DemoFormValidator);
+  // Add drag-n-drop feature to boxes
+  WinMove();
+});
+</script>

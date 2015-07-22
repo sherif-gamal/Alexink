@@ -32,7 +32,7 @@
           <tbody>
             <% @invoices.each do |invoice| %>
             <%purchase = @purchases.find(invoice.purchase_id)%>
-            <%url = "/permission/purchase/#{permission.id}/#{invoice.id}"%>
+            <%url = "/permission/purchase/#{invoice.id}/#{invoice.id}"%>
               <tr data-href="<%= url %>">
                 <td><%= invoice.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= invoice.id %></td>

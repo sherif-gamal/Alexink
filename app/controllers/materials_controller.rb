@@ -56,9 +56,13 @@ class MaterialsController < ApplicationController
         params['debt'] = 0
       end
       @material = Material.new(material_params)
-      @material.in_stock = params[:quantity]
       @material.user_name = current_user.name
-      @material.price = @material.quantity * params['price_per_unit']
+
+      raw_materials = RawMaterial.find(params['raw_material_ids'])
+      @material.price = 0
+      @material.prices.each_with_index do |price, i|
+        @material.price = @material.price + price.to_f * @material.quantities[i].to_f
+      end
 
       if @material.debt > @material.price
         redirect_to material_params['internal'] == "1" ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
@@ -72,19 +76,22 @@ class MaterialsController < ApplicationController
       respond_to do |format|
         if @material.save
           update_treasury(@material.payment_method, -material_params['price'].to_f + material_params['debt'].to_f, MATERIAL, @material.id, "عملية شراء", 0)
-          # if @material.debt == 0
-          #   add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
-          # end
+          if @material.debt == 0
+            add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
+          end
 
-          raw_material = RawMaterial.find(@material.raw_material_id)
-          raw_material.in_stock = raw_material.in_stock + @material.quantity
+          raw_materials = RawMaterial.find(@material.raw_material_ids)
+
+          raw_materials.each_with_index do |raw_material, i|
+            raw_material.in_stock = raw_material.in_stock + @material.quantities[i].to_f
+            raw_material.save
+          end
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
-          permission1 = AddMaterialPermission.create!({transaction_id: @material.id, quantity: @material.quantity})
+          permission1 = AddMaterialPermission.create!({transaction_id: @material.id})
           permission2 = ReleaseMoneyPermission.create!({transaction_id: @material.id, quantity: @material.price - @material.debt})
-
           supplier.save
-          raw_material.save
+          MaterialPaymentDetail.create()
           format.html { redirect_to "/permission/material/#{permission1.id}/#{permission2.id}" }
           format.json { render :show, status: :created, location: @material }
         else
@@ -156,15 +163,27 @@ class MaterialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def material_params
-      pms = params.require(:material).permit(:raw_material_id, :quantity, :price, :supplier_id, :debt, :payment_method, :payment_state, :state, :in_stock, :currency, :due_date, :internal)
+      pms = params.require(:material).permit!
+      pms['raw_material_ids'] = params['raw_material_ids']
       pms[:internal] = params[:internal]
       return pms
     end
 
-    def validate_params(params)
-      if params[:raw_material_id].present? && params[:supplier_id].present? && params[:price].present? && params[:quantity].present? then
-        return is_float?(params[:price]) && is_float?(params[:quantity])
+    def validate_params(params)  
+      params[:prices].each do |price|
+        if !is_float?(price)
+          return nil
+        elsif price.to_f < 0
+          return nil
+        end
       end
-      return nil
+      params[:quantities].each do |quantity|
+        if !is_float?(quantity)
+          return nil
+        elsif quantity.to_f < 0
+          return nil
+        end
+      end
+      return true
     end
 end

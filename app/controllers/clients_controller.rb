@@ -23,6 +23,17 @@ class ClientsController < ApplicationController
     super
   end
 
+  def status
+    @clients = Client.all
+    @products = Product.all
+    if request.xhr?
+      flash.discard(:notice)
+      render partial: 'status'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
+  end
+
   # GET /clients/new
   def new
     @client = Client.new

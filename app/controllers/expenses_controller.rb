@@ -46,6 +46,7 @@ class ExpensesController < ApplicationController
 
       if @expense.save
         permission = ReleaseMoneyPermission.create!({transaction_id: @expense.id, quantity: @expense.price})
+        ExpensePaymentDetail.create()
         update_treasury(@expense.payment_method, - @expense.price, EXPENSE, @expense.id, "مصروفات مباشرة", 0)
         redirect_to "/permission/expense/#{permission.id}"
       else

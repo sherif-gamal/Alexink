@@ -38,16 +38,17 @@
         <div class="clearfix"></div>
         <div class="col-xs-12 pull-right text-right" dir="rtl" style="margin-top: 20px;">من السادة شركة: <span style="border-bottom: 1px dotted;"><%=@supplier.name%></span></div>
         <div class="col-xs-12">
-
           <table border="2" dir="rtl" class="col-xs-12 pull-right">
             <tr>
               <th class="text-center">البيان</th>
               <th style="width: 70px" class="text-center">الكمية</th>
             </tr>
+            <%@raw_materials.each_with_index do |raw_material, i|%>  
             <tr>
-              <td class="text-center"><%=@raw_material.name%></th>
-              <td style="width: 70px" class="text-center"><%=@material.quantity%></th>
+                <td class="text-center"><%=raw_material.name%></th>
+                <td style="width: 70px" class="text-center"><%=@material.quantities[i]%></td>
             </tr>
+            <%end%>
           </table>
         </div>
         <div class="clearfix"></div>

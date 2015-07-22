@@ -38,16 +38,80 @@
         <div class="clearfix"></div>
         <div class="col-xs-12 pull-right text-right" dir="rtl" style="margin-top: 20px;">يصرف للسادة شركة: <span style="border-bottom: 1px dotted;"><%=@supplier.name%></span></div>
         <div class="col-xs-12">
-
+          
           <table border="2" dir="rtl" class="col-xs-12 pull-right">
             <tr>
-              <th class="text-center">البيان</th>
-              <th style="width: 70px" class="text-center">المبلغ</th>
+              <th colspan="2" class="text-center">الإجمالي</th>
+              <th colspan="2" class="text-center">سعر الوحدة</th>
+              <th rowspan="2" style="width: 70px" class="text-center">الكمية</th>
+              <th rowspan="2" class="text-center">البيان</th>
             </tr>
             <tr>
-              <td class="text-center"><%=@raw_material.name%></th>
-              <td style="width: 70px" class="text-center"><%=@permission.quantity%></th>
+              <th style="width: 50px" class="text-center">قرش</th>
+              <th style="width: 60px" class="text-center">جنيه</th>
+              <th style="width: 50px" class="text-center">قرش</th>
+              <th style="width: 60px" class="text-center">جنيه</th>
             </tr>
+            <%@raw_materials.each_with_index do |p, i|%>
+              <tr>
+                <%price_i = @material.prices[i].to_f * @material.quantities[i].to_f%>
+                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i).to_i%></td>
+                <td class="text-center"><%=price_i.to_i%></td>
+                <td class="text-center"><%=sprintf '%02d', (@material.prices[i].to_f - @material.prices[i].to_i).to_i%></td>
+                <td class="text-center"><%=@material.prices[i].to_i%></td>
+                <td class="text-center"><%=@material.quantities[i]%></td>
+                <td class="text-center"><%=p.name%></td>
+              </tr>
+            <%end%>
+            <%(15 - @raw_materials.count).times.each do |i|%>
+              <tr>
+                <td class="text-center">&nbsp</td>
+                <td class="text-center">&nbsp</td>
+                <td class="text-center">&nbsp</td>
+                <td class="text-center">&nbsp</td>
+                <td></td>
+                <td></td>
+              </tr>
+            <%end%>
+            <tr>
+              <td class="text-center"><%=sprintf '%02d', (@material.price.to_f - @material.price.to_i) * 100%></td>
+              <td class="text-center"><%=@material.price.to_i%></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center">الإجمالي</td>
+            </tr>
+            <tr>
+              <%addition = @material.price * 0.1%>
+              <td class="text-center"><%=sprintf '%02d', (addition - addition.to_i) * 100%></td>
+              <td class="text-center"><%=addition.to_i%></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center">يضاف 10% ض.م</td>
+            </tr>
+            <%subtraction = 0%>
+            <%if @material.calc_sub_tax == 1%>
+            <tr>
+              <%subtraction = @material.price * 0.005%>
+              <td class="text-center"><%=sprintf '%02d', (subtraction - subtraction.to_i) * 100%></td>
+              <td class="text-center"><%=subtraction.to_i%></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center">يخصم 0.5% ض.أ.ص</td>
+            </tr>
+            <%end%>
+            <tr>
+              <%total = @material.price + addition - subtraction%>
+              <td class="text-center"><%=sprintf '%02d', (total - total.to_i) * 100%></td>
+              <td class="text-center"><%=total.to_i%></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center">الإجمالي بعد الضرائب</td>
+            </tr>
+
           </table>
         </div>
         <div class="clearfix"></div>

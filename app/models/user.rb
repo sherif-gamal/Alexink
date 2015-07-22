@@ -26,6 +26,8 @@ class User < ActiveRecord::Base
 		return user if user.salt == cookie_salt
 	end
 
+	before_save :validate
+
 	private
 
 		def encrypt_password
@@ -43,5 +45,9 @@ class User < ActiveRecord::Base
 
 		def secure_hash(string)
 			Digest::SHA2.hexdigest(string)
+		end
+
+		def validate
+			self.deleted  ||= 0
 		end
 end

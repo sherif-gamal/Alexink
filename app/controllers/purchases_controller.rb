@@ -56,8 +56,6 @@ class PurchasesController < ApplicationController
         redirect_to '/purchases/new', notice: 'لا يمكن أن يكون المبلغ المدفوع أكبر من السعر الكلي'
         return
       end
-      p params
-      p _params
       purchase.debt = purchase.price_with_taxes - params["paid_amount"].to_f
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
@@ -83,6 +81,7 @@ class PurchasesController < ApplicationController
 
          # treasury.save
          client.save
+         PurchasePaymentDetail.create()
 
          redirect_to "/permission/purchase/#{permission.id}/#{invoice.id}"
       end

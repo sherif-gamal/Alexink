@@ -113,4 +113,45 @@ class DiariesController < ApplicationController
     	flash.discard(:notice)
 	end
 
+
+	def diaries
+		if params['p_method'].present? && params['p_method'] != 'all'
+			@p_method = params['p_method']
+			materials = Material.where("p_method = ?", params['p_method'])
+			expenses = Expense.where("p_method = ?", params['p_method'])
+			purchases = Purchase.where("p_method = ?", params['p_method'])
+		else
+			@p_method = 'all'
+			materials = Material.all
+			expenses = Expense.all
+			purchases = Purchase.all
+		end
+		if params['_start'].present?
+			@_start = 	Date.strptime(params['_start'], "%m/%d/%Y")
+		else
+			@_start = 1.month.ago
+		end
+		if params['_end'].present?
+			@_end = Date.strptime(params['_end'], "%m/%d/%Y")
+		else
+			@_end = DateTime.tomorrow
+		end
+		materials = materials.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+		expenses = expenses.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+		purchases = purchases.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+
+		@all = materials + expenses + purchases
+		@all = @all.sort_by{|e| e.created_at}
+
+		@products = Product.all
+		@clients = Client.all
+		@suppliers = Supplier.all
+		@raw_materials = RawMaterial.all
+		if request.xhr?
+      		render partial: 'diaries'
+    	else
+      		redirect_to "/dashboard##{request.path}"
+    	end
+    	flash.discard(:notice)
+	end
 end

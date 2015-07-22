@@ -35,12 +35,32 @@
               </div>
             <% end %>
 
-            <div class="form-group">
-              <%= f.label :raw_material_id,  'اسم المادة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.select :raw_material_id , @raw_materials.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"}%>
+            <div id="raw_materials">
+              <div id="raw_material" style="border: 1px solid #000; border-radius:10px;">
+                <span  style="cursor: pointer;" class="pull-left glyphicon glyphicon-minus"  id="delete-raw_material" onclick="f()"></span>
+                <div class="form-group">
+                  <%= f.label :raw_material_ids,  'المنتج', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= select_tag "raw_material_ids[]", options_for_select(@raw_materials.collect {|p| [p.name, p.id, {'in_stock' => p.in_stock}]}),  {class:"pull-right", style:"min-width:100%"}%>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :quantities,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= f.text_field :quantities , {class:"form-control", placeholder:"الكمية", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكميلة", multiple:true}%>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :prices,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
+                  <div class="col-sm-4 pull-right">
+                    <%= f.text_field :prices , {class:"form-control", placeholder:"سعر الوحدة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"سعر الوحدة", multiple:true}%>
+                  </div>
+                </div>
               </div>
             </div>
+            <div><span  style="cursor: pointer;" class="glyphicon glyphicon-plus"  id="add-raw_material"></span></div>
 
             <div class="form-group">
               <%= f.label :supplier_id,  'المورد', {class:"col-sm-2 control-label pull-right"}%>
@@ -48,24 +68,12 @@
                 <%= f.select :supplier_id, @suppliers.collect {|c| [c.name, c.id]}, {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
-
             <div class="form-group">
-              <%= f.label :quantity,  'الكمية', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :quantity , {class:"form-control", placeholder:"رقم", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"الكمية"}%>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= label_tag 'price_per_unit',  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= text_field_tag 'price_per_unit' , '', {class:"form-control", placeholder:"المبلغ الكلي", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"المبلغ الكلي"}%>
-              </div>
-
               <%= f.label :currency,  'عملة الدفع', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :currency , {class:"form-control", placeholder:"عملة الدفع", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"عملة الدفع"}%>
               </div>
+              <%= f.check_box :calc_sub_tax, {class:"col-sm-2 control-label pull-right"}%> حساب ضريبة الخصم
             </div>
 
             <div class="form-group">
@@ -185,4 +193,22 @@ function set_debt() {
    $('#debt-div').hide();
   }
 }
+
+var i = 1
+$("#add-raw_material").click(function(e) {
+  var div = document.getElementById('raw_material'),
+      clone = div.cloneNode(true); // true means clone all childNodes and all event handlers
+  clone.id = "add-raw_material" + i++;
+  document.getElementById('raw_materials').appendChild(clone);
+  $("#"+clone.id+" span").attr('id', "delete-raw_material"+i)
+  $("#"+clone.id+" select").val(1);
+  $("#"+clone.id+" input").val('');
+});
+
+function f() {
+  if (event.target.id != 'delete-raw_material') {
+    document.getElementById('raw_materials').removeChild(event.target.parentNode);
+  }
+}
+
 </script>

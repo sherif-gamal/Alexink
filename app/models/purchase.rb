@@ -12,6 +12,7 @@ class Purchase < ActiveRecord::Base
 		after_add = price + price * 0.1
 		if calc_sub_tax
 			after_sub = after_add - price * 0.005
+			after_sub.round(2)
 		end
 	end
 
