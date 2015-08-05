@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150720171418) do
+ActiveRecord::Schema.define(version: 20150804085109) do
 
   create_table "add_material_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
@@ -113,6 +113,8 @@ ActiveRecord::Schema.define(version: 20150720171418) do
     t.string   "user_name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "type"
+    t.string   "date_added"
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -202,9 +204,20 @@ ActiveRecord::Schema.define(version: 20150720171418) do
     t.string   "currency"
     t.string   "due_date"
     t.integer  "internal"
+    t.string   "date_added"
   end
 
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
+
+  create_table "product_expenses", force: :cascade do |t|
+    t.integer  "product_id"
+    t.float    "constant_expense"
+    t.float    "raw_material_expense"
+    t.float    "employment"
+    t.float    "other"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
 
   create_table "production_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
@@ -220,6 +233,7 @@ ActiveRecord::Schema.define(version: 20150720171418) do
     t.integer  "permission_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "date_added"
   end
 
   create_table "products", force: :cascade do |t|
@@ -313,6 +327,7 @@ ActiveRecord::Schema.define(version: 20150720171418) do
     t.datetime "updated_at",     null: false
     t.string   "currency"
     t.string   "due_date"
+    t.string   "date_added"
   end
 
   add_index "purchases", ["client_id"], name: "index_purchases_on_client_id"
@@ -335,10 +350,11 @@ ActiveRecord::Schema.define(version: 20150720171418) do
   end
 
   create_table "release_money_permissions", force: :cascade do |t|
+    t.integer  "transaction_for"
     t.integer  "transaction_id"
     t.integer  "quantity"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "release_product_permissions", force: :cascade do |t|

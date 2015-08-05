@@ -65,7 +65,13 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    @product.deleted = 1
+    purchases = Purchase.where("product_id = ?", @product.id)
+    if purchases.empty?
+      @product.destroy
+    else
+      @product.update(deleted: 1)
+    end
+
     respond_to do |format|
       format.html { redirect_to products_url, notice: 'Product was successfully destroyed.' }
       format.json { head :no_content }

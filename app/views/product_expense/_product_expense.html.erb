@@ -1,9 +1,9 @@
 <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
-      <li><a href="#">الصفحة الرئيسية</a></li>
-      <li><a href="#">المواد الخام</a></li>
-      <li><a href="#">إضافة مادة خام</a></li>
+      <li><a href="/">الصفحة الرئيسية</a></li>
+      <li><a href="#">المنتجات</a></li>
+      <li><a href="#">تعديل تكاليف المنتج</a></li>
     </ol>
   </div>
 </div>
@@ -13,22 +13,19 @@
       <div class="box-header">
         <div class="box-name">
           <i class="fa fa-search"></i>
-          <span>إدخال بيانات منتج جديد</span>
+          <span>تعديل تكاليف المنتج</span>
         </div>
 
         <div class="no-move"></div>
       </div>
       <div class="box-content">
-        <% if notice.present? %>
-        <h3 class="alert alert-danger"><%= notice%></h3>
-        <%end%>
-          <%= form_for(@material, html: {class: 'form-horizontal'}) do |f| %>
-            <% if @material.errors.any? %>
+          <%= form_for(@product_expense, html: {class: 'form-horizontal'}) do |f| %>
+            <% if @product_expense.errors.any? %>
               <div id="error_explanation">
-                <h2><%= pluralize(@material.errors.count, "error") %> prohibited this material from being saved:</h2>
+                <h2><%= pluralize(@product_expense.errors.count, "error") %> prohibited this product_expense from being saved:</h2>
 
                 <ul>
-                <% @material.errors.full_messages.each do |message| %>
+                <% @product_expense.errors.full_messages.each do |message| %>
                   <li><%= message %></li>
                 <% end %>
                 </ul>
@@ -64,13 +61,6 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :price_per_unit,  'سعر الوحدة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :price_per_unit , {class:"form-control", placeholder:"سعر الوحدة", 'data-toggle' => "tooltip", 'data-placement' => "bottom", title:"سعر الوحدة"}%>
-              </div>
-            </div>
-
-            <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">
                 <%= f.submit "تسجيل المنتج", class:"btn btn-primary btn-label-left" %>
               </div>
@@ -97,6 +87,49 @@ function DemoSelect2(){
 function DemoTimePicker(){
   $('#input_time').timepicker({setDate: new Date()});
 }
+
+function validator() {
+    $('#new_product_expense').bootstrapValidator({
+    message: 'برجاء مراجعة المدخل',
+    fields: {
+      'product_expense[name]': {
+        message: 'الاسم غير مقبول',
+        validators: {
+          notEmpty: {
+            message: 'الاسم لا يمكن أن يكون فارغاً'
+          },
+          stringLength: {
+            min: 3,
+            max: 30,
+            message: 'الاسم من 3 إلى 30 حرف'
+          }
+        }
+      },
+      'product_expense[unit]': {
+        validators: {
+          notEmpty: {
+            message: 'لابد من إدخال الوحدة'
+          }
+        }
+      },
+      'product_expense[quantity]': {
+        validators: {
+          numeric: {
+            message: 'أرقام فقط'
+          }
+        }
+      },
+      'product_expense[price_per_unit]': {
+        validators: {
+          numeric: {
+            message: 'أرقام فقط'
+          }
+        }
+      }
+    }
+  });
+}
+
 $(document).ready(function() {
   // Create Wysiwig editor for textare
   TinyMCEStart('#wysiwig_simple', null);
@@ -111,7 +144,7 @@ $(document).ready(function() {
   $('.form-control').tooltip();
   LoadSelect2Script(DemoSelect2);
   // Load example of form validation
-  LoadBootstrapValidatorScript(DemoFormValidator);
+  LoadBootstrapValidatorScript(validator);
   // Add drag-n-drop feature to boxes
   WinMove();
 });

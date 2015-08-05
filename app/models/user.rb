@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
 
 	validates :name, presence: true, length: {within: 5..20}
 	#validates :email, presence: true, format: {with: email_regex}, uniqueness: {case_sensitive: false}
-	validates :password, :confirmation => true
+	validates :password, :confirmation => true, on: :create
 
-	validates :password, :presence => true, :confirmation => true, :length => { :within => 6..40 }
+	validates :password, :presence => true, :confirmation => true, :length => { :within => 6..40 }, on: :create
 
 	before_save :encrypt_password
 
@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
 
 		def encrypt_password
 			self.salt = make_salt if new_record?
-			self.encrypted_password = encrypt(password)
+			self.encrypted_password = encrypt(password) if password.present?
 		end
 
 		def encrypt(string)
@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
 		end
 
 		def validate
+			puts "I came here"
 			self.deleted  ||= 0
 		end
 end

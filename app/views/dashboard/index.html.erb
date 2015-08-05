@@ -159,7 +159,6 @@
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="ajax-link" href="/clients">جميع العملاء</a></li>
-							<li><a class="ajax-link" href="/clients/status">موقف العملاء</a></li>
 							<li><a class="ajax-link" href="/clients/new">عميل جديد</a></li>
 						</ul>
 					</li>
@@ -241,7 +240,8 @@
 							<span class="hidden-xs">المصروفات</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/expenses">المصروفات</a></li>
+							<li><a class="ajax-link" href="expenses/index_general">المصروفات العمومية</a></li>
+							<li><a class="ajax-link" href="expenses/index_production">المصروفات التشغيلية</a></li>
 							<li><a class="ajax-link" href="/expenses/new">إضافة مصروفات</a></li>
 						</ul>
 					</li>
@@ -295,7 +295,6 @@
 						<span class="hidden-xs">اليوميات</span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a class="ajax-link" href="/diaries/index">اليوميات</a></li>
 						<li><a class="ajax-link" href="/diaries/transactions">يوميات الحركات</a></li>
 						<li><a class="ajax-link" href="/diaries/treasury">يوميات الخزنة</a></li>
 						<li><a class="ajax-link" href="/diaries/stock">يوميات المخزن</a></li>
@@ -317,6 +316,18 @@
 						</a>
 					</li>
 				<%end%>
+
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">الحسابات العامة</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="/clients/status">موقف العملاء</a></li>
+						<li><a class="ajax-link" href="/diaries/index">دفتر اليومية</a></li>
+					</ul>
+				</li>
+
 <!--
  				<li><a class="ajax-link" href="ajax/invoice.html">Invoice</a></li>
 

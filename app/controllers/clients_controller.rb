@@ -98,8 +98,9 @@ class ClientsController < ApplicationController
     if purchases.empty?
       @client.destroy
     else
-      @client.deleted = 1
+      @client.update(deleted: 1)
     end
+
     respond_to do |format|
       format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
       format.json { head :no_content }

@@ -157,7 +157,12 @@ th, td { white-space: nowrap; }
                   <td><%=a.name%></td>
                   <td><%=a.price%></td>
                 <%elsif a.is_a? Material%>
-                  <td><%=@raw_materials.find(a.raw_material_id).name%></td>
+                  <td><ul>
+                  <% @raw_materials.find(a.raw_material_ids).each do |r| %>
+                  <li><%= r.name%></li>
+                  <%end%>
+                </ul>
+                </td>
                   <td><%=a.price_with_taxes%></td>
                 <%elsif a.is_a? Purchase%>
                   <td><%="ف رقم #{a.invoice_id}"%></td>

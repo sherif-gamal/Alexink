@@ -59,7 +59,8 @@ class RawMaterialsController < ApplicationController
   # DELETE /raw_materials/1
   # DELETE /raw_materials/1.json
   def destroy
-    @raw_material.deleted = 1
+    @raw_material.update(deleted: 1)
+    
     respond_to do |format|
       format.html { redirect_to raw_materials_url, notice: 'تم حذف المادة الخام بنجاح.' }
       format.json { head :no_content }
@@ -95,6 +96,6 @@ class RawMaterialsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def raw_material_params
-      params.require(:raw_material).permit(:name, :unit, :description, :in_stock)
+      params.require(:raw_material).permit(:name, :unit, :description, :in_stock, :deleted)
     end
 end

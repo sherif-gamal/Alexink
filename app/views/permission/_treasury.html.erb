@@ -30,7 +30,7 @@
           </thead>
           <tbody>
             <% @permissions.each do |permission| %>
-              <%if permission.transaction_type == 5 %>
+              <%if permission.transaction_for == 1 %>
                 <%t = Material.find(permission.transaction_id)%>
                 <%url = "/permission/material_expense/#{permission.id}"%>
               <%else%>
@@ -41,7 +41,12 @@
                 <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= permission.id %></td>
                 <%if t.is_a? Material%>
-                  <td><%= RawMaterial.find(t.raw_material_id).name %></td>
+                  <td><ul>
+                  <% RawMaterial.find(t.raw_material_ids).each do |r| %>
+                  <li><%= r.name%></li>
+                  <%end%>
+                </ul>
+                </td>
                   <td><%= permission.quantity %></td>
                 <%else%>
                   <td><%= t.name %></td>

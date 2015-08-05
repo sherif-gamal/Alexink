@@ -1,11 +1,36 @@
 class ExpensesController < ApplicationController
   before_action :set_expense, only: [:show, :edit, :update, :destroy]
 
+  GENERAL = 0
+  PRODUCTION = 1
+
   # GET /expenses
   # GET /expenses.json
   def index
     @expenses = Expense.all
     super
+    flash.discard(:notice)
+  end
+
+  def index_general
+    @expenses = Expense.where(type: GENERAL)
+    if request.xhr?
+      flash.discard(:notice)
+      render partial: 'index'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
+    flash.discard(:notice)
+  end
+
+  def index_production
+    @expenses = Expense.where(type: PRODUCTION)
+    if request.xhr?
+      flash.discard(:notice)
+      render partial: 'index'
+    else
+      redirect_to "/dashboard##{request.path}"
+    end
     flash.discard(:notice)
   end
 
@@ -45,7 +70,7 @@ class ExpensesController < ApplicationController
       @expense.user_name = current_user.name
 
       if @expense.save
-        permission = ReleaseMoneyPermission.create!({transaction_id: @expense.id, quantity: @expense.price})
+        permission = ReleaseMoneyPermission.create!({transaction_for: EXPENSE, transaction_id: @expense.id, quantity: @expense.price})
         ExpensePaymentDetail.create()
         update_treasury(@expense.payment_method, - @expense.price, EXPENSE, @expense.id, "مصروفات مباشرة", 0)
         redirect_to "/permission/expense/#{permission.id}"

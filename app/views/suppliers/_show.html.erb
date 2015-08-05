@@ -121,7 +121,7 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
-              <th>الاسم</th>
+              <th>المواد الخام</th>
               <th>المورد</th>
               <th>المبلغ</th>
               <th>الموقف</th>
@@ -131,7 +131,12 @@
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= @raw_materials.find(material.raw_material_id).name %></td>
+                <td><ul>
+                  <% @raw_materials.find(material.raw_material_ids).each do |r| %>
+                  <li><%= r.name%></li>
+                  <%end%>
+                </ul>
+                </td>
                 <td><%= @supplier.name %></td>
                 <td><%= material.price %></td>
                 <td><%= material.debt %></td>

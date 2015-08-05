@@ -35,6 +35,13 @@
               </div>
             <% end %>
 
+            <div class="form-group">
+              <%= f.label :date_added,  'تاريخ الحركة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-2 pull-right">
+                  <%= f.date_field :date_added , {class:"form-control"}%>
+              </div>
+            </div>
+
             <div id="raw_materials">
               <div id="raw_material" style="border: 1px solid #000; border-radius:10px;">
                 <span  style="cursor: pointer;" class="pull-left glyphicon glyphicon-minus"  id="delete-raw_material" onclick="f()"></span>

@@ -91,7 +91,7 @@ class MaterialsController < ApplicationController
           supplier = Supplier.find(@material.supplier_id)
           supplier.credit = supplier.credit + @material.debt
           permission1 = AddMaterialPermission.create!({transaction_id: @material.id})
-          permission2 = ReleaseMoneyPermission.create!({transaction_id: @material.id, quantity: @material.price - @material.debt})
+          permission2 = ReleaseMoneyPermission.create!({transaction_for: MATERIAL, transaction_id: @material.id, quantity: @material.price - @material.debt})
           supplier.save
           MaterialPaymentDetail.create()
           format.html { redirect_to "/permission/material/#{permission1.id}/#{permission2.id}" }
@@ -132,7 +132,7 @@ class MaterialsController < ApplicationController
         supplier.credit = supplier.credit - money
         supplier.save
         if debt > @material.debt
-          permission = ReleaseMoneyPermission.create!({transaction_id: @material.id, quantity: money})
+          permission = ReleaseMoneyPermission.create!({transaction_for: MATERIAL, transaction_id: @material.id, quantity: money})
 
           format.html { redirect_to "/permission/material_expense/#{permission.id}", notice: 'تم تعديل عملية الشراء بنجاح.' }
         else

@@ -118,7 +118,6 @@
               <%sum = sum - a.amount%>
               <%if a.transaction_type == ApplicationController::MATERIAL%>
                 <%m = Material.find(a.transaction_id)%>
-                <%t = RawMaterial.find(m.raw_material_id)%>
                 <tr data-href="<%= material_path(m) %>">
               <%elsif a.transaction_type == ApplicationController::SUPPLIER%>
                 <%t = Supplier.find(a.transaction_id)%>

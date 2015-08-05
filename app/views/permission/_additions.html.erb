@@ -31,13 +31,23 @@
           </thead>
           <tbody>
             <% @material_permissions.each do |permission| %>
-              <%@material = @materials.find(permission.transaction_id)%>
+              <%material = @materials.find(permission.transaction_id)%>
               <%url = "/permission/material_stock/#{permission.id}"%>
               <tr data-href=<%=url%>>
                 <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
                 <td><%= permission.id %></td>
-                <td><%= @raw_materials.find(@material.raw_material_id).name %></td>
-                <td><%= @material.quantity %></td>
+                <td><ul>
+                  <% @raw_materials.find(material.raw_material_ids).each do |r| %>
+                  <li><%= r.name%></li>
+                  <%end%>
+                </ul>
+                </td>
+                <td><ul>
+                  <% material.quantities.each do |q| %>
+                  <li><%= q%></li>
+                  <%end%>
+                </ul>
+                </td>
               </tr>
             <% end %>
             </tr>
