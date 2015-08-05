@@ -48,8 +48,18 @@
                 <tr data-href="<%= material_path(t) %>">
                   <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
                   <td>دخول مادة خام</td>
-                  <td><%= @raw_materials.find(t.raw_material_id).name %></td>
-                  <td><%= t.quantity %></td>
+                  <td>
+                    <ul>
+                  <% @raw_materials.find(t.raw_material_ids).each do |r| %>
+                  <li><%= r.name%></li>
+                  <%end%>
+                </ul>
+              </td>
+                  <td><ul>
+                  <% t.quantities.each do |q| %>
+                  <li><%= q%></li>
+                  <%end%>
+                </ul></td>
                 </tr>
               <%else%>
                 <tr data-href="<%= product_path(t) %>">
