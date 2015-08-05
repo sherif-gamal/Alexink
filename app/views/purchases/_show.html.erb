@@ -36,7 +36,7 @@
             <div class="form-group">
               <%= label_tag 'date',  'التاريخ', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= text_field_tag 'date', @purchase.created_at.strftime("%Y/%m/%d"), {class:"form-control", disabled:true}%>
+                <%= text_field_tag 'date', @purchase.date_added, {class:"form-control", disabled:true}%>
               </div>
             </div>
 

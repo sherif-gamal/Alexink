@@ -34,7 +34,7 @@
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= material.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= material.date_added %></td>
                 <td><ul>
                   <% @raw_materials.find(material.raw_material_ids).each do |r| %>
                   <li><%= r.name%></li>

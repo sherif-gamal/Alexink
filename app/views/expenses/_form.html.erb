@@ -34,7 +34,14 @@
                 </ul>
               </div>
             <% end %>
-
+            
+            <div class="form-group">
+              <%= f.label :date_added,  'تاريخ الحركة', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-2 pull-right">
+                  <%= f.date_field :date_added , {class:"form-control"}%>
+              </div>
+            </div>
+            
             <div class="form-group">
               <%= f.label :name,  'وصف المصروفات', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">

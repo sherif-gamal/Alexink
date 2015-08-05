@@ -33,7 +33,7 @@
           <tbody>
             <% @purchases.each do |purchase| %>
               <tr data-href="<%= purchase_path(purchase) %>">
-                <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= purchase.date_added %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
                 <td><%= purchase.price %></td>
                 <td><%= purchase.currency %></td>
