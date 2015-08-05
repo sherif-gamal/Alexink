@@ -10,10 +10,11 @@ class Purchase < ActiveRecord::Base
 
 	def price_with_taxes
 		after_add = price + price * 0.1
-		if calc_sub_tax
+		if calc_sub_tax == 1
 			after_sub = after_add - price * 0.005
-			after_sub.round(2)
+			return after_sub.round(2)
 		end
+		return after_add.round(2)
 	end
 
 	def added_tax

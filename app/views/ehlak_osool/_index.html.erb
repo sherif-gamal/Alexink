@@ -35,28 +35,20 @@
           <tbody>
             <% @ehlak.each do |e| %>
               <tr>
-                <%= form_for e, url: '/wear_outs' do |f| %>
-                  <td><%= f.text_field :name %></td>
-                  <td><%= f.text_field :rate %></td>
-                  <td>سنة</td>
-                  <td><%= f.text_field :value %></td>
-                  <td><%= f.text_field :last_year_acc %></td>
-                  <td><%= e.ehlak %></td>
-                  <td><%= e.acc_ehlak %></td>
-                  <td><%= e.total_value %></td>
-                  <td><%= f.submit "تعديل"%></td>
-                <%end%>
+                <input type="hidden" value="<%= e.id%>" />
+                <td><input style="width: 100px;"><%= e.name %></input></td>
+                <td><input style="width: 100px;"><%= e.rate %></input></td>
+                <td>سنة</td>
+                <td><input style="width: 100px;"><%= e.value %></input></td>
+                <td><input style="width: 100px;"><%= e.last_year_acc %></input></td>
+                <td><%= f  e.ehlak %></td>
+                <td><%= f e.acc_ehlak %></td>
+                <td><%= f e.total_value %></td>
+                <td><button class="update"></td>
               </tr>
             <% end %>
             </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
-            </tr>
-          </tfoot>
         </table>
       </div>
     </div>
@@ -85,5 +77,26 @@ $(document).ready(function() {
   window.location = this.dataset.href;
 }).hover(function() {
     $(this).toggleClass('hover');
+});
+var v;
+$(".update").click(function(e) {
+  t = e.target;
+  children = t.parentNode.parentNode.children;
+  id = children[0].value
+  name = children[1].children[0].value
+  rate = children[2].children[0].value
+  value = children[4].children[0].value
+  $.ajax({ url: '/wear_outs/update',
+    type: 'POST',
+    beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+    data: {"id": id,
+           "name": name,
+           "rate": rate,
+           "value": value},
+
+    success: function(response) {
+      
+    }
+  });
 });
 </script>

@@ -8,10 +8,8 @@ class EhlakOsoolController < ApplicationController
 		end
 
 		@ehlak = EhlakOsool.where(year: @_year)
-		puts "zzzzzzzzzzzzzzzzzzz #{@ehlak.count}"
-		if (!@ehlak)
+		if (!@ehlak || @ehlak.empty?)
 			@ehlak = create_new @_year 
-			puts "zzzzzzzzzzzzzzzzzzz #{@ehlak.count}"
 		end
 		super
 	end
@@ -24,7 +22,7 @@ class EhlakOsoolController < ApplicationController
 	private
 
 		def ehlak_osool_params
-			params.require(:ehlak).permit!
+			params.require(:ehlak_osool).permit!
 		end
 
 		def create_new(year)
@@ -38,6 +36,6 @@ class EhlakOsoolController < ApplicationController
 			EhlakOsool.create(name: "كلاركات", rate: 12.5, value: 25300, year: year)
 			EhlakOsool.create(name: "انشاءات", rate: 5, value: 43806, year: year)
 
-			Ehlak.where(year: year)
+			EhlakOsool.where(year: year)
 		end
 end

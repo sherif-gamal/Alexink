@@ -133,6 +133,9 @@ class PurchasesController < ApplicationController
   # DELETE /purchases/1
   # DELETE /purchases/1.json
   def destroy
+    permissions = ReleaseProductPermission.where(transaction_id: @purchase.id)
+    PurchasePaymentDetail.find(@purchase.id).destroy
+    permissions.destroy_all
     @purchase.destroy
     respond_to do |format|
       format.html { redirect_to purchases_url, notice: 'Purchase was successfully destroyed.' }

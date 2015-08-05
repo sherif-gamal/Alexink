@@ -97,6 +97,9 @@ class ExpensesController < ApplicationController
   # DELETE /expenses/1
   # DELETE /expenses/1.json
   def destroy
+    permissions = ReleaseMoneyPermission.where(transaction_for: EXPENSE, transaction_id: @expense.id)
+    permissions.destroy_all
+    ExpensePaymentDetail.find(@expense.id).destroy
     @expense.destroy
     respond_to do |format|
       format.html { redirect_to expenses_url, notice: 'Expense was successfully destroyed.' }

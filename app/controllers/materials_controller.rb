@@ -149,6 +149,12 @@ class MaterialsController < ApplicationController
   # DELETE /materials/1
   # DELETE /materials/1.json
   def destroy
+    permissions = ReleaseMoneyPermission.where(transaction_for: 1, transaction_id: @material.id)
+    permissions = permissions + AddMaterialPermission.where(transaction_id: @material.id)
+    permissions.destroy_all
+    update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح عملية شراء", 0)
+    TreasuryDiary.where(transaction_id: @material.id, transaction_type: 1).destroy_all
+    MaterialPaymentDetail.find(@material.id).destroy
     @material.destroy
     respond_to do |format|
       format.html { redirect_to materials_url, notice: 'Material was successfully destroyed.' }

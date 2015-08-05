@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
   def create
   	user = User.authenticate(params[:session][:email],
 	params[:session][:password])
-	if user.nil?
+	if user.nil? || user.deleted == 1
 		flash.now[:error] = "المعلومات التي قمت بإدخالها غير صحيحة."
 		render 'new'
 	else

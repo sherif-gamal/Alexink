@@ -156,12 +156,12 @@
                   <td></td>
                   <td><%=f e.price%></td>
                   <td><%=f e.added_tax%></td>
-                  <td><%=f e.sub_tax%></td>
+                  <td><%=e.calc_sub_tax == 1 ? f(e.sub_tax) : "-"%></td>
                 </tr>
                 <%total_debt = total_debt + e.price_with_taxes%>
                 <%total_price = total_price + e.price%>
                 <%total_added_tax = total_added_tax + e.added_tax%>
-                <%total_sub_tax = total_sub_tax + e.sub_tax%>
+                <%if (e.calc_sub_tax == 1 ) then total_sub_tax = total_sub_tax + e.sub_tax end%>
               <%else%>
                 <tr>
                   <td></td>
@@ -181,6 +181,19 @@
               <%end%>
             <% end %>
             
+            </tr>
+            <tr>
+              <td style="background-color: #BEB5B5;"><%= total_debt%></td>
+              <td style="background-color: #BEB5B5;"><%= total_credit%></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"></td>
+              <td style="background-color: #BEB5B5;"><%= total_price%></td>
+              <td style="background-color: #BEB5B5;"><%= total_added_tax%></td>
+              <td style="background-color: #BEB5B5;"><%= total_sub_tax%></td>
             </tr>
           </tbody>
         </table>

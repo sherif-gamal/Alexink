@@ -21,6 +21,9 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
+        <% if notice.present? %>
+        <h3 class="alert alert-error"><%= notice%></h3>
+        <%end%>
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>

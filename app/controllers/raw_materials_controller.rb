@@ -81,7 +81,7 @@ class RawMaterialsController < ApplicationController
       @raw_material.in_stock = @raw_material.in_stock - params['quantity'].to_f
       @raw_material.save
       production = Production.create!({raw_material_id: @raw_material.id, user_name: current_user.name, quantity:params['quantity'].to_f})
-      permission = Permission.create!({transaction_type: 2, transaction_id: production.id, quantity: params['quantity']})
+      permission = ProductionPermission.create!({transaction_id: production.id, quantity: params['quantity']})
       redirect_to "/permission/production/#{permission.id}"
     else
       redirect_to '/raw_materials/production', notice: "المتاح بالمخزن أقل من الكمية المطلوبة"

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   match '/diaries/diaries', to: 'diaries#diaries', via: [:post]
   match '/invoices', to: 'invoices#purchases', via: [:get]
   match '/wear_outs', to: 'ehlak_osool#index', via: [:get]
+  match '/wear_outs/update', to: 'ehlak_osool#update', via: [:post]
 
   get '/dashboard/index'
   get '/clients/status'
