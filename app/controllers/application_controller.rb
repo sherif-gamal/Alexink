@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
     true if Float(param) rescue false
   end
 
-  def update_treasury(method, amount, transaction_type, transaction_id, description, is_tax, cheque_num = nil)
+  def update_treasury(method, amount, transaction_type, transaction_id, description, is_tax, cheque_num = nil, date_added = nil)
     treasury = Treasury.first
     if method == "cash"
       treasury.cash = treasury.cash + amount
@@ -91,7 +91,8 @@ class ApplicationController < ActionController::Base
       treasury.bank = treasury.bank + amount
     end
     treasury.save
-    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax, p_method: method, cheque_num: cheque_num)
+    p date_added
+    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax, p_method: method, cheque_num: cheque_num, date_added: date_added)
   end
 
   def add_tax(method, transaction_type, transaction_id, price)

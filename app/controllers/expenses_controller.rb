@@ -13,7 +13,7 @@ class ExpensesController < ApplicationController
   end
 
   def index_general
-    @expenses = Expense.where(type: GENERAL)
+    @expenses = Expense.where(e_type: GENERAL)
     if request.xhr?
       flash.discard(:notice)
       render partial: 'index'
@@ -24,7 +24,7 @@ class ExpensesController < ApplicationController
   end
 
   def index_production
-    @expenses = Expense.where(type: PRODUCTION)
+    @expenses = Expense.where(e_type: PRODUCTION)
     if request.xhr?
       flash.discard(:notice)
       render partial: 'index'
@@ -72,7 +72,7 @@ class ExpensesController < ApplicationController
       if @expense.save
         permission = ReleaseMoneyPermission.create!({transaction_for: EXPENSE, transaction_id: @expense.id, quantity: @expense.price})
         ExpensePaymentDetail.create()
-        update_treasury(@expense.payment_method, - @expense.price, EXPENSE, @expense.id, "مصروفات مباشرة", 0)
+        update_treasury(@expense.payment_method, - @expense.price, EXPENSE, @expense.id, "مصروفات مباشرة", 0, @expense.date_added)
         redirect_to "/permission/expense/#{permission.id}"
       else
         redirect_to "/expenses/new", notice: 'تعذر تسجيل عملية الصرف. برجاء مراجعة المدخلات'  
@@ -112,7 +112,7 @@ class ExpensesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def expense_params
-      params.require(:expense).permit(:name, :price, :seller, :payment_method, :payment_state, :debt)
+      params.require(:expense).permit(:name, :price, :seller, :payment_method, :payment_state, :debt, :e_type, :date_added)
     end
 
     def validate_params(params)

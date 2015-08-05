@@ -111,7 +111,8 @@
               </div>
             <%end%>
 
-          <%= link_to 'تعديل', edit_purchase_path(@purchase)%>
+          <%= link_to 'تعديل', edit_purchase_path(@purchase)%> |
+          <%= link_to 'حذف', @purchase, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
           <% end %>
         </div>
       </div>

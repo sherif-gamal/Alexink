@@ -49,7 +49,7 @@
               <tr data-href="<%= purchase_path(purchase) %>">
                 <%products = @products.find(purchase.product_ids)%>
                 <%quantities = purchase.quantities%>
-                <td><%= purchase.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= purchase.date_added %></td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
                 <td>
                   <ul>
@@ -65,7 +65,7 @@
                     <%end%>
                   </ul>
                 </td>
-                <td><%= purchase.price %></td>
+                <td><%= purchase.price_with_taxes %></td>
                 <td><%= purchase.debt %></td>
               </tr>
             <% end %>
@@ -119,7 +119,7 @@
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><%= material.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= material.date_added %></td>
                 <td><ul>
                   <% @raw_materials.find(material.raw_material_ids).each do |r| %>
                   <li><%= r.name%></li>
@@ -127,7 +127,7 @@
                 </ul>
                 </td>
                 <td><%= @suppliers.find(material.supplier_id).name %></td>
-                <td><%= material.price %></td>
+                <td><%= material.price_with_taxes %></td>
                 <td><%= material.debt %></td>
                 <td><%= material.in_stock %></td>
               </tr>
@@ -181,7 +181,7 @@
           <tbody>
             <% @expenses.each do |expense| %>
               <tr data-href="<%= expense_path(expense) %>">
-                <td><%= expense.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= expense.date_added %></td>
                 <td><%= expense.name %></td>
                 <td><%= expense.seller %></td>
                 <td><%= expense.price %></td>

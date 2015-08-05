@@ -77,7 +77,7 @@ class MaterialsController < ApplicationController
       end
       respond_to do |format|
         if @material.save
-          update_treasury(@material.payment_method, -material_params['price'].to_f + material_params['debt'].to_f, MATERIAL, @material.id, "عملية شراء", 0)
+          update_treasury(@material.payment_method, -material_params['price'].to_f + material_params['debt'].to_f, MATERIAL, @material.id, "عملية شراء", 0, @material.date_added)
           if @material.debt == 0
             add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
           end

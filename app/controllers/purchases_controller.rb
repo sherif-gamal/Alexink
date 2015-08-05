@@ -62,7 +62,7 @@ class PurchasesController < ApplicationController
          permission = ReleaseProductPermission.create!({transaction_id: purchase.id})
          purchase.invoice_id = invoice.id
          purchase.save
-         update_treasury(purchase.payment_method, params["paid_amount"].to_f, PURCHASE, purchase.id, "عملية بيع", 0, params["cheque_num"])
+         update_treasury(purchase.payment_method, params["paid_amount"].to_f, PURCHASE, purchase.id, "عملية بيع", 0, params["cheque_num"], purchase.date_added)
          # if purchase.debt == 0
          #  add_tax(purchase.payment_method, PURCHASE, purchase.id, purchase.price)
          # end
@@ -148,7 +148,7 @@ class PurchasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def purchase_params
-      _params = params.require(:purchase).permit(:payment_method, :calc_sub_tax, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], )
+      _params = params.require(:purchase).permit(:payment_method, :calc_sub_tax, :payment_state, :client_id, :payment_method, :payment_state, :state, :debt, :quantities => [], :prices => [], :date_added)
       _params[:product_ids] = params[:product_ids]
       p _params
     end

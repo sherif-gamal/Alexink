@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150804085109) do
+ActiveRecord::Schema.define(version: 20150805115206) do
 
   create_table "add_material_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
@@ -40,6 +40,16 @@ ActiveRecord::Schema.define(version: 20150804085109) do
     t.datetime "updated_at",     null: false
     t.text     "bank"
     t.integer  "deleted"
+  end
+
+  create_table "ehlak_osools", force: :cascade do |t|
+    t.string   "name"
+    t.float    "rate"
+    t.float    "value"
+    t.float    "last_year_acc"
+    t.integer  "year"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "expense_payment_details", force: :cascade do |t|
@@ -113,7 +123,7 @@ ActiveRecord::Schema.define(version: 20150804085109) do
     t.string   "user_name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.integer  "type"
+    t.integer  "e_type"
     t.string   "date_added"
   end
 
@@ -396,6 +406,7 @@ ActiveRecord::Schema.define(version: 20150804085109) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.string   "p_method"
+    t.string   "date_added"
   end
 
   create_table "users", force: :cascade do |t|

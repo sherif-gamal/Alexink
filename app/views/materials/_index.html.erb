@@ -42,7 +42,7 @@
                 </ul>
                 </td>
                 <td><%= @suppliers.find(material.supplier_id).name%></td>
-                <td><%= material.price %></td>
+                <td><%= material.price_with_taxes %></td>
                 <td><%= material.internal == 0 ? "خارجية" : "داخلية" %></td>
                 <td><%= material.currency %></td>
               </tr>

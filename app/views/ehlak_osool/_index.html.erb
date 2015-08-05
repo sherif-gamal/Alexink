@@ -1,0 +1,89 @@
+
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">الحسابات العامة</a></li>
+      <li><a href="#">إهلاك الأصول الثابتة</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div class="box-name">
+          <i class="fa fa-linux"></i>
+          <span>إهلاك الأصول الثابتة</span>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <table class="table table-bordered table-striped table-hover table-heading">
+          <thead>
+            <tr>
+              <th>البيان</th>
+              <th>النسبة</th>
+              <th>المدة</th>
+              <th>قيمة الأصل</th>
+              <th>مجمع إهلاك <%= Date.new(@_year, 1, 1).strftime("%Y/%m/%d")%></th>
+              <th>إهلاك <%= @_year%></th>
+              <th>مجمع إهلاك <Date.new(@_year, 12, 31).strftime("%Y/%m/%d")></th>
+              <th>صافي قيمة الأصل</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @ehlak.each do |e| %>
+              <tr>
+                <%= form_for e, url: '/wear_outs' do |f| %>
+                  <td><%= f.text_field :name %></td>
+                  <td><%= f.text_field :rate %></td>
+                  <td>سنة</td>
+                  <td><%= f.text_field :value %></td>
+                  <td><%= f.text_field :last_year_acc %></td>
+                  <td><%= e.ehlak %></td>
+                  <td><%= e.acc_ehlak %></td>
+                  <td><%= e.total_value %></td>
+                  <td><%= f.submit "تعديل"%></td>
+                <%end%>
+              </tr>
+            <% end %>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_country" value="البحث بالدولة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_debt" value="البحث بالموقف" class="search_init" /></label></th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+</script>

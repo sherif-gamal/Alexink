@@ -62,7 +62,7 @@
                 <%t = User.find(a.transaction_id)%>
                 <tr>
               <%end%>
-                  <td><%= a.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= a.date_added || a.created_at.strftime("%Y/%m/%d") %></td>
                   <td><%= t.name%></td>
                   <td><%= a.description %></td>
                   <td><%= a.amount %></td>
@@ -131,7 +131,7 @@
               <%else%>
                 <%t = User.find(a.transaction_id)%>
               <%end%>
-                  <td><%= a.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= a.date_added || a.created_at.strftime("%Y/%m/%d") %></td>
                   <%if a.transaction_type == ApplicationController::MATERIAL%>
                     <td><%= Supplier.find(m.supplier_id).name%></td>
                   <%elsif a.transaction_type == ApplicationController::EXPENSE%>

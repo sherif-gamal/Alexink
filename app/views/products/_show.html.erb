@@ -72,8 +72,7 @@
               </div>
             </div>
 
-            <%= link_to 'تعديل', edit_product_path(@product) %></td>
-            <%= link_to 'تعديل تكاليف', "/product_expense/#{@product.id}/edit/" %></td>
+            <%= link_to 'تعديل', edit_product_path(@product) %>
             <%= link_to 'حذف', @product, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
           </div>
           <% end %>

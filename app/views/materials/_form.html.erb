@@ -117,7 +117,7 @@
                 <%= f.select :state, ['تم الطلب', 'تم الشحن', 'مخزن' ], {}, {class:"pull-right", style:"min-width:100%"} %>
               </div>
             </div>
-            <%=hidden_field_tag "internal", 0%>
+            <%=hidden_field_tag "internal", @internal ? 1 : 0%>
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">
                 <%= f.submit "تسجيل عملية شراء", class:"btn btn-primary btn-label-left" %>
