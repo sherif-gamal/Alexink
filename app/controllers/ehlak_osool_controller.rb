@@ -2,7 +2,7 @@ class EhlakOsoolController < ApplicationController
 
 	def index
 		if params['_year'].present?
-			@_year = 	Date.strptime(params['_year'], "%m/%d/%Y")
+			@_year = 	params['_year']
 		else
 			@_year = Time.now.year
 		end
@@ -15,8 +15,9 @@ class EhlakOsoolController < ApplicationController
 	end
 
 	def update
-		@ehlak = EhlakOsool.find(params[:id])
+		@ehlak = EhlakOsool.find(ehlak_osool_params[:id])
 		@ehlak.update(ehlak_osool_params)
+		render nothing: true
 	end
 
 	private
