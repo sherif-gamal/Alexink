@@ -107,7 +107,6 @@ class MaterialsController < ApplicationController
   # PATCH/PUT /materials/1
   # PATCH/PUT /materials/1.json
   def update
-    in_stock = @material.in_stock
     debt = @material.debt
     if !check_treasury(@material.payment_method, debt - material_params[:debt].to_f)
       redirect_to "/materials/#{@material.id}/edit", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
@@ -122,10 +121,7 @@ class MaterialsController < ApplicationController
         if debt > 0 && @material.debt == 0
           add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
         end
-        if (in_stock > @material.in_stock)
-          raw_material = RawMaterial.find(@material.raw_material_id)
-          raw_material.in_stock = raw_material.in_stock - (in_stock - @material.in_stock)
-        end
+        
         
         
         supplier = Supplier.find(@material.supplier_id)
@@ -150,7 +146,8 @@ class MaterialsController < ApplicationController
   # DELETE /materials/1.json
   def destroy
     permissions = ReleaseMoneyPermission.where(transaction_for: 1, transaction_id: @material.id)
-    permissions = permissions + AddMaterialPermission.where(transaction_id: @material.id)
+    permissions.destroy_all
+    permissions = AddMaterialPermission.where(transaction_id: @material.id)
     permissions.destroy_all
     update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح عملية شراء", 0)
     TreasuryDiary.where(transaction_id: @material.id, transaction_type: 1).destroy_all
