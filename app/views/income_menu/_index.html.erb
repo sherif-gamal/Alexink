@@ -148,6 +148,21 @@ function MakeSelect2(){
     $(this).find('label input[type=text]').attr('placeholder', 'Search');
   });
 }
+
+var update_table = function() {
+  var total_profit = $("#income_menu_sales").val() - $("#income_menu_sales_payoff").val();
+  $("#total_profit").html(total_profit);
+
+  var total_sub = parseFloat($("#income_menu_general_expenses").val()) + parseFloat($("#income_menu_sales_expenses").val()) + parseFloat($("#income_menu_exchange_loss").val()) + parseFloat($("#income_menu_ehlak").val());
+  $("#total_sub").html(total_sub)
+
+  var total_add = parseFloat($("#income_menu_exchange_profit").val()) +
+  parseFloat($("#income_menu_other_income").val());
+  $("#total_add").html(total_add)
+
+  $("#total_profit_loss").html(total_profit - total_sub + total_add)
+
+};
 $(document).ready(function() {
   // Load Datatables and run plugin on tables 
   LoadDataTablesScripts(AllTables);

@@ -156,6 +156,7 @@ th, td { white-space: nowrap; }
                 <%if a.is_a? Expense%>
                   <td><%=a.name%></td>
                   <td><%=a.price%></td>
+                  <td><%=a.price%></td>
                 <%elsif a.is_a? Material%>
                   <td><ul>
                   <% @raw_materials.find(a.raw_material_ids).each do |r| %>
@@ -163,6 +164,7 @@ th, td { white-space: nowrap; }
                   <%end%>
                 </ul>
                 </td>
+                  <td><%=a.price_with_taxes%></td>
                   <td><%=a.price_with_taxes%></td>
                 <%elsif a.is_a? Purchase%>
                   <td><%="ف رقم #{a.invoice_id}"%></td>
