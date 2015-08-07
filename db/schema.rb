@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150805115206) do
+ActiveRecord::Schema.define(version: 20150806213037) do
 
   create_table "add_material_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
@@ -125,6 +125,44 @@ ActiveRecord::Schema.define(version: 20150805115206) do
     t.datetime "updated_at",     null: false
     t.integer  "e_type"
     t.string   "date_added"
+  end
+
+  create_table "financial_states", force: :cascade do |t|
+    t.float    "osool",             default: 0.0
+    t.float    "ehlak_osool",       default: 0.0
+    t.float    "stock",             default: 0.0
+    t.float    "ats",               default: 0.0
+    t.float    "clients",           default: 0.0
+    t.float    "treasury",          default: 0.0
+    t.float    "m_advance",         default: 0.0
+    t.float    "suppliers",         default: 0.0
+    t.float    "debts",             default: 0.0
+    t.float    "taxes_for_us",      default: 0.0
+    t.float    "foreign_suppliers", default: 0.0
+    t.float    "taxes_delayed",     default: 0.0
+    t.float    "expenses",          default: 0.0
+    t.float    "working_capital",   default: 0.0
+    t.float    "capital",           default: 0.0
+    t.float    "fiat_investments",  default: 0.0
+    t.float    "delayed_profits",   default: 0.0
+    t.float    "year_profits",      default: 0.0
+    t.integer  "year"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  create_table "income_menus", force: :cascade do |t|
+    t.float    "sales"
+    t.float    "sales_payoff"
+    t.float    "general_expenses"
+    t.float    "sales_expenses"
+    t.float    "exchange_loss"
+    t.float    "ehlak"
+    t.float    "exchange_profit"
+    t.float    "other_income"
+    t.integer  "year"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "invoices", force: :cascade do |t|

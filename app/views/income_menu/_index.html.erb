@@ -1,0 +1,184 @@
+
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">الحسابات العامة</a></li>
+      <li><a href="#">قائمة الدخل</a></li>
+    </ol>
+  </div>
+</div>
+<div>
+  <div class="pull-right col-sm-1">
+    السنة
+  </div>
+  <div class="pull-right col-sm-2">
+    <select id="input_year">
+      <%cur = Time.now.year%>
+      <%(2000..cur).each do |y|%>
+        <option value="<%= y%>" <%= @_year == y ? "selected" : ""%>><%= y%></option>
+      <%end%>
+    </select>  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div align="center">
+          <span>قائمة الدخل في <%= "#{@_year}/12/31"%></span>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <%= form_for(@income, url: '/income/update') do |f| %>
+          <%= f.hidden_field :id%>
+          <table style="text-align: center;" class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center;">كلي</th>
+                <th style="text-align: center;">جزئي</th>
+                <th style="text-align: center;">البيان</th>
+                <th style="text-align: center;"><%= @_year - 1%></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :sales, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td>المبيعات</td>
+                <td><%= @last_year_income.sales%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :sales_payoff, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td>تكلفة المبيعات</td>
+                <td><%= @last_year_income.sales_expenses%></td>
+              </tr>
+              <tr>
+                <td id="total_profit"></td>
+                <td></td>
+                <td>مجمل الربح</td>
+                <td><%= @last_year_income.sales - @last_year_income.sales_payoff%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>تخصم</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :general_expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>م. عمومية</td>
+                <td><%= @last_year_income.general_expenses%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :sales_expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>م. بيعية</td>
+                <td><%= @last_year_income.sales_expenses%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :exchange_loss, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>خسائر فروق العملة</td>
+                <td><%= @last_year_income.exchange_loss%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :ehlak, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>م. إهلاك أ. ث.</td>
+                <td><%= @last_year_income.ehlak%></td>
+              </tr>
+              <tr>
+                <td id="total_sub"></td>
+                <td></td>
+                <td></td>
+                <td><%= @last_year_income.general_expenses + @last_year_income.sales_expenses + @last_year_income.exchange_loss + @last_year_income.ehlak%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>يضاف</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :exchange_profit, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>أرباح قروق العملة</td>
+                <td><%= @last_year_income.exchange_profit%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :other_income, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>أرباح أخرى</td>
+                <td><%= @last_year_income.other_income%></td>
+              </tr>
+              <tr>
+                <td id="total_add"></td>
+                <td></td>
+                <td></td>
+                <td><%= @last_year_income.exchange_profit + @last_year_income.other_income%></td>
+              </tr>
+
+              <tr>
+                <td id="total_profit_loss"></td>
+                <td></td>
+                <td>صافي خسارة (ربح) العام</td>
+                <td><%= @last_year_income.exchange_profit + @last_year_income.other_income%></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "تحديث البيانات"%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+  update_table();
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+
+
+var update_table = function() {
+  var total_profit = $("#income_menu_sales").val() - $("#income_menu_sales_payoff").val();
+  $("#total_profit").html(total_profit);
+
+  var total_sub = parseFloat($("#income_menu_general_expenses").val()) + parseFloat($("#income_menu_sales_expenses").val()) + parseFloat($("#income_menu_exchange_loss").val()) + parseFloat($("#income_menu_ehlak").val());
+  $("#total_sub").html(total_sub)
+
+  var total_add = parseFloat($("#income_menu_exchange_profit").val()) +
+  parseFloat($("#income_menu_other_income").val());
+  $("#total_add").html(total_add)
+
+  $("#total_profit_loss").html(total_profit - total_sub + total_add)
+
+};
+var f = function() {
+    window.location.href = "/income/" + $("#input_year").val();
+}
+$('#input_year').change(f)
+
+</script>

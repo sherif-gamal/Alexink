@@ -19,6 +19,12 @@ Rails.application.routes.draw do
   match '/wear_outs', to: 'ehlak_osool#index', via: [:get]
   match '/wear_outs', to: 'ehlak_osool#index', via: [:post]
   match '/wear_outs/update', to: 'ehlak_osool#update', via: [:post]
+  match '/income', to: 'income_menu#index', via: [:get]
+  match '/income/:year', to: 'income_menu#index', via: [:get]
+  match '/income/update', to: 'income_menu#update', via: [:patch]
+  match '/financial_state', to: 'financial_state#index', via: [:get]
+  match '/financial_state/:year', to: 'financial_state#index', via: [:get]
+  match '/financial_state/update', to: 'financial_state#update', via: [:patch]
 
   get '/dashboard/index'
   get '/clients/status'

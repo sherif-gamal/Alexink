@@ -47,7 +47,17 @@
             </tr>
           </thead>
           <tbody>
+            <%total_value = 0%>
+            <%total_last_year_acc = 0%>
+            <%total_ehlak = 0%>
+            <%total_acc_ehlak = 0%>
+            <%total_total_values = 0%>
             <% @ehlak.each do |e| %>
+              <%total_value = total_value + e.value%>
+              <%total_last_year_acc = total_last_year_acc + e.last_year_acc%>
+              <%total_ehlak = total_ehlak + e.ehlak%>
+              <%total_acc_ehlak = total_acc_ehlak + e.acc_ehlak%>
+              <%total_total_values = total_total_values + e.total_value%>
               <tr>
                 <input type="hidden" value="<%= e.id%>" />
                 <td><input style="width: 100px;" value="<%= e.name %>"></input></td>
@@ -59,6 +69,17 @@
                 <td><%= f e.acc_ehlak %></td>
                 <td><%= f e.total_value %></td>
                 <td><button class="update">تعديل</button></td>
+              </tr>
+
+              <tr>
+                <td>الإجمالي</td>
+                <td></td>
+                <td></td>
+                <td><%= total_value%></td>
+                <td><%= total_last_year_acc%></td>
+                <td><%= total_ehlak%></td>
+                <td><%= total_acc_ehlak%></td>
+                <td><%= total_total_values%></td>
               </tr>
             <% end %>
             </tr>

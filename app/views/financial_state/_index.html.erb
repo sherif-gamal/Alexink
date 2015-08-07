@@ -1,0 +1,297 @@
+
+<div class="row">
+  <div id="breadcrumb" class="col-md-12">
+    <ol class="breadcrumb">
+      <li><a href="#">الحسابات العامة</a></li>
+      <li><a href="#">قائمة المركز المالي</a></li>
+    </ol>
+  </div>
+</div>
+<div>
+  <div class="pull-right col-sm-1">
+    السنة
+  </div>
+  <div class="pull-right col-sm-2">
+    <select id="input_year">
+      <%cur = Time.now.year%>
+      <%(2000..cur).each do |y|%>
+        <option value="<%= y%>" <%= @_year == y ? "selected" : ""%>><%= y%></option>
+      <%end%>
+    </select>  
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <div align="center">
+          <span>قائمة المركز المالي في <%= "#{@_year}/12/31"%></span>
+        </div>
+        <div class="no-move"></div>
+      </div>
+      <div class="box-content no-padding table-responsive">
+        <%= form_for(@f_state, url: '/financial_state/update') do |f| %>
+          <%= f.hidden_field :id%>
+          <table style="text-align: center;" class="table table-bordered">
+            <thead>
+              <tr>
+                <th style="text-align: center;">كلي</th>
+                <th style="text-align: center;">جزئي</th>
+                <th style="text-align: center;">جزئي</th>
+                <th style="text-align: center;">البيان</th>
+                <th style="text-align: center;"><%= @_year - 1%></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :osool, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td></td>
+                <td>أصول ثابتة</td>
+                <td><%= @last_year_f_state.osool%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :ehlak_osool, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td></td>
+                <td>يخصم إهلاك أ. ث</td>
+                <td><%= @last_year_f_state.ehlak_osool%></td>
+              </tr>
+              <%total_osool = @last_year_f_state.osool - @last_year_f_state.ehlak_osool%>
+              <tr>
+                <td id="total_osool"></td>
+                <td></td>
+                <td></td>
+                <td><b>صافي قيمة الأصول الثابتة</b></td>
+                <td><%= total_osool%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><u><b>الأصول المتداولة</b></u></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :stock, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>المخزون</td>
+                <td><%= @last_year_f_state.stock%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :ats, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>أ. ت. ص</td>
+                <td><%= @last_year_f_state.ats%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :clients, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>عملاء</td>
+                <td><%= @last_year_f_state.clients%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :treasury, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>النقدية بالصندوق والبنوك</td>
+                <td><%= @last_year_f_state.treasury%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :m_advance, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>م. مقدم</td>
+                <td><%= @last_year_f_state.m_advance%></td>
+              </tr>
+              <%total_osool_motadawla = @last_year_f_state.stock + @last_year_f_state.ats + @last_year_f_state.clients + @last_year_f_state.treasury + @last_year_f_state.m_advance%>
+              <tr>
+                <td></td>
+                <td id="total_osool_motadawla"></td>
+                <td></td>                
+                <td><b>إجمالي الأصول المتداولة</b></td>
+                <td><%= total_osool_motadawla%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><u><b>الالتزامات المتداولة</b></u></td>
+                <td></td>
+              </tr>
+      
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :suppliers, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>موردين</td>
+                <td><%= @last_year_f_state.suppliers%></td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :debts, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>دائنون وأرصدة دائنة</td>
+                <td><%= @last_year_f_state.debts%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :taxes_for_us, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>ضريبة مبيعات مستحقة</td>
+                <td><%= @last_year_f_state.taxes_for_us%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :foreign_suppliers, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>موردي الخارج</td>
+                <td><%= @last_year_f_state.foreign_suppliers%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :taxes_delayed, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>التزامات ضريبية مؤجلة</td>
+                <td><%= @last_year_f_state.taxes_delayed%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><%= f.text_field :expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td>مصروف مستحق</td>
+                <td><%= @last_year_f_state.expenses%></td>
+              </tr>
+              <%total_eltezamat_motadawla = @last_year_f_state.suppliers + @last_year_f_state.debts + @last_year_f_state.taxes_delayed + @last_year_f_state.foreign_suppliers + @last_year_f_state.taxes_for_us + @last_year_f_state.expenses%>
+              <tr>
+                <td></td>
+                <td id="total_eltezamat_motadawla"></td>
+                <td></td>                
+                <td><b>إجمالي الالتزامات المتداولة</b></td>
+                <td><%= total_eltezamat_motadawla%></td>
+              </tr>
+              <%working_capital = total_osool_motadawla - total_eltezamat_motadawla%>
+              <tr>
+                <td id="working_capital"></td>
+                <td></td>
+                <td></td>
+                <td><b>رأس المال العامل</b></td>
+                <td><%= working_capital%></td>
+              </tr>
+              <%total_investment = total_osool + working_capital%>
+              <tr>
+                <td id="total_investments"></td>
+                <td></td>
+                <td></td>
+                <td><b>إجمالي الاستثمار</b></td>
+                <td><%= total_investment%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>ويتم تمويله على النحو التالي:</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :capital, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td></td>
+                <td>رأس المال</td>
+                <td><%= @last_year_f_state.capital%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :fiat_investments, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td></td>
+                <td>جاري المساهمين</td>
+                <td><%= @last_year_f_state.fiat_investments%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :delayed_profits, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td></td>
+                <td>أرباح مرحلة</td>
+                <td><%= @last_year_f_state.delayed_profits%></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><%= f.text_field :year_profits, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td></td>
+                <td>أرباح العام</td>
+                <td><%= @last_year_f_state.year_profits%></td>
+              </tr>
+              <%tamweel_osool = @last_year_f_state.capital + @last_year_f_state.fiat_investments + @last_year_f_state.delayed_profits + @last_year_f_state.year_profits%>
+              <tr>
+                <td id="tamweel_osool"></td>
+                <td></td>
+                <td></td>
+                <td><b>إجمالي تمويل الأصول الثابتة ورأس المال العامل</b></td>
+                <td><%= tamweel_osool%></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= f.submit "تحديث البيانات"%>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+// Run Datables plugin and create 3 variants of settings
+function AllTables(){
+  setupTables();
+  LoadSelect2Script(MakeSelect2);
+}
+function MakeSelect2(){
+  $('select').select2();
+  $('.dataTables_filter').each(function(){
+    $(this).find('label input[type=text]').attr('placeholder', 'Search');
+  });
+}
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+  update_table();
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+
+
+var update_table = function() {
+  var total_osool = parseFloat($("#financial_state_osool").val() - $("#financial_state_ehlak_osool").val());
+  $("#total_osool").html(total_osool);
+
+  var total_osool_motadawla = parseFloat($("#financial_state_stock").val()) + parseFloat($("#financial_state_ats").val()) + parseFloat($("#financial_state_clients").val()) + parseFloat($("#financial_state_treasury").val()) + parseFloat($("#financial_state_m_advance").val());
+  $("#total_osool_motadawla").html(total_osool_motadawla);
+
+  var total_eltezamat_motadawla = parseFloat($("#financial_state_suppliers").val()) + parseFloat($("#financial_state_debts").val()) + parseFloat($("#financial_state_taxes_for_us").val()) + parseFloat($("#financial_state_foreign_suppliers").val()) + parseFloat($("#financial_state_taxes_delayed").val()) + parseFloat($("#financial_state_expenses").val());
+  $("#total_eltezamat_motadawla").html(total_eltezamat_motadawla);
+
+  var working_capital = total_osool_motadawla - total_eltezamat_motadawla;
+  $("#working_capital").html(working_capital);
+
+  var total_investments = total_osool - working_capital;
+  $("#total_investments").html(total_investments);
+
+  var tamweel_osool = parseFloat($("#financial_state_capital").val()) +
+  parseFloat($("#financial_state_fiat_investments").val()) + parseFloat($("#financial_state_delayed_profits").val()) + parseFloat($("#financial_state_year_profits").val());
+  $("#tamweel_osool").html(tamweel_osool);
+
+};
+var f = function() {
+    window.location.href = "/financial_state/" + $("#input_year").val();
+}
+$('#input_year').change(f)
+
+</script>
