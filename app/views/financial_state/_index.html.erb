@@ -254,20 +254,6 @@ function MakeSelect2(){
     $(this).find('label input[type=text]').attr('placeholder', 'Search');
   });
 }
-$(document).ready(function() {
-  // Load Datatables and run plugin on tables 
-  LoadDataTablesScripts(AllTables);
-  // Add Drag-n-Drop feature
-  WinMove();
-  update_table();
-});
-    $("tr[data-href]").click(function() {
-  window.location = this.dataset.href;
-}).hover(function() {
-    $(this).toggleClass('hover');
-});
-
-
 var update_table = function() {
   var total_osool = parseFloat($("#financial_state_osool").val() - $("#financial_state_ehlak_osool").val());
   $("#total_osool").html(total_osool);
@@ -289,6 +275,21 @@ var update_table = function() {
   $("#tamweel_osool").html(tamweel_osool);
 
 };
+$(document).ready(function() {
+  // Load Datatables and run plugin on tables 
+  LoadDataTablesScripts(AllTables);
+  // Add Drag-n-Drop feature
+  WinMove();
+  update_table();
+});
+    $("tr[data-href]").click(function() {
+  window.location = this.dataset.href;
+}).hover(function() {
+    $(this).toggleClass('hover');
+});
+
+
+
 var f = function() {
     window.location.href = "/financial_state/" + $("#input_year").val();
 }
