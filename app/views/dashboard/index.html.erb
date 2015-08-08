@@ -88,14 +88,8 @@
 									<li>
 										<%= link_to edit_user_path(current_user), class:"ajax-link" do%>
 											<i class="fa fa-user"></i>
-											<span>Profile</span>
+											<span>تعديل البيانات</span>
 										<%end%>
-									</li>
-									<li>
-										<a href="ajax/page_messages.html" class="ajax-link">
-											<i class="fa fa-envelope"></i>
-											<span>Messages</span>
-										</a>
 									</li>
 									<li>
 										<a href="/signout">
@@ -133,8 +127,8 @@
 							<span class="hidden-xs">الموظفين</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/users">جميع الموظفين</a></li>
-							<li><a class="ajax-link" href="/users/new">موظف جديد</a></li>
+							<li><a class="ajax-link" href="/users">عرض الموظفين</a></li>
+							<li><a class="ajax-link" href="/users/new">إضافة موظف</a></li>
 						</ul>
 					</li>
 				<%end%>
@@ -145,7 +139,7 @@
 							<span class="hidden-xs">الموردين</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/suppliers">جميع الموردين</a></li>
+							<li><a class="ajax-link" href="/suppliers">عرض الموردين</a></li>
 							<li><a class="ajax-link" href="/suppliers/new">إضافة مورد</a></li>
 						</ul>
 					</li>
@@ -158,8 +152,8 @@
 							<span class="hidden-xs">العملاء</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/clients">جميع العملاء</a></li>
-							<li><a class="ajax-link" href="/clients/new">عميل جديد</a></li>
+							<li><a class="ajax-link" href="/clients">عرض العملاء</a></li>
+							<li><a class="ajax-link" href="/clients/new">إضافة عميل</a></li>
 						</ul>
 					</li>
 				<%end%>
@@ -172,19 +166,19 @@
 							<span class="hidden-xs">المواد الخام</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/raw_materials">جميع المواد الخام</a></li>
+							<li><a class="ajax-link" href="/raw_materials">عرض المواد الخام</a></li>
 							<li><a class="ajax-link" href="/raw_materials/new">إضافة مادة خام</a></li>
 						</ul>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle">
 							<i class="fa fa-bar-chart-o"></i>
-							<span class="hidden-xs">حركات الشراء</span>
+							<span class="hidden-xs">عرض حركات الشراء</span>
 						</a>
 						<ul class="dropdown-menu">
 							<li><a class="ajax-link" href="/materials">حركات الشراء</a></li>
-							<li><a class="ajax-link" href="/materials/new">حركة شراء خارجية</a></li>
-							<li><a class="ajax-link" href="/materials/new_internal">حركة شراء داخلية</a></li>
+							<li><a class="ajax-link" href="/materials/new">إضافة حركة شراء خارجية</a></li>
+							<li><a class="ajax-link" href="/materials/new_internal">إضافة حركة شراء داخلية</a></li>
 						</ul>
 					</li>
 
@@ -194,8 +188,8 @@
 							<span class="hidden-xs">حركات الصناعة</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/productions">حركات الصناعة</a></li>
-							<li><a class="ajax-link" href="/raw_materials/production">حركة صناعة جديدة</a></li>
+							<li><a class="ajax-link" href="/productions">عرض حركات الصناعة</a></li>
+							<li><a class="ajax-link" href="/raw_materials/production">إضافة حركة صناعة جديدة</a></li>
 						</ul>
 					</li>
 				<%end%>
@@ -207,8 +201,8 @@
 							<span class="hidden-xs">المنتجات</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/products">المنتجات</a></li>
-							<li><a class="ajax-link" href="/products/new">منتج جديد</a></li>
+							<li><a class="ajax-link" href="/products">عرض المنتجات</a></li>
+							<li><a class="ajax-link" href="/products/new">إضافة منتج</a></li>
 						</ul>
 					</li>
 				<%end%>
@@ -219,20 +213,11 @@
 							<span class="hidden-xs">حركات البيع</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/purchases">حركات البيع</a></li>
-							<li><a class="ajax-link" href="/purchases/new">حركة بيع جديدة</a></li>
+							<li><a class="ajax-link" href="/purchases">عرض حركات البيع</a></li>
+							<li><a class="ajax-link" href="/purchases/new">إضافة حركة بيع</a></li>
 						</ul>
 					</li>
 				<%end%>
-				<%if current_user.department.in? ['Management', 'Stocks']%>
-					<li class="dropdown">
-						<a href="/stock" class="ajax-link">
-							<i class="fa fa-bar-chart-o"></i>
-							<span class="hidden-xs">المخزن</span>
-						</a>
-					</li>
-				<%end%>
-
 				<%if current_user.department.in? ['Management', 'Accounting']%>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle">
@@ -240,53 +225,54 @@
 							<span class="hidden-xs">المصروفات</span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="expenses/index_general">المصروفات العمومية</a></li>
-							<li><a class="ajax-link" href="expenses/index_production">المصروفات التشغيلية</a></li>
+							<li><a class="ajax-link" href="expenses/index_general">عرض المصروفات العمومية</a></li>
+							<li><a class="ajax-link" href="expenses/index_production">عرض المصروفات التشغيلية</a></li>
 							<li><a class="ajax-link" href="/expenses/new">إضافة مصروفات</a></li>
 						</ul>
 					</li>
 				<%end%>
 
-				<%if current_user.department.in? ['Management', 'Stocks', 'Accounting']%>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle">
-							<i class="fa fa-bar-chart-o"></i>
-							<span class="hidden-xs">أذونات المخزن</span>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/permission/additions">أذونات الإضافة</a></li>
-							<li><a class="ajax-link" href="/permission/subtractions">أذونات الخصم</a></li>
-						</ul>
-					</li>
+				<li class="dropdown">
+					<a href="/invoices" class="ajax-link">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">الفواتير</span>
+					</a>
+				</li>
+				<%if current_user.department.in? ['Management', 'Stocks']%>
+				<li class="dropdown">
+					<a href="/stock" class="ajax-link">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">المخزن</span>
+					</a>
+				</li>
 				<%end%>
 
-				<%if current_user.department.in? ['Management', 'Accounting']%>
-					<li class="dropdown">
-						<a href="/invoices" class="ajax-link">
-							<i class="fa fa-bar-chart-o"></i>
-							<span class="hidden-xs">الفواتير</span>
-						</a>
-					</li>
-
-					<li class="dropdown">
-						<a href="/permission/treasury" class="ajax-link">
-							<i class="fa fa-bar-chart-o"></i>
-							<span class="hidden-xs">أذونات الخزنة</span>
-						</a>
-					</li>
-				<%end%>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">أذونات المخزن</span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a class="ajax-link" href="/permission/additions">أذونات الإضافة</a></li>
+						<li><a class="ajax-link" href="/permission/subtractions">أذونات الخصم</a></li>
+					</ul>
+				</li>
 
 				<%if current_user.department.in? ['Management', 'Stocks', 'Accounting']%>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle">
+						<a href="/treasury/show" class="ajax-link">
 							<i class="fa fa-bar-chart-o"></i>
 							<span class="hidden-xs">الخزنة</span>
 						</a>
-						<ul class="dropdown-menu">
-							<li><a class="ajax-link" href="/treasury/show">عرض الخزنة</a></li>
-						</ul>
 					</li>
 				<%end%>
+
+				<li class="dropdown">
+					<a href="/permission/treasury" class="ajax-link">
+						<i class="fa fa-bar-chart-o"></i>
+						<span class="hidden-xs">أذونات الخزنة</span>
+					</a>
+				</li>
 
 				<%if current_user.department.in? ['Management', 'Accounting']%>
 				<li class="dropdown">
@@ -322,9 +308,11 @@
 						<li><a class="ajax-link" href="/diaries/index">دفتر اليومية</a></li>
 						<li><a class="ajax-link" href="/wear_outs">اهلاك الأصول الثابتة</a></li>
 						<li><a class="ajax-link" href="/income">قائمة الدخل</a></li>
+						<li><a class="ajax-link" href="/revision">ميزان المراجعة</a></li>
 
 						<li><a class="ajax-link" href="/financial_state">قائمة المركز المالي</a></li>
 						<li><a class="ajax-link" href="/taxes">الإقرار الضريبي</a></li>
+
 					</ul>
 				</li>
 

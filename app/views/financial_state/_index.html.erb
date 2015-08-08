@@ -46,14 +46,14 @@
             <tbody>
               <tr>
                 <td></td>
-                <td><%= f.text_field :osool, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td><%= f.text_field :osool, {onchange:"update_table()"} %></td>
                 <td></td>
                 <td>أصول ثابتة</td>
                 <td><%= @last_year_f_state.osool%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :ehlak_osool, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td><%= f.text_field :ehlak_osool, {onchange:"update_table()"} %></td>
                 <td></td>
                 <td>يخصم إهلاك أ. ث</td>
                 <td><%= @last_year_f_state.ehlak_osool%></td>
@@ -76,35 +76,35 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :stock, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :stock, {onchange:"update_table()"}%></td>
                 <td>المخزون</td>
                 <td><%= @last_year_f_state.stock%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :ats, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :ats, {onchange:"update_table()"}%></td>
                 <td>أ. ت. ص</td>
                 <td><%= @last_year_f_state.ats%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :clients, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :clients, {onchange:"update_table()"}%></td>
                 <td>عملاء</td>
                 <td><%= @last_year_f_state.clients%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :treasury, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :treasury, {onchange:"update_table()"}%></td>
                 <td>النقدية بالصندوق والبنوك</td>
                 <td><%= @last_year_f_state.treasury%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :m_advance, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :m_advance, {onchange:"update_table()"}%></td>
                 <td>م. مقدم</td>
                 <td><%= @last_year_f_state.m_advance%></td>
               </tr>
@@ -127,7 +127,7 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :suppliers, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :suppliers, {onchange:"update_table()"}%></td>
                 <td>موردين</td>
                 <td><%= @last_year_f_state.suppliers%></td>
               </tr>
@@ -135,35 +135,35 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :debts, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :debts, {onchange:"update_table()"}%></td>
                 <td>دائنون وأرصدة دائنة</td>
                 <td><%= @last_year_f_state.debts%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :taxes_for_us, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :taxes_for_us, {onchange:"update_table()"}%></td>
                 <td>ضريبة مبيعات مستحقة</td>
                 <td><%= @last_year_f_state.taxes_for_us%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :foreign_suppliers, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :foreign_suppliers, {onchange:"update_table()"}%></td>
                 <td>موردي الخارج</td>
                 <td><%= @last_year_f_state.foreign_suppliers%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :taxes_delayed, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :taxes_delayed, {onchange:"update_table()"}%></td>
                 <td>التزامات ضريبية مؤجلة</td>
                 <td><%= @last_year_f_state.taxes_delayed%></td>
               </tr>
               <tr>
                 <td></td>
                 <td></td>
-                <td><%= f.text_field :expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :expenses, {onchange:"update_table()"}%></td>
                 <td>مصروف مستحق</td>
                 <td><%= @last_year_f_state.expenses%></td>
               </tr>
@@ -200,28 +200,28 @@
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :capital, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :capital, {onchange:"update_table()"}%></td>
                 <td></td>
                 <td>رأس المال</td>
                 <td><%= @last_year_f_state.capital%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :fiat_investments, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :fiat_investments, {onchange:"update_table()"}%></td>
                 <td></td>
                 <td>جاري المساهمين</td>
                 <td><%= @last_year_f_state.fiat_investments%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :delayed_profits, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :delayed_profits, {onchange:"update_table()"}%></td>
                 <td></td>
                 <td>أرباح مرحلة</td>
                 <td><%= @last_year_f_state.delayed_profits%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :year_profits, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :year_profits, {onchange:"update_table()"}%></td>
                 <td></td>
                 <td>أرباح العام</td>
                 <td><%= @last_year_f_state.year_profits%></td>

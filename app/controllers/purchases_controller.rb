@@ -135,6 +135,8 @@ class PurchasesController < ApplicationController
   def destroy
     permissions = ReleaseProductPermission.where(transaction_id: @purchase.id)
     PurchasePaymentDetail.find(@purchase.id).destroy
+    update_treasury(@purchase.payment_method, -@purchase.price_with_taxes, PURCHASE, @material.id, "مسح حركة بيع", 0)
+    TreasuryDiary.where(transaction_id: @purchase.id, transaction_type: PURCHASE).destroy_all
     permissions.destroy_all
     @purchase.destroy
     respond_to do |format|

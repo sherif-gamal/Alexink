@@ -149,7 +149,7 @@ class MaterialsController < ApplicationController
     permissions.destroy_all
     permissions = AddMaterialPermission.where(transaction_id: @material.id)
     permissions.destroy_all
-    update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح عملية شراء", 0)
+    update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح حركة شراء", 0)
     TreasuryDiary.where(transaction_id: @material.id, transaction_type: 1).destroy_all
     MaterialPaymentDetail.find(@material.id).destroy
     @material.destroy

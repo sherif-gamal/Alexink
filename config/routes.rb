@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   match '/financial_state', to: 'financial_state#index', via: [:get]
   match '/financial_state/:year', to: 'financial_state#index', via: [:get]
   match '/financial_state/update', to: 'financial_state#update', via: [:patch]
+  match '/revision', to: 'revision#index', via: [:get]
+  match '/revision/:year', to: 'revision#index', via: [:get]
+  match '/revision/update', to: 'revision#update', via: [:patch]
 
   get '/dashboard/index'
   get '/clients/status'

@@ -52,13 +52,16 @@
             <% @treasury_additions.each do |a| %>
               <%sum = sum + a.amount%>
               <%if a.transaction_type == ApplicationController::PURCHASE%>
+              <%puts "purchase and treasuryDiary id is #{a.id}"%>
                 <%m = Purchase.find(a.transaction_id)%>
                 <%t = Client.find(m.client_id)%>
                 <tr data-href="<%= purchase_path(m) %>">
               <%elsif a.transaction_type == ApplicationController::CLIENT%>
+              <%puts "client and treasuryDiary id is #{a.id}"%>
                 <%t = Client.find(a.transaction_id)%>
                 <tr data-href="<%= client_path(t) %>">
               <%elsif a.transaction_type == ApplicationController::MANUAL%>
+              <%puts "manual and treasuryDiary id is #{a.id}"%>
                 <%t = User.find(a.transaction_id)%>
                 <tr>
               <%end%>

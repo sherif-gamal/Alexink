@@ -45,13 +45,13 @@
             <tbody>
               <tr>
                 <td></td>
-                <td><%= f.text_field :sales, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td><%= f.text_field :sales, {onchange:"update_table()"} %></td>
                 <td>المبيعات</td>
                 <td><%= @last_year_income.sales%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :sales_payoff, {onchange:"update_table()", style: "border:none;"} %></td>
+                <td><%= f.text_field :sales_payoff, {onchange:"update_table()"} %></td>
                 <td>تكلفة المبيعات</td>
                 <td><%= @last_year_income.sales_expenses%></td>
               </tr>
@@ -69,25 +69,25 @@
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :general_expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :general_expenses, {onchange:"update_table()"}%></td>
                 <td>م. عمومية</td>
                 <td><%= @last_year_income.general_expenses%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :sales_expenses, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :sales_expenses, {onchange:"update_table()"}%></td>
                 <td>م. بيعية</td>
                 <td><%= @last_year_income.sales_expenses%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :exchange_loss, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :exchange_loss, {onchange:"update_table()"}%></td>
                 <td>خسائر فروق العملة</td>
                 <td><%= @last_year_income.exchange_loss%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :ehlak, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :ehlak, {onchange:"update_table()"}%></td>
                 <td>م. إهلاك أ. ث.</td>
                 <td><%= @last_year_income.ehlak%></td>
               </tr>
@@ -105,13 +105,13 @@
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :exchange_profit, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :exchange_profit, {onchange:"update_table()"}%></td>
                 <td>أرباح قروق العملة</td>
                 <td><%= @last_year_income.exchange_profit%></td>
               </tr>
               <tr>
                 <td></td>
-                <td><%= f.text_field :other_income, {onchange:"update_table()", style: "border:none;"}%></td>
+                <td><%= f.text_field :other_income, {onchange:"update_table()"}%></td>
                 <td>أرباح أخرى</td>
                 <td><%= @last_year_income.other_income%></td>
               </tr>

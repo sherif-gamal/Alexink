@@ -95,6 +95,7 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     purchases = Purchase.where("client_id = ?", @client.id)
+    
     if purchases.empty?
       @client.destroy
     else

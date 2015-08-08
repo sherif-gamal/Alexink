@@ -99,6 +99,8 @@ class ExpensesController < ApplicationController
   def destroy
     permissions = ReleaseMoneyPermission.where(transaction_for: EXPENSE, transaction_id: @expense.id)
     permissions.destroy_all
+    update_treasury(@expense.payment_method, @expense.price, EXPENSE, @expense.id, "مسح حركة بيع", 0)
+    TreasuryDiary.where(transaction_id: @expense.id, transaction_type: EXPENSE).destroy_all
     ExpensePaymentDetail.find(@expense.id).destroy
     @expense.destroy
     respond_to do |format|
