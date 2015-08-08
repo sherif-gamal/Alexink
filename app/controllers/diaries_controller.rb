@@ -104,6 +104,7 @@ class DiariesController < ApplicationController
 		diaries = diaries.where("created_at > ? and created_at <= ?", @_start, @_end)
 
 		@treasury_additions = diaries.where("amount > ?", 0).order(created_at: :desc)
+		p @treasury_additions
 		@treasury_subtractions = diaries.where("amount < ?", 0).order(created_at: :desc)
 		if request.xhr?
       		render partial: 'treasury'
