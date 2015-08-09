@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
   # DELETE /products/1
   # DELETE /products/1.json
   def destroy
-    purchases = Purchase.where("product_id = ?", @product.id)
+    purchases = Purchase.where(["product_ids like ?", "%#{@product.id}%"])
     if purchases.empty?
       @product.destroy
     else
