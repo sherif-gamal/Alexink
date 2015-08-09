@@ -1,4 +1,4 @@
-<div class="row">
+  <div class="row">
   <div id="breadcrumb" class="col-md-12">
     <ol class="breadcrumb">
       <li><a href="/">الصفحة الرئيسية</a></li>
@@ -97,9 +97,9 @@
               </div>
 
               <div id="debt-div" hidden="hidden">
-                <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
+                <%= label_tag "paid_label",  'المبلغ المدفوع', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-2 pull-right">
-                  <%= f.text_field :debt , {class:"form-control", value:0}%>
+                  <%= text_field_tag "paid_amount" , "", {class:"form-control", value:0}%>
                 </div>
 
                 <%= f.label :due_date,  'تاريخ الاستحقاق', {class:"col-sm-2 control-label pull-right"}%>

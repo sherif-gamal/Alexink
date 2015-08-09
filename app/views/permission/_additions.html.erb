@@ -34,7 +34,7 @@
               <%material = @materials.find(permission.transaction_id)%>
               <%url = "/permission/material_stock/#{permission.id}"%>
               <tr data-href=<%=url%>>
-                <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= material.date_added %></td>
                 <td><%= permission.id %></td>
                 <td><ul>
                   <% @raw_materials.find(material.raw_material_ids).each do |r| %>

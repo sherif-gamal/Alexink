@@ -38,7 +38,7 @@
                 <%url = "/permission/expense/#{permission.id}"%>
               <%end%>
               <tr data-href=<%=url%>>
-                <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= t.date_added %></td>
                 <td><%= permission.id %></td>
                 <%if t.is_a? Material%>
                   <td><ul>

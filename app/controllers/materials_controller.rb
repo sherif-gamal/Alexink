@@ -56,14 +56,9 @@ class MaterialsController < ApplicationController
       params = material_params
       @material = Material.new(params)
 
-      if params['paid_amount'].present? && purchase.price < params['paid_amount'].to_f
+      if params['paid_amount'].present? && purchase.price_with_taxes < params['paid_amount'].to_f
         redirect_to '/materials/new', notice: 'لا يمكن أن يكون المبلغ المدفوع أكبر من السعر الكلي'
         return
-      end
-      if (@material.payment_state == "آجل")
-        @material.debt = @material.price_with_taxes - params["paid_amount"].to_f
-      else
-        @material.debt = 0
       end
       @material.user_name = current_user.name
 
@@ -72,10 +67,10 @@ class MaterialsController < ApplicationController
       @material.prices.each_with_index do |price, i|
         @material.price = @material.price + price.to_f * @material.quantities[i].to_f
       end
-
-      if @material.debt > @material.price
-        redirect_to !material_params['currency'] ? "/materials/new_internal" : "/materials/new", notice: 'لا يمكن أن يكون المبلغ المتبقي أكبر من السعر'
-        return
+      if (@material.payment_state == "آجل")
+        @material.debt = @material.price_with_taxes - params["paid_amount"].to_f
+      else
+        @material.debt = 0
       end
 
       if !check_treasury(material_params[:payment_method], (params['price'].to_f - params['debt'].to_f))

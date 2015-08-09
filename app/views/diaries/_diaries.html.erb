@@ -43,6 +43,7 @@ th, td { white-space: nowrap; }
             <tr>
               <th rowspan="2" width="40px">رقم القيد</th>
               <th rowspan="2" width="70px">التاريخ</th>
+              <th rowspan="2" >الدائن/المدين</th>
               <th rowspan="2" >البيان</th>
               <th colspan="2" class="text-center">الإجمالي</th>
               <th colspan="2" class="text-center">الخزينة</th>
@@ -151,12 +152,14 @@ th, td { white-space: nowrap; }
 
               <tr data-href=<%=url%>>
                 <td><%=number%></td>
-                <td><%=d a.created_at%></td>
+                <td><%=a.date_added.blank? ? (d a.created_at) : a.date_added%></td>
                 <%if a.is_a? Expense%>
+                  <td><%=a.seller%></td>
                   <td><%=a.name%></td>
                   <td><%=a.price%></td>
                   <td><%=a.price%></td>
                 <%elsif a.is_a? Material%>
+                  <td><%= Supplier.find(a.supplier_id).name%></td>
                   <td><ul>
                   <% @raw_materials.find(a.raw_material_ids).each do |r| %>
                   <li><%= r.name%></li>
@@ -166,6 +169,7 @@ th, td { white-space: nowrap; }
                   <td><%=a.price_with_taxes%></td>
                   <td><%=a.price_with_taxes%></td>
                 <%elsif a.is_a? Purchase%>
+                  <td><%= Client.find(a.client_id).name%>
                   <td><%="ف رقم #{a.invoice_id}"%></td>
                   <td><%=a.price_with_taxes%></td>
                   <td><%=a.price_with_taxes%></td>
