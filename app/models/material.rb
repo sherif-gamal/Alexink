@@ -7,7 +7,12 @@ class Material < ActiveRecord::Base
 	serialize :prices, Array
 
 	def price_with_taxes
-		after_add = price + price * 0.1
+		puts "zzzzzzzzzzzzz #{internal}"
+		if internal == 1
+			after_add = price + price * 0.1
+		else
+			after_add = price
+		end
 		if calc_sub_tax == 1
 			after_sub = after_add - price * 0.005
 			return after_sub.round(2)

@@ -81,36 +81,38 @@
               <td class="text-center"></td>
               <td class="text-center">الإجمالي</td>
             </tr>
-            <tr>
-              <%addition = @material.price * 0.1%>
-              <td class="text-center"><%=sprintf '%02d', (addition - addition.to_i) * 100%></td>
-              <td class="text-center"><%=addition.to_i%></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center">يضاف 10% ض.م</td>
-            </tr>
-            <%subtraction = 0%>
-            <%if @material.calc_sub_tax == 1%>
-            <tr>
-              <%subtraction = @material.price * 0.005%>
-              <td class="text-center"><%=sprintf '%02d', (subtraction - subtraction.to_i) * 100%></td>
-              <td class="text-center"><%=subtraction.to_i%></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center">يخصم 0.5% ض.أ.ص</td>
-            </tr>
+            <%if @material.internal == 1%>
+              <tr>
+                <%addition = @material.price * 0.1%>
+                <td class="text-center"><%=sprintf '%02d', (addition - addition.to_i) * 100%></td>
+                <td class="text-center"><%=addition.to_i%></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center">يضاف 10% ض.م</td>
+              </tr>
+              <%subtraction = 0%>
+              <%if @material.calc_sub_tax == 1%>
+              <tr>
+                <%subtraction = @material.price * 0.005%>
+                <td class="text-center"><%=sprintf '%02d', (subtraction - subtraction.to_i) * 100%></td>
+                <td class="text-center"><%=subtraction.to_i%></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center">يخصم 0.5% ض.أ.ص</td>
+              </tr>
+              <%end%>
+              <tr>
+                <%total = @material.price + addition - subtraction%>
+                <td class="text-center"><%=sprintf '%02d', (total - total.to_i) * 100%></td>
+                <td class="text-center"><%=total.to_i%></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center">الإجمالي بعد الضرائب</td>
+              </tr>
             <%end%>
-            <tr>
-              <%total = @material.price + addition - subtraction%>
-              <td class="text-center"><%=sprintf '%02d', (total - total.to_i) * 100%></td>
-              <td class="text-center"><%=total.to_i%></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center"></td>
-              <td class="text-center">الإجمالي بعد الضرائب</td>
-            </tr>
 
           </table>
         </div>

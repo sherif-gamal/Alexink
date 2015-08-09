@@ -7,152 +7,64 @@
 	</div>
 </div>
 <style>
-hr {
-  border-top-color: rgb(0, 0, 0);
-  border-top-style: solid;
-  border-top-width: 1px;
-  border-right-color: initial;
-  border-right-style: initial;
-  border-right-width: 0px;
-  border-bottom-color: initial;
-  border-bottom-style: initial;
-  border-bottom-width: 0px;
-  border-left-color: initial;
-  border-left-style: initial;
-  border-left-width: 0px;
-}
-td { 
-    padding: 10px;
-}
+    #paper {
+        position: absolute;
+        width: 100%;
+        height: 700px;
+        background-color: white;
+    }
+    .main-content {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 95%;
+        height: 90%;
+        border-style: solid;
+    }
+    #header-right {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+    }
+    #header-center {
+        position: absolute;
+        top: 60px;
+        right: 215px;
+    }
+    #header-left {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    #details-box {
+        position: absolute;
+        left: 20px;
+        top: 100px;
+        border: solid;
+    }
+
+    #details {
+        
+    }
+
 </style>
 <div class="row"  dir="ltr">
-  <div class="col-xs-8 col-xs-offset-2" id="invoice">
-      <div class="box-content">
-        <div>
-          <div class="col-xs-5 text-center">
-            
-          </div>
-
-          <div class="col-xs-2">
-            <div class="text-center">إقرار الضريبة العامة على المبيعات</div>
-          </div>
-          <div class="col-xs-5 pull-right" style="text-align:center;">
-              <div align=center>وزارة المالية</div>
-              <div align=center>مصلحة الضرائب</div>
-          </div>
+  <div class="col-xs-8 col-xs-offset-2" id="taxes">
+      <div id="paper" style="text-align: center;">
+        <div class="main-content">
+            <div id="header-right">وزارة المالية<br/>مصلحة الضرائب</div>
+            <div id="header-center">إقرار<br/>الضريبة العامة على المبيعات</div>
+            <div id="header-left">Logo</div>
+            <div id="details-box">
+                الاسم: شركة الإسكندرية للأحبار<br/>
+                العنوان: ك 27 طريق القاهرة - الإسكندرية الصحراوي<br/>
+                الراسل: العامرية<br/>
+            </div>
         </div>
-        <div class="clearfix"></div>
-        <div class="col-xs-12 pull-right text-right" dir="rtl" style="margin-top: 20px;">رقم التسجيل: <span style="border-bottom: 1px dotted;">459791473</span></div>
-
-        <hr>
-
-        <table align=right dir="rtl" cellspacing="10px" class="col-xs-12 pull-right">
-        	<tr>
-        		<th width="100px">المبيعات</th>
-        		<th></th>
-        		<th width="150px"></th>
-        		<th></th>
-        	</tr>
-        	<tr>
-        		<td>محلي <span style="padding: 5px; border-style:solid; border-color:#0;">1</span></td>
-        		<td><div align=center> القيمة</div><input style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f @purchases_price %>"></input></td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">2</span></td>
-        		<%purchase_tax = @purchases_price * 0.1%>
-        		<td><div align=center> الضريبة</div><input style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f purchase_tax %>"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td>صادرات <span style="padding: 5px; border-style:solid; border-color:#0;">3</span></td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="لا شيء"></input></td>
-        		<td>فئة ضريبية واحدة</td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td>اعفاءات <span style="padding: 5px; border-style:solid; border-color:#0;">4</span></td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="لا شيء"></input></td>
-        		<td>فئات ضريبية متعددة</td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;"></input></td>
-        	</tr>
-        </table>
-
-
-        <br/>
-		<hr>
-
-
-        <table align=right dir="rtl" cellspacing="10px" class="col-xs-12 pull-right">
-        	<tr>
-        		<th width="100px">المشتريات القابلة للخصم</th>
-        		<th></th>
-        		<th width="150x"></th>
-        		<th></th>
-        	</tr>
-        	<tr>
-        		<td>محلية <span style="padding: 5px; border-style:solid; border-color:#0;">5</span></td>
-        		<td><div align=center> القيمة</div><input style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f @material_price_local %>"></input></td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">6</span></td>
-        		<td><div align=center> الضريبة</div><input style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f @material_price_local * 0.1 %>"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td>مستوردة <span style="padding: 5px; border-style:solid; border-color:#0;">7</span></td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f @material_price_foreign %>"></input></td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">8</span></td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f @material_price_foreign * 0.1%>"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td></td>
-        		<td>إجمالي الضرائب المخصومة</td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">9</span></td>
-        		<% material_tax = 0.1 * (@material_price_foreign + @material_price_local)%>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="<%= material_tax%>"></input></td>
-        	</tr>
-        </table>
-
-        <br/>
-		<hr>
-
-		<table align=right dir="rtl" cellspacing="10px" class="col-xs-12 pull-right">
-        	<tr>
-        		<th width="100px"></th>
-        		<th></th>
-        		<th width="150x"></th>
-        		<th></th>
-        	</tr>
-        	<tr>
-        		<td></td>
-        		<td><div align=center> الضريبة المستحقة</div></td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">10</span></td>
-        		<td><input style="padding: 5px; border-style:solid; border-color:#0;" value="<%= f (purchase_tax - material_tax) %>"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td></td>
-        		<td><div align=center> رصيد دائن مرحل من الشهر السابق</div></td>
-        		<td align=center><span contenteditable="true" style="padding: 5px; border-style:solid; border-color:#0;">الشهر</span></td>
-        		<td><input style="padding: 5px; border-style:solid; border-color:#0;" value="0"></input></td>
-        	</tr>
-
-        	<tr>
-        		<td></td>
-        		<td>رصيد الشهر الحالي</td>
-        		<td align=center><span style="padding: 5px; border-style:solid; border-color:#0;">دائن</span></td>
-        		<td><input type="text" style="padding: 5px; border-style:solid; border-color:#0;" value="0"></input></td>
-        	</tr>
-        </table>
-
-		<hr>        
-        <div class="clearfix"></div>
+      </div>
     </div>
-  </div>
 </div>
-<div class="col-xs-6 col-xs-offset-6">
-    <div class="col-xs-4">
-      <a href"" class="btn btn-default btn-label-left" id="print-3"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
-    </div>
-  </div>
 
 
 <script type="text/javascript">
