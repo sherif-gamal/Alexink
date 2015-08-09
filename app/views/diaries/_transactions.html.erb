@@ -38,7 +38,7 @@
             <tr>
               <th>التاريخ</th>
               <th>العميل</th>
-              <th>المنجات</th>
+              <th>المنتجات</th>
               <th>الكمية</th>
               <th>السعر</th>
               <th>المبلغ المتبقي</th>
@@ -113,7 +113,7 @@
               <th>المورد</th>
               <th>المبلغ</th>
               <th>الموقف</th>
-              <th>كمية المخزون</th>
+              <th>العملة (القيمة الأجنبية)</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +129,7 @@
                 <td><%= @suppliers.find(material.supplier_id).name %></td>
                 <td><%= material.price_with_taxes %></td>
                 <td><%= material.debt %></td>
-                <td><%= material.in_stock %></td>
+                <td><%= material.currency %></td>
               </tr>
             <% end %>
             </tr>

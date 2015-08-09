@@ -24,25 +24,28 @@
           <thead>
             <tr>
               <th>التاريخ</th>
-              <th>المورد</th>
               <th>المواد الخام</th>
+              <th>المورد</th>
               <th>المبلغ</th>
+              <th>الموقف</th>
               <th>النوع</th>
-              <th>العملة</th>
+              <th>العملة (القيمة الأجنبية)</th>
             </tr>
           </thead>
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
                 <td><%= material.date_added %></td>
-                <td><%= @suppliers.find(material.supplier_id).name%></td>
+                
                 <td><ul>
                   <% @raw_materials.find(material.raw_material_ids).each do |r| %>
                   <li><%= r.name%></li>
                   <%end%>
                 </ul>
                 </td>
+                <td><%= @suppliers.find(material.supplier_id).name%></td>
                 <td><%= material.price_with_taxes %></td>
+                <td><%= material.debt %></td>
                 <td><%= material.internal == 0 ? "خارجية" : "داخلية" %></td>
                 <td><%= material.currency %></td>
               </tr>

@@ -121,26 +121,29 @@
         <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
           <thead>
             <tr>
+              <th>التاريخ</th>
               <th>المواد الخام</th>
-              <th>المورد</th>
               <th>المبلغ</th>
               <th>الموقف</th>
-              <th>كمية المخزون</th>
+              <th>النوع</th>
+              <th>العملة (القيمة الأجنبية)</th>
             </tr>
           </thead>
           <tbody>
             <% @materials.each do |material| %>
               <tr data-href="<%= material_path(material) %>">
-                <td><ul>
+                <td><%= material.date_added %> </td>
+                <td>
+                  <ul>
                   <% @raw_materials.find(material.raw_material_ids).each do |r| %>
                   <li><%= r.name%></li>
                   <%end%>
                 </ul>
                 </td>
-                <td><%= @supplier.name %></td>
-                <td><%= material.price %></td>
-                <td><%= material.debt %></td>
-                <td><%= material.in_stock %></td>
+                <td><%=p material.price_with_taxes %></td>
+                <td><%=p material.debt %></td>
+                <td><%=material.internal ? "داخلية" : "خارجية" %></td>
+                <td><%= material.currency %></td>
               </tr>
             <% end %>
             </tr>
@@ -151,7 +154,8 @@
               <th><label><input type="text" name="search_supplier" value="البحث بالمورد" class="search_init" /></label></th>
               <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_pay_state" value="البحث بالموقف" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_in_stock" value="البحث بكمية المخزون" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_stock" value="البحث بالنوع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_in_cur" value="البحث بالعملة" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>

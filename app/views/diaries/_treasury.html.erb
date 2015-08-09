@@ -68,7 +68,7 @@
                   <td><%= a.date_added || a.created_at.strftime("%Y/%m/%d") %></td>
                   <td><%= t.name%></td>
                   <td><%= a.description %></td>
-                  <td><%= a.amount %></td>
+                  <td><%=f a.amount %></td>
                 </tr>
             <% end %>
             </tr>
@@ -143,7 +143,7 @@
                     <td><%= t.name%></td>
                   <%end%>
                   <td><%= a.description %></td>
-                  <td><%= - a.amount %></td>
+                  <td><%=f - a.amount %></td>
                 </tr>
             <% end %>
             </tr>
