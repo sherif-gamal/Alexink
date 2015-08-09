@@ -18,7 +18,7 @@ class ClientsController < ApplicationController
     diaries = diaries + d
 
     @both = purchases + diaries
-    @both = @both.sort_by{|e| e.created_at}
+    @both = @both.sort_by{|e| e.date_added}
     @products = Product.all
     super
   end

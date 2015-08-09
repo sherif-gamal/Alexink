@@ -23,7 +23,7 @@ class ExpensePaymentDetailController < ApplicationController
 
 	    # Never trust parameters from the scary internet, only allow the white list through.
 	    def expense_params
-	      params.require(:expense).permit!
+	      params.require(:expense_payment_detail).permit!
 	    end
 
 end

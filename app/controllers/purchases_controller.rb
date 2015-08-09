@@ -52,17 +52,23 @@ class PurchasesController < ApplicationController
       purchase.prices.each_with_index do |price, i|
         purchase.price = purchase.price + price.to_f * purchase.quantities[i].to_f
       end
-      if _params['debt'].present? && purchase.price < _params['paid_amount'].to_f
+      if _params['paid_amount'].present? && purchase.price < _params['paid_amount'].to_f
         redirect_to '/purchases/new', notice: 'لا يمكن أن يكون المبلغ المدفوع أكبر من السعر الكلي'
         return
       end
-      purchase.debt = purchase.price_with_taxes - params["paid_amount"].to_f
+      if (purchase.payment_state == "آجل")
+        purchase.debt = purchase.price_with_taxes - params["paid_amount"].to_f
+      else
+        purchase.debt = 0
+      end
       if purchase.save
          invoice = Invoice.create!({purchase_id: purchase.id})
          permission = ReleaseProductPermission.create!({transaction_id: purchase.id})
          purchase.invoice_id = invoice.id
          purchase.save
-         update_treasury(purchase.payment_method, params["paid_amount"].to_f, PURCHASE, purchase.id, "عملية بيع", 0, params["cheque_num"], purchase.date_added)
+         if (purchase.price_with_taxes != purchase.debt)
+            update_treasury(purchase.payment_method, purchase.price_with_taxes - purchase.debt, PURCHASE, purchase.id, "عملية بيع", 0, params["cheque_num"], purchase.date_added)
+         end
          # if purchase.debt == 0
          #  add_tax(purchase.payment_method, PURCHASE, purchase.id, purchase.price)
          # end

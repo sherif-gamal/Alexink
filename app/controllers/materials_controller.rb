@@ -54,10 +54,17 @@ class MaterialsController < ApplicationController
       redirect_to !material_params['currency'] ? "/materials/new_internal" : "/materials/new", notice: 'تعذر تسجيل عملية الشراء. برجاء مراجعة المدخلات'
     else
       params = material_params
-      if(!params['debt'])
-        params['debt'] = 0
+      @material = Material.new(params)
+
+      if params['paid_amount'].present? && purchase.price < params['paid_amount'].to_f
+        redirect_to '/materials/new', notice: 'لا يمكن أن يكون المبلغ المدفوع أكبر من السعر الكلي'
+        return
       end
-      @material = Material.new(material_params)
+      if (@material.payment_state == "آجل")
+        @material.debt = @material.price_with_taxes - params["paid_amount"].to_f
+      else
+        @material.debt = 0
+      end
       @material.user_name = current_user.name
 
       raw_materials = RawMaterial.find(params['raw_material_ids'])
@@ -77,7 +84,9 @@ class MaterialsController < ApplicationController
       end
       respond_to do |format|
         if @material.save
-          update_treasury(@material.payment_method, @material.debt - @material.price_with_taxes, MATERIAL, @material.id, "عملية شراء", 0, @material.date_added)
+          if (@material.debt != @material.price_with_taxes)
+            update_treasury(@material.payment_method, @material.debt - @material.price_with_taxes, MATERIAL, @material.id, "عملية شراء", 0, @material.date_added)
+          end
           if @material.debt == 0
             add_tax(@material.payment_method, MATERIAL, @material.id, @material.price)
           end

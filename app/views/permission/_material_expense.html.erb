@@ -55,9 +55,9 @@
             <%@raw_materials.each_with_index do |p, i|%>
               <tr>
                 <%price_i = @material.prices[i].to_f * @material.quantities[i].to_f%>
-                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i).to_i%></td>
+                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i) * 100%></td>
                 <td class="text-center"><%=price_i.to_i%></td>
-                <td class="text-center"><%=sprintf '%02d', (@material.prices[i].to_f - @material.prices[i].to_i).to_i%></td>
+                <td class="text-center"><%=sprintf '%02d', (@material.prices[i].to_f - @material.prices[i].to_i) * 100%></td>
                 <td class="text-center"><%=@material.prices[i].to_i%></td>
                 <td class="text-center"><%=@material.quantities[i]%></td>
                 <td class="text-center"><%=p.name%></td>

@@ -25,16 +25,17 @@
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <div align="center">
-          <span>قائمة الدخل في <%= "#{@_year}/12/31"%></span>
-        </div>
+        
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
         <%= form_for(@income, url: '/income/update') do |f| %>
           <%= f.hidden_field :id%>
-          <table style="text-align: center;" class="table table-bordered">
+          <table style="text-align: center;" class="table table-bordered" id="menu">
             <thead>
+              <tr>
+                <th colspan="4" align=center><span>قائمة الدخل في <%= "#{@_year}/12/31"%></span></th>
+              </tr>
               <tr>
                 <th style="text-align: center;">كلي</th>
                 <th style="text-align: center;">جزئي</th>
@@ -131,11 +132,14 @@
             </tbody>
           </table>
           <%= f.submit "تحديث البيانات"%>
+          <button id="print-1">طباعة</button>
         <%end%>
       </div>
     </div>
   </div>
 </div>
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
@@ -196,4 +200,13 @@ var f = function() {
 }
 $('#input_year').change(f)
 
+
+$('#print-1').click(function () {
+  var doc = new jsPDF('p', 'pt', 'a4');
+    html2canvas($("#menu"), { onrendered: function(canvas) {
+      console.log(canvas.toDataURL());
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+        doc.save('income-menu.pdf');
+    }});
+  });
 </script>

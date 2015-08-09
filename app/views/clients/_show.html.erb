@@ -151,7 +151,7 @@
                   <td><%=f debt %></td>
                   <td>مبيعات</td>
                   <td><%= e.invoice_id%></td>
-                  <td><%=d e.created_at%></td>
+                  <td><%=e.date_added.present? ? e.date_added : (d e.created_at)%></td>
                   <td></td>
                   <td></td>
                   <td><%=f e.price%></td>
@@ -172,7 +172,7 @@
                   <td></td>
                   <td></td>
                   <td><%=e.cheque_num%></td>
-                  <td><%=d e.created_at%></td>
+                  <td><%=e.date_added.present? ? e.date_added : (d e.created_at)%></td>
                   <td></td>
                   <td></td>
                   <td></td>

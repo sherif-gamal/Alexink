@@ -32,7 +32,7 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
-        <table class="table table-bordered table-striped table-hover table-heading">
+        <table class="table table-bordered table-striped table-hover" id="ehlak">
           <thead>
             <tr>
               <th>البيان</th>
@@ -70,25 +70,27 @@
                 <td><%= f e.total_value %></td>
                 <td><button class="update">تعديل</button></td>
               </tr>
-
-              <tr>
+            <% end %>
+            <tr>
                 <td>الإجمالي</td>
                 <td></td>
                 <td></td>
-                <td><%= total_value%></td>
-                <td><%= total_last_year_acc%></td>
-                <td><%= total_ehlak%></td>
-                <td><%= total_acc_ehlak%></td>
-                <td><%= total_total_values%></td>
+                <td><%=f total_value%></td>
+                <td><%=f total_last_year_acc%></td>
+                <td><%=f total_ehlak%></td>
+                <td><%=f total_acc_ehlak%></td>
+                <td><%=f total_total_values%></td>
+                <td></td>
               </tr>
-            <% end %>
-            </tr>
           </tbody>
         </table>
+        <button id="print-1">طباعة</button>
       </div>
     </div>
   </div>
 </div>
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
 <script type="text/javascript">
 // Run Datables plugin and create 3 variants of settings
 function AllTables(){
@@ -147,4 +149,13 @@ $(".update").click(function(e) {
     }
   });
 });
+
+$('#print-1').click(function () {
+  var doc = new jsPDF('p', 'pt', 'a4');
+    html2canvas($("#ehlak"), { onrendered: function(canvas) {
+      console.log(canvas.toDataURL());
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+        doc.save('wear-outs.pdf');
+    }});
+  });
 </script>

@@ -21,7 +21,7 @@
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive">
-        <table class="table table-bordered table-striped table-hover table-heading table-datatable" id="datatable-2">
+        <table class="table table-bordered table-hover" id="datatable-2">
           <thead>
             <tr>
               <th>مدين</th>
@@ -47,12 +47,15 @@
               <%total_sub_tax = 0%>
               <%
                 purchases = Purchase.where(["client_id = ?", client.id])
+                if (purchases.empty?)
+                  next
+                end
                 diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id))
                 d = TreasuryDiary.where(transaction_type: 4, transaction_id: client.id)
                 diaries = diaries + d
 
                 both = purchases + diaries
-                both = both.sort_by{|e| e.created_at}
+                both = both.sort_by{|e| e.date_added}
               %>
               <tr>
                 <td colspan="11" style="text-align: center;"><%= client.name%></td>
@@ -66,7 +69,7 @@
                     <td><%=f debt %></td>
                     <td>مبيعات</td>
                     <td><%= e.invoice_id%></td>
-                    <td><%=d e.created_at%></td>
+                    <td><%=e.date_added.present? ? e.date_added : (d e.created_at)%></td>
                     <td></td>
                     <td></td>
                     <td><%=f e.price%></td>
@@ -87,7 +90,7 @@
                     <td></td>
                     <td></td>
                     <td><%=e.cheque_num%></td>
-                    <td><%=d e.created_at%></td>
+                    <td><%=e.date_added.present? ? e.date_added : (d e.created_at)%></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -96,8 +99,6 @@
                 <%end%>
               <% end %>
             <%end%>
-            
-            
             </tr>
           </tbody>
         </table>

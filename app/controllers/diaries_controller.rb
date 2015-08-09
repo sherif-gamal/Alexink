@@ -22,9 +22,9 @@ class DiariesController < ApplicationController
 		else
 			@_end = DateTime.tomorrow
 		end
-		@materials = materials.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		@expenses = expenses.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		@purchases = purchases.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+		@materials = materials.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@expenses = expenses.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@purchases = purchases.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 
 		@products = Product.all
 		@clients = Client.all
@@ -60,10 +60,10 @@ class DiariesController < ApplicationController
 		else
 			@_end = DateTime.tomorrow
 		end
-		@materials = materials.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		@expenses = expenses.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		@purchases = purchases.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		@products = Product.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+		@materials = materials.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@expenses = expenses.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@purchases = purchases.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@products = Product.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 		@clients = Client.all
 		@suppliers = Supplier.all
 		@raw_materials = RawMaterial.all
@@ -77,9 +77,9 @@ class DiariesController < ApplicationController
 	end
 
 	def treasury
-		# @materials = Material.order(created_at: :desc)
-		# @expenses = Expense.order(created_at: :desc)
-		# @purchases = Purchase.order(created_at: :desc)
+		# @materials = Material.order(date_added: :desc)
+		# @expenses = Expense.order(date_added: :desc)
+		# @purchases = Purchase.order(date_added: :desc)
 		# @clients = Client.all
 		# @products = Product.all
 		# @suppliers = Supplier.all
@@ -101,11 +101,11 @@ class DiariesController < ApplicationController
 		else
 			@_end = DateTime.tomorrow
 		end
-		diaries = diaries.where("created_at > ? and created_at <= ?", @_start, @_end)
+		diaries = diaries.where("date_added > ? and date_added <= ?", @_start, @_end)
 
-		@treasury_additions = diaries.where("amount > ?", 0).order(created_at: :desc)
+		@treasury_additions = diaries.where("amount > ?", 0).order(date_added: :desc)
 		p @treasury_additions
-		@treasury_subtractions = diaries.where("amount < ?", 0).order(created_at: :desc)
+		@treasury_subtractions = diaries.where("amount < ?", 0).order(date_added: :desc)
 		if request.xhr?
       		render partial: 'treasury'
     	else
@@ -137,12 +137,12 @@ class DiariesController < ApplicationController
 		else
 			@_end = DateTime.tomorrow
 		end
-		materials = materials.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		expenses = expenses.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
-		purchases = purchases.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
+		materials = materials.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		expenses = expenses.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		purchases = purchases.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 
 		@all = materials + expenses + purchases
-		@all = @all.sort_by{|e| e.created_at}
+		@all = @all.sort_by{|e| e.date_added}
 
 		@products = Product.all
 		@clients = Client.all
