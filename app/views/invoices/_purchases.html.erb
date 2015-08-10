@@ -27,6 +27,7 @@
               <th>رقم الفاتورة</th>
               <th>المنتج</th>
               <th>العميل</th>
+              <th>المبلغ</th>
             </tr>
           </thead>
           <tbody>
@@ -45,6 +46,7 @@
                   </ul>
                 </td>
                 <td><%= @clients.find(purchase.client_id).name %></td>
+                <td><%= purchase.price_with_taxes %></td>
               </tr>
             <% end %>
             </tr>
@@ -55,6 +57,7 @@
               <th><label><input type="text" name="search_invoice" value="البحث برقم الفاتورة" class="search_init" /></label></th>
               <th><label><input type="text" name="search_product" value="البحث بالمنتج" class="search_init" /></label></th>
               <th><label><input type="text" name="search_client" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_client" value="البحث بالمبلغ" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>

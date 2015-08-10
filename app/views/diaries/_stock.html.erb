@@ -110,7 +110,7 @@
             <% transactions.each do |t| %>
               <%if t.is_a? Purchase%>
                 <tr data-href="<%= purchase_path(t) %>">
-                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= t.date_added %></td>
                   <td>صرف منتج</td>
                   <%products = @products.find(t.product_ids)%>
                   <%quantities = t.quantities%>
@@ -131,7 +131,7 @@
                 </tr>
               <%else%>
                 <tr data-href="<%= production_path(t) %>">
-                  <td><%= t.created_at.strftime("%Y/%m/%d") %></td>
+                  <td><%= t.created_at.strftime("%Y-%m-%d") %></td>
                   <td>صرف مادة خام للصناعة</td>
                   <td><%= @raw_materials.find(t.raw_material_id).name %></td>
                   <td><%= t.quantity %></td>

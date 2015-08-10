@@ -63,7 +63,7 @@ class DiariesController < ApplicationController
 		@materials = materials.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 		@expenses = expenses.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 		@purchases = purchases.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
-		@products = Product.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		@products = Product.where("created_at > ? and created_at <= ?", @_start, @_end).order(created_at: :desc)
 		@clients = Client.all
 		@suppliers = Supplier.all
 		@raw_materials = RawMaterial.all

@@ -10,7 +10,7 @@
     #paper {
         position: absolute;
         width: 100%;
-        height: 700px;
+        height: 1060px;
         background-color: white;
     }
     .main-content {
@@ -66,9 +66,50 @@
         height: 1px;
     }
 
+    .label-right {
+        position: absolute;
+        right: 20px;
+        display: inline-block;
+    }
+    .numbers-right {
+        position: absolute;
+        right: 80px;
+        display: inline-block;   
+        border-style: solid;
+        width: 20px;
+        height: 25px;
+    }
+
+    .numbers-left {
+        position: absolute;
+        right: 410px;
+        display: inline-block;
+        border-style: solid;
+        width: 20px;
+        height: 25px;
+    }
+
+    .value-box {
+        position: absolute;
+        width: 180px;
+        height: 25px;
+        border-style: solid;
+        display: inline-block;
+    }
+
+    .right-value-box {
+        right: 140px;
+    }
+
+    .left-value-box {
+        left: 30px;
+    }
+
+
+
 </style>
 <div class="row"  dir="ltr">
-  <div class="col-xs-8 col-xs-offset-2" id="taxes">
+  <div class="col-xs-8 col-xs-offset-2" style="height: 1060px;" id="taxes">
       <div id="paper" style="text-align: center;">
         <div class="main-content">
             <div id="header-right">وزارة المالية<br/>مصلحة الضرائب</div>
@@ -94,11 +135,85 @@
             <span class="number-box">4</span><span class="number-box">7</span>
             </div>
             <hr style="position: absolute; top: 200px; left: 10px;">
-            <div style="position: absolute; top: 205px; right: 10px;">
-            <div style="top: 205px; right: 10px;">المبيعات:</div>
-            <div style="top: 215px; right: 10px;">
-                محلي &nbsp <span class="number-box">1</span>&nbsp &nbsp
+            
+            <div dir="rtl" style="position: absolute; top: 230px; right: 10px;">المبيعات:</div>
+            <div style="position: absolute; top: 235px; right: 185px;">القيمة</div>
+            <div style="position: absolute; top: 235px; right: 550px;">الضريبة</div>
+            <div class = "label-right" style="top: 260px;" dir="rtl">
+                محلي 
+            </div>
+            <div class="numbers-right" style="top: 260px;">1</div>
 
+            <div class="value-box right-value-box" style="top: 260px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;" value="<%= f @purchases_price %>"></input></div>
+            <%purchase_tax = @purchases_price * 0.1%>
+            <div class="numbers-left" style="top: 260px;">2</div>
+            <div class="value-box left-value-box" style="top: 260px;"><%= f purchase_tax %></div>
+
+            <div class = "label-right" style="top: 310px;" dir="rtl">
+                صادرات 
+            </div>
+            <div class="numbers-right" style="top: 310px;">3</div>
+            <div class="value-box right-value-box" style="top: 310px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+            <div style="position: absolute; top: 310px; right: 400px;">فئة ضريبة واحدة</div>
+            <div class="value-box left-value-box" style="width: 120px; top: 310px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+
+            <div class = "label-right" style="top: 360px;" dir="rtl">
+                اعفاءات 
+            </div>
+            <div class="numbers-right" style="top: 360px;">4</div>
+            <div class="value-box right-value-box" style="top: 360px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+            <div style="position: absolute; top: 360px; right: 400px;">فئات ضريبية متعددة</div>
+            <div class="value-box left-value-box" style="width: 120px; top: 360px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+
+            <hr style="position: absolute; top: 380px; left: 10px;">
+            
+            <div dir="rtl" style="position: absolute; top: 410px; right: 10px;">المشريات القابلة للخصم:</div>
+            <div style="position: absolute; top: 415px; right: 185px;">القيمة</div>
+            <div style="position: absolute; top: 415px; right: 550px;">الضريبة</div>
+            <div class = "label-right" style="top: 440px;" dir="rtl">
+                محلية 
+            </div>
+            <div class="numbers-right" style="top: 440px;">5</div>
+            <div class="value-box right-value-box" style="top: 440px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;" value="<%= f @material_price_local %>"></input></div>
+            <div class="numbers-left" style="top: 440px;">6</div>
+            <div class="value-box left-value-box" style="top: 440px;"><input style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;" value="<%= f @material_price_local * 0.1 %>"></input></div>
+
+            <div class = "label-right" style="top: 490px;" dir="rtl">
+                مستوردة 
+            </div>
+            <div class="numbers-right" style="top: 490px;">7</div>
+            <div class="value-box right-value-box" style="top: 490px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;" value="<%= f @material_price_foreign %>"></input></div>
+            <div class="numbers-left" style="top: 490px;">8</div>
+            <div class="value-box left-value-box" style="top: 490px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;" value="<%= f @material_price_foreign * 0.1%>"></input></div>
+
+            
+            <div style="position: absolute; top: 540px; right: 160px">إجمالي الضريبة المخصومة</div>
+            <div class="numbers-left" style="top: 540px;">9</div>
+            <div class="value-box left-value-box" style="top: 540px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+
+            <hr style="position: absolute; top: 560px; left: 10px;">
+            
+            <div dir="rtl" style="position: absolute; top: 590px; right: 200px;">الضريبة المستحقة</div>
+            
+            <div class="numbers-left" style="top: 595px;">10</div>
+            <div class="value-box left-value-box" style="top: 590px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+            
+            <div dir="rtl" style="position: absolute; top: 640px; right: 200px;">رصيد دائن من الشهر السابق</div>
+            <div class="value-box left-value-box" style="top: 640px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+
+            <div dir="rtl" style="position: absolute; top: 690px; right: 200px;">رصيد الشهر الحالي</div>
+            <div class="value-box left-value-box" style="top: 690px;"><input type="text" style="padding: 5px; height: 20px; width: 100%; border: none; text-align: center;"></input></div>
+
+
+            <div style="position: absolute; top: 750px; right: 20px; width: 90%; height: 140px; border-style: solid; border-width: 1px; border-radius: 25px;">
+                <div align="center">إقرار</div>
+                <div style="position: absolute; top: 30px; right: 20px;">أقر أن البيانات عاليه صحيحة وتحت مسئوليتي</div>
+                <div dir="rtl" style="position: absolute; top: 60px; right: 10px;">الاسم: <span style="display: inline-block; width: 200px; border-bottom: 3px solid black;"></span></div>
+                <div dir="rtl" style="position: absolute; top: 60px; right: 350px;">الصفة: <span style="display: inline-block; width: 200px; border-bottom: 3px solid black;"></span></div>
+
+                <div dir="rtl" style="position: absolute; top: 100px; right: 10px;">التوقيع: <span style="display: inline-block; width: 200px; border-bottom: 3px solid black;"></span></div>
+                <div dir="rtl" style="position: absolute; top: 100px; right: 350px;">التاريخ: <span style="display: inline-block; width: 200px; border-bottom: 3px solid black;"></span></div>
+                
             </div>
         </div>
       </div>

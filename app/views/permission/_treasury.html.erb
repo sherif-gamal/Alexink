@@ -25,6 +25,7 @@
               <th>التاريخ</th>
               <th>رقم الإذن</th>
               <th>البيان</th>
+              <th>المستحق</th>
               <th>المبلغ</th>
             </tr>
           </thead>
@@ -47,10 +48,12 @@
                   <%end%>
                 </ul>
                 </td>
-                  <td><%= permission.quantity %></td>
+                <td><%= Supplier.find(t.supplier_id).name %></td>
+                  <td><%= t.price_with_taxes %></td>
                 <%else%>
                   <td><%= t.name %></td>
-                  <td><%= t.price %></td>
+                  <td><%= t.seller%></td>
+                  <td><%= t.price%></td>
                 <%end%>
               </tr>
             <% end %>
@@ -61,6 +64,7 @@
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_permission" value="البحث برقم الإذن" class="search_init" /></label></th>
               <th><label><input type="text" name="search_product" value="البحث بالبيان" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_client" value="البحث بالمستحق" class="search_init" /></label></th>
               <th><label><input type="text" name="search_client" value="البحث بالمبلغ" class="search_init" /></label></th>
             </tr>
           </tfoot>

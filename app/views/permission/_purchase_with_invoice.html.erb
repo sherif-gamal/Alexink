@@ -128,7 +128,7 @@
               <div>الإسكندرية - مصر</div>
               <div>ت : 035469692 - 01004814814816</div>
               <div>Email: info@alexinkegypt.net</div>
-              <div>تحريراً في : <%= @purchase.created_at.strftime("%Y/%m/%d")%></div>
+              <div>تحريراً في : <%= @purchase.date_added%></div>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -204,7 +204,7 @@
               <div>الإسكندرية - مصر</div>
               <div>ت : 035469692 - 01004814814816</div>
               <div>Email: info@alexinkegypt.net</div>
-              <div>تحريراً في : <%= @purchase.created_at.strftime("%Y/%m/%d")%></div>
+              <div>تحريراً في : <%= @purchase.date_added%></div>
           </div>
         </div>
         <div class="clearfix"></div>
@@ -227,9 +227,9 @@
             <%@products.each_with_index do |p, i|%>
               <tr>
                 <%price_i = @purchase.prices[i].to_f * @purchase.quantities[i].to_f%>
-                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i).to_i%></td>
+                <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i) * 100%></td>
                 <td class="text-center"><%=price_i.to_i%></td>
-                <td class="text-center"><%=sprintf '%02d', (@purchase.prices[i].to_f - @purchase.prices[i].to_i).to_i%></td>
+                <td class="text-center"><%=sprintf '%02d', (@purchase.prices[i].to_f - @purchase.prices[i].to_i) * 100%></td>
                 <td class="text-center"><%=@purchase.prices[i].to_i%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
                 <td class="text-center"><%=p.name%></td>
