@@ -34,7 +34,7 @@
               <%production = @productions.find(permission.transaction_id)%>
               <%url = "/permission/production/#{permission.id}"%>
               <tr data-href=<%=url%>>
-                <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
+                <td><%= permission.created_at.strftime("%Y-%m-%d") %></td>
                 <td><%= permission.id %></td>
                 <td><%= @raw_materials.find(production.raw_material_id).name %></td>
                 <td><%= production.quantity %></td>
@@ -45,9 +45,9 @@
           <tfoot>
             <tr>
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_permission" value="البحث برقم الفاتورة" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_product" value="البحث بالمنتج" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_client" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_permission" value="البحث برقم الإذن" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_product" value="البحث بالمادة الخام" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_client" value="البحث بالكمية" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
@@ -106,9 +106,9 @@
           <tfoot>
             <tr>
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_permission" value="البحث برقم الفاتورة" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_permission" value="البحث برقم الإذن" class="search_init" /></label></th>
               <th><label><input type="text" name="search_product" value="البحث بالمنتج" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_client" value="البحث بالعميل" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_client" value="البحث بالكمية" class="search_init" /></label></th>
             </tr>
           </tfoot>
         </table>
