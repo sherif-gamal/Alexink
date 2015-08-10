@@ -26,7 +26,8 @@
             <tr>
               <th>التاريخ</th>
               <th>الاسم</th>
-              <th>البائع</th>
+              <th>المستحق</th>
+              <th>النوع</th>
               <th>المبلغ</th>
             </tr>
           </thead>
@@ -36,6 +37,7 @@
                 <td><%= expense.date_added %></td>
                 <td><%= expense.name %></td>
                 <td><%= expense.seller %></td>
+                <td><%= expense.e_type == 2 ? 'مصروفات بيعية' : (expense.e_type == 1 ? 'مصروفات تشغيلية' : 'مصروفات عمومية')%></td>
                 <td><%= expense.price %></td>
               </tr>
             <% end %>
@@ -45,7 +47,8 @@
             <tr>
               <th><label><input type="text" name="search_date" value="البحث بالتاريخ" class="search_init" /></label></th>
               <th><label><input type="text" name="search_name" value="البحث بالاسم" class="search_init" /></label></th>
-              <th><label><input type="text" name="search_seller" value="البحث بالبائع" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_seller" value="البحث بالمستحق" class="search_init" /></label></th>
+              <th><label><input type="text" name="search_seller" value="البحث بالنوع" class="search_init" /></label></th>
               <th><label><input type="text" name="search_price" value="البحث بالمبلغ" class="search_init" /></label></th>
             </tr>
           </tfoot>

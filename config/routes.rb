@@ -62,8 +62,7 @@ Rails.application.routes.draw do
 
   post 'expenses/confirm'
   get 'expenses/permission'
-  get 'expenses/index_general'
-  get 'expenses/index_production'
+  get 'expenses/index'
 
   get 'purchases/invoice/:id', to: 'purchases#invoice'
   post 'materials/confirm'
