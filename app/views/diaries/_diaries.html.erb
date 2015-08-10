@@ -160,11 +160,10 @@ th, td { white-space: nowrap; }
                   <td><%=a.price%></td>
                 <%elsif a.is_a? Material%>
                   <td><%= Supplier.find(a.supplier_id).name%></td>
-                  <td><ul>
+                  <td>
                   <% @raw_materials.find(a.raw_material_ids).each do |r| %>
-                  <li><%= r.name%></li>
+                  <%= r.name%><br/>
                   <%end%>
-                </ul>
                 </td>
                   <td><%=a.price_with_taxes%></td>
                   <td><%=a.price_with_taxes%></td>

@@ -83,7 +83,7 @@
               <%products = @products.find(purchase.product_ids)%>
               <% url = "/permission/purchase/#{permission.id}" %>
               <tr data-href=<%=url%>>
-                <td><%= @purchase.date_added%></td>
+                <td><%= purchase.date_added%></td>
                 <td><%= permission.id %></td>
                 <td>
                   <ul>
