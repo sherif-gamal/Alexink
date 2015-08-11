@@ -36,6 +36,11 @@ class EhlakOsoolController < ApplicationController
 			EhlakOsool.create(name: "موازين", rate: 12.5, value: 5525, year: year)
 			EhlakOsool.create(name: "كلاركات", rate: 12.5, value: 25300, year: year)
 			EhlakOsool.create(name: "انشاءات", rate: 5, value: 43806, year: year)
+			EhlakOsool.create(name: "أخرى", rate: 0, value: 0, year: year)
+			EhlakOsool.create(name: "أخرى", rate: 0, value: 0, year: year)
+			EhlakOsool.create(name: "أخرى", rate: 0, value: 0, year: year)
+			EhlakOsool.create(name: "أخرى", rate: 0, value: 0, year: year)
+			EhlakOsool.create(name: "أخرى", rate: 0, value: 0, year: year)
 
 			EhlakOsool.where(year: year)
 		end

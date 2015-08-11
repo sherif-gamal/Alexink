@@ -15,7 +15,7 @@
     <select id="input_year">
       <%cur = Time.now.year%>
       <%(2000..cur).each do |y|%>
-        <option value="<%= y%>" <%= @_year == y ? "selected" : ""%>><%= y%></option>
+        <option value="<%= y%>" <%= @_year.to_i == y ? "selected" : ""%>><%= y%></option>
       <%end%>
     </select>  
   </div>
@@ -151,10 +151,10 @@ $(".update").click(function(e) {
 });
 
 $('#print-1').click(function () {
-  var doc = new jsPDF('p', 'pt', 'a4');
+  var doc = new jsPDF('p', 'pt', [1142, 1430]);
     html2canvas($("#ehlak"), { onrendered: function(canvas) {
       console.log(canvas.toDataURL());
-      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+      doc.addImage(canvas.toDataURL(), 'JPEG', 50, 50, canvas.width, canvas.height);
         doc.save('wear-outs.pdf');
     }});
   });

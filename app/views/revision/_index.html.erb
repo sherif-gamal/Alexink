@@ -56,11 +56,11 @@
                 <td><%= f.text_field :treasury_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.treasury_debt - @revision.treasury_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
 
               </tr>
@@ -71,11 +71,11 @@
                 <td><%= f.text_field :bnp_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.bnp_debt - @revision.bnp_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
 
                 <tr>
@@ -84,11 +84,11 @@
                 <td><%= f.text_field :bnp_dollar_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.bnp_dollar_debt - @revision.bnp_dollar_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -98,11 +98,11 @@
                 <td><%= f.text_field :bnp_euro_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.bnp_euro_debt - @revision.bnp_euro_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -112,11 +112,11 @@
                 <td><%= f.text_field :abu_dhabi_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.abu_dhabi_debt - @revision.abu_dhabi_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -126,11 +126,11 @@
                 <td><%= f.text_field :abu_dhabi_dollar_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.abu_dhabi_dollar_debt - @revision.abu_dhabi_dollar_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -140,11 +140,11 @@
                 <td><%= f.text_field :abu_dhabi_euro_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.abu_dhabi_euro_debt - @revision.abu_dhabi_euro_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -154,11 +154,11 @@
                 <td><%= f.text_field :fx_difference_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.fx_difference_debt - @revision.fx_difference_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -168,11 +168,11 @@
                 <td><%= f.text_field :operation_expense_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.operation_expense_debt - @revision.operation_expense_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -182,11 +182,11 @@
                 <td><%= f.text_field :sale_expense_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.sale_expense_debt - @revision.sale_expense_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
               <tr>
@@ -195,11 +195,11 @@
                 <td><%= f.text_field :general_managerial_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.general_managerial_debt - @revision.general_managerial_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -209,11 +209,11 @@
                 <td><%= f.text_field :aq_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.aq_debt - @revision.aq_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -223,11 +223,11 @@
                 <td><%= f.text_field :aq_rasm_ta7seel_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.aq_rasm_ta7seel_debt - @revision.aq_rasm_ta7seel_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -237,11 +237,11 @@
                 <td><%= f.text_field :e3temadat_mostanadeya_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.e3temadat_mostanadeya_debt - @revision.e3temadat_mostanadeya_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -251,11 +251,11 @@
                 <td><%= f.text_field :rental_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.rental_debt - @revision.rental_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -265,11 +265,11 @@
                 <td><%= f.text_field :supplier_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.supplier_debt - @revision.supplier_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -279,11 +279,11 @@
                 <td><%= f.text_field :purchases_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.purchases_debt - @revision.purchases_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -293,11 +293,11 @@
                 <td><%= f.text_field :m_moshtarayat_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.m_moshtarayat_debt - @revision.m_moshtarayat_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -307,11 +307,11 @@
                 <td><%= f.text_field :outer_suppliers_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.outer_suppliers_debt - @revision.outer_suppliers_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -321,11 +321,11 @@
                 <td><%= f.text_field :clients_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.clients_debt - @revision.clients_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -335,11 +335,11 @@
                 <td><%= f.text_field :sales_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.sales_debt - @revision.sales_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -349,11 +349,11 @@
                 <td><%= f.text_field :sales_tax_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.sales_tax_debt - @revision.sales_tax_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -363,11 +363,11 @@
                 <td><%= f.text_field :das_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.das_debt - @revision.das_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -377,11 +377,11 @@
                 <td><%= f.text_field :osool_sabta_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.osool_sabta_debt - @revision.osool_sabta_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -391,11 +391,11 @@
                 <td><%= f.text_field :income_tax_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.income_tax_debt - @revision.income_tax_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -405,11 +405,11 @@
                 <td><%= f.text_field :creditor_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.creditor_debt - @revision.creditor_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -419,11 +419,11 @@
                 <td><%= f.text_field :other_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
                 <%result = @revision.other_debt - @revision.other_credit%>
                 <%if result >= 0%>
-                  <td><%= result%></td>
+                  <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td><%= (-result)%></td>
+                  <td>%></td>
                 <%end%>
               </tr>
 
@@ -464,22 +464,24 @@ function MakeSelect2(){
 
 var update_table = function() {
   var total_debt1 = 0;
+  console.log(total_debt1);
   var total_debt2 = 0;
   var total_credit1 = 0;
   var total_credit2 = 0;
-  rows = $("#table tr").slice(2, 29)
+  rows = $("#table tr").slice(3, 30)
   var t1 = 0, t2 = 0, t3 = 0, t4 = 0;
   for (var i = 0; i < rows.length; i++) {
     t1 = parseFloat($(rows[i].children[1].children[0]).val());
+    console.log(t1);
     t2 = parseFloat($(rows[i].children[2].children[0]).val());
     total_debt1 += t1;
     total_credit1 += t2;
     var result = t1 - t2;
-    if (result >= 0) {
+    if (result > 0) {
       $(rows[i].children[3]).html(result);
       total_debt2 += result;
     }
-    else {
+    else if (result < 0){
       $(rows[i].children[4]).html(-result);
       total_credit2 -= result;
     }

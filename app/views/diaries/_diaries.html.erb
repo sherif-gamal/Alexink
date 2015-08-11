@@ -38,7 +38,7 @@ th, td { white-space: nowrap; }
         <div class="no-move"></div>
       </div>
       <div class="box-content no-padding table-responsive" style="white-space:pre;overflow:auto;width:100%;padding:10px;">
-        <table class="table table-bordered table-hover" id="datatable-1">
+        <table class="table table-bordered table-hover" id="table">
           <thead>
             <tr>
               <th rowspan="2" width="40px">رقم القيد</th>
@@ -62,8 +62,8 @@ th, td { white-space: nowrap; }
               <th colspan="2" class="text-center">أ . ق برسم التحصيل</th>
               <th colspan="2" class="text-center">اعتمادات مستندية</th>
               <th colspan="2" class="text-center">إيجار مقدم</th>
-
               <th colspan="2" class="text-center">موردين</th>
+
               <th colspan="2" class="text-center">مشتريات</th>
               <th colspan="2" class="text-center">م. على المشتريات</th>
               <th colspan="2" class="text-center">موردين خارجيين</th>
@@ -84,12 +84,10 @@ th, td { white-space: nowrap; }
               
               <th colspan="2" class="text-center">دائنون مساهمون</th>
               
-              <th colspan="2" class="text-center">موردين</th>
+              
               <th colspan="2" class="text-center">أخرى</th>
             </tr>
                         <tr>
-              <th style="width: 50px" class="text-center">دائن</th>
-              <th style="width: 60px" class="text-center">مدين</th>
               <th style="width: 50px" class="text-center">دائن</th>
               <th style="width: 60px" class="text-center">مدين</th>
               <th style="width: 50px" class="text-center">دائن</th>
@@ -218,10 +216,13 @@ th, td { white-space: nowrap; }
                 <td><%=detail.e3temadat_mostanadeya_credit%></td>
                 <td><%=detail.rental_debt%></td>
                 <td><%=detail.rental_credit%></td>
+                
                 <td><%=detail.supplier_debt%></td>
                 <td><%=detail.supplier_credit%></td>
+                
                 <td><%=detail.purchases_debt%></td>
                 <td><%=detail.purchases_credit%></td>
+
                 <td><%=detail.m_moshtarayat_debt%></td>
                 <td><%=detail.m_moshtarayat_credit%></td>
                 <td><%=detail.outer_suppliers_debt%></td>
@@ -248,6 +249,11 @@ th, td { white-space: nowrap; }
 
               <%number = number + 1%>
             <% end %>
+            </tr>
+            <tr id="totals">
+              <%60.times do%>
+                <td></td>
+              <%end%>
             </tr>
           </tbody>
         </table>
@@ -308,7 +314,24 @@ $(document).ready(function() {
     $(this).toggleClass('hover');
 });
 
-$("#title").text("عرض اليوميات من " + $('#input_date').val() + " إلى " + $('#input_date-2').val())
+$("#title").text("عرض اليوميات من " + $('#input_date').val() + " إلى " + $('#input_date-2').val());
+
+
+totals = []
+rows = $("#table tr")
+for (var i = 4; i < 60; i++)
+  totals[i] = 0
+for (var j = 2; j < rows.length - 1; j++) {
+  for(i = 4; i < 60; i++) {
+    totals[i] += (parseFloat($(rows[j].children[i]).html()) || 0)
+  }
+}
+totals_row = $("#totals").children();
+
+for (i = 0; i < totals_row.length; i++) {
+  if (totals[i] != 0)
+    $(totals_row[i]).html(totals[i]);
+}
 });
 
 $('#print-1').click(function () {

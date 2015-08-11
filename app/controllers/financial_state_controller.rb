@@ -1,6 +1,6 @@
 class FinancialStateController < ApplicationController
 
-		def index
+	def index
 		if params['year'].present?
 			@_year = 	params['year'].to_i
 		else

@@ -12,9 +12,20 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.json
   def show
-    purchases = Purchase.where(["client_id = ?", @client.id])
-    diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id))
-    d = TreasuryDiary.where(transaction_type: 4, transaction_id: @client.id)
+    if params['_start'].present?
+      @_start =   Date.strptime(params['_start'], "%m/%d/%Y")
+    else
+      @_start = 1.month.ago
+    end
+    if params['_end'].present?
+      @_end = Date.strptime(params['_end'], "%m/%d/%Y")
+    else
+      @_end = DateTime.tomorrow
+    end
+
+    purchases = Purchase.where(["client_id = ?", @client.id]).where("date_added > ? and date_added <= ?", @_start, @_end)
+    diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id)).where("date_added > ? and date_added <= ?", @_start, @_end)
+    d = TreasuryDiary.where(transaction_type: 4, transaction_id: @client.id).where("date_added > ? and date_added <= ?", @_start, @_end)
     diaries = diaries + d
 
     @both = purchases + diaries
@@ -24,6 +35,22 @@ class ClientsController < ApplicationController
   end
 
   def status
+    if params['filter'].present? && params['filter'] == "1"
+      @filter = "1"
+    else
+      @filter = "0"
+    end
+    if params['_start'].present?
+      @_start =   Date.strptime(params['_start'], "%m/%d/%Y")
+    else
+      @_start = DateTime.yesterday
+    end
+    if params['_end'].present?
+      @_end = Date.strptime(params['_end'], "%m/%d/%Y")
+    else
+      @_end = DateTime.tomorrow
+    end
+
     @clients = Client.all
     @products = Product.all
     if request.xhr?

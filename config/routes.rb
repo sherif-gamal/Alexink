@@ -28,12 +28,18 @@ Rails.application.routes.draw do
   match '/revision', to: 'revision#index', via: [:get]
   match '/revision/:year', to: 'revision#index', via: [:get]
   match '/revision/update', to: 'revision#update', via: [:patch]
+  match '/clients/status', to: 'clients#status', via: [:post]
+  match '/clients/:id', to: 'clients#show', via: [:post]
+  match '/suppliers/:id', to: 'suppliers#show', via: [:post]
+
 
   get '/dashboard/index'
   get '/clients/status'
+
   get 'dashboard/*a/*b', to: redirect('/%{a}/%{b}')
   get 'stock/index'
   match '/taxes', to: 'taxes#index', via: [:get]
+  match '/taxes/:year', to: 'taxes#index', via: [:get]
   match '/taxes', to: 'taxes#index', via: [:post]
 
   get 'permission/production/:id', to: 'permission#production'

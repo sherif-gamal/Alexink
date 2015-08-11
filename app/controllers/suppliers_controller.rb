@@ -12,7 +12,18 @@ class SuppliersController < ApplicationController
   # GET /suppliers/1
   # GET /suppliers/1.json
   def show
-    @materials = Material.where(["supplier_id = ?", @supplier.id])
+    if params['_start'].present?
+      @_start =   Date.strptime(params['_start'], "%m/%d/%Y")
+    else
+      @_start = 1.month.ago
+    end
+    if params['_end'].present?
+      @_end = Date.strptime(params['_end'], "%m/%d/%Y")
+    else
+      @_end = DateTime.tomorrow
+    end
+    
+    @materials = Material.where(["supplier_id = ?", @supplier.id]).where("date_added > ? and date_added <= ?", @_start, @_end)
     @raw_materials = RawMaterial.all
     super
   end

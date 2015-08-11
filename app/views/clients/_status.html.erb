@@ -8,13 +8,26 @@
     </ol>
   </div>
 </div>
+<div>
 
+  <div class="col-sm-2">
+    حتى
+    <input type="text" id="input_date-2" class="form-control" placeholder="تاريخ النهاية" value="<%=@_end.strftime("%m/%d/%Y")%>">
+  </div>
+  <div class="col-sm-2">
+    بداية من
+    <input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">  
+  </div>
+  <div class="col-sm-2">
+    <br/>
+    <input type="checkbox" id="filter" name="filter" value="<%= @filter %>" <%= @filter == "1" ? "checked" : ""%>> الفلترة حسب التاريخ
+  </div>
+</div>
 <div class="row" id="table1">
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">
-        <div class="box-name">
-          <i class="fa fa-linux"></i>
+        <div align="center">
           <span>عرض موقف جميع العملاء</span>
         </div>
 
@@ -38,6 +51,13 @@
             </tr>
           </thead>
           <tbody>
+            <%debts = 0%>
+              <%total_debts = 0%>
+              <%total_credits = 0%>
+              <%total_prices = 0%>
+              <%total_added_taxs = 0%>
+              <%total_sub_taxs = 0%>
+
             <%@clients.each do |client|%>
               <%debt = 0%>
               <%total_debt = 0%>
@@ -46,12 +66,22 @@
               <%total_added_tax = 0%>
               <%total_sub_tax = 0%>
               <%
-                purchases = Purchase.where(["client_id = ?", client.id])
+                if (@filter == "1")
+                  purchases = Purchase.where(["client_id = ?", client.id]).where("date_added > ? and date_added <= ?", @_start, @_end)
+                else
+                  purchases = Purchase.where(["client_id = ?", client.id])
+                end
                 if (purchases.empty?)
                   next
                 end
-                diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id))
-                d = TreasuryDiary.where(transaction_type: 4, transaction_id: client.id)
+                if (@filter == "1")
+                  diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id)).where("date_added > ? and date_added <= ?", @_start, @_end)
+                  d = TreasuryDiary.where(transaction_type: 4, transaction_id: client.id).where("date_added > ? and date_added <= ?", @_start, @_end)
+                else
+                  diaries = TreasuryDiary.where(transaction_type: 2, transaction_id: purchases.map(&:id))
+                  d = TreasuryDiary.where(transaction_type: 4, transaction_id: client.id)
+                end
+
                 diaries = diaries + d
 
                 both = purchases + diaries
@@ -74,12 +104,12 @@
                     <td></td>
                     <td><%=f e.price%></td>
                     <td><%=f e.added_tax%></td>
-                    <td><%=f e.sub_tax%></td>
+                    <td><%=e.calc_sub_tax == 1 ? f(e.sub_tax) : "-"%></td>
                   </tr>
                   <%total_debt = total_debt + e.price_with_taxes%>
                   <%total_price = total_price + e.price%>
                   <%total_added_tax = total_added_tax + e.added_tax%>
-                  <%total_sub_tax = total_sub_tax + e.sub_tax%>
+                  <%if (e.calc_sub_tax == 1 ) then total_sub_tax = total_sub_tax + e.sub_tax end%>
                 <%else%>
                   <tr>
                     <td></td>
@@ -98,8 +128,43 @@
                   <% total_credit = total_credit + e.amount %>
                 <%end%>
               <% end %>
+              <tr>
+                <td style="background-color: #BEB5B5;"><%=f total_debt%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_credit%></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"><%=f total_price%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_added_tax%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_sub_tax%></td>
+              </tr>
+              <%debts = debts + debt%>
+              <%total_debts = total_debts + total_debt%>
+              <%total_credits = total_credits + total_credit%>
+              <%total_prices = total_prices + total_prices%>
+              <%total_added_taxs = total_added_taxs + total_added_tax%>
+              <%total_sub_taxs = total_sub_taxs + total_sub_tax%>
             <%end%>
             </tr>
+            <tr>
+              <th colspan="11" style="text-align: center;">الإجمالي</th>
+            </tr>
+            <tr>
+                <td style="background-color: #BEB5B5;"><%=f total_debts%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_credits%></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"></td>
+                <td style="background-color: #BEB5B5;"><%=f total_prices%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_added_taxs%></td>
+                <td style="background-color: #BEB5B5;"><%=f total_sub_taxs%></td>
+              </tr>
           </tbody>
         </table>
       </div>
@@ -131,13 +196,37 @@ function AllTables(){
 
   });
 }
+var f2 = function() {
+  if ($("#filter")[0].checked)
+    $("#filter").val("1")
+  else
+    $("#filter").val("0")
+
+  f();
+}
+var f = function() {
+    $.ajax({ url: '/clients/status',
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'filter' : $("#filter").val()},
+      success: function(response) {
+        $('#ajax-content').html(response);
+      }
+    });
+}
 
 $(document).ready(function() {
   // Load Datatables and run plugin on tables 
   LoadDataTablesScripts(AllTables);
   // Add Drag-n-Drop feature
   WinMove();
-
+  $('#input_date').datepicker({setDate: new Date()});
+  $('#input_date-2').datepicker({setDate: new Date()});
+  
+  $('#filter').change(f2);
+  $('#input_date-2').change(f);
+  $('#input_date').change(f);
+  
 });
     $("tr[data-href]").click(function() {
   window.location = this.dataset.href;
@@ -146,10 +235,10 @@ $(document).ready(function() {
 });
 
 $('#print-1').click(function () {
-  var doc = new jsPDF('p', 'pt', 'a4');
+  var doc = new jsPDF('p', 'pt', [1142, 1430]);
     html2canvas($("#table1"), { onrendered: function(canvas) {
       console.log(canvas.toDataURL());
-      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
+      doc.addImage(canvas.toDataURL(), 'JPEG', 50, 50, canvas.width, canvas.height);
         doc.save('clients-status.pdf');
     }});
   });

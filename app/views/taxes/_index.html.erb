@@ -7,6 +7,10 @@
 	</div>
 </div>
 <style>
+
+input, button {
+    vertical-align:middle;
+}
     #paper {
         position: absolute;
         width: 100%;
@@ -108,8 +112,23 @@
 
 
 </style>
+
+<div>
+  <div class="pull-right col-sm-1">
+    السنة
+  </div>
+  <div class="pull-right col-sm-2">
+    <select id="input_year">
+      <%cur = Time.now.year%>
+      <%(2000..cur).each do |y|%>
+        <option value="<%= y%>" <%= @_year == y ? "selected" : ""%>><%= y%></option>
+      <%end%>
+    </select>  
+  </div>
+</div>
+
 <div class="row"  dir="ltr">
-  <div class="col-xs-8 col-xs-offset-2" style="height: 1060px;" id="taxes">
+  <div class="col-xs-8 col-xs-offset-2" style="height: 1080px;" id="taxes">
       <div id="paper" style="text-align: center;">
         <div class="main-content">
             <div id="header-right">وزارة المالية<br/>مصلحة الضرائب</div>
@@ -217,10 +236,12 @@
             </div>
         </div>
       </div>
+      <button id="print-1" style="position: absolute; right: 300px; top: 1070px;">طباعة</button>
     </div>
 </div>
 
-
+<%= javascript_include_tag 'js/jspdf.min' %>
+<%= javascript_include_tag 'js/html2canvas' %>
 <script type="text/javascript">
 // Run Select2 plugin on elements
 function DemoSelect2(){
@@ -248,20 +269,20 @@ $(document).ready(function() {
 	LoadBootstrapValidatorScript(DemoFormValidator);
 	// Add drag-n-drop feature to boxes
 	WinMove();
-	$('#input_date').datepicker({setDate: new Date()});
-	$('#input_date-2').datepicker({setDate: new Date()});
-	var f = function() {
-		$.ajax({ url: 'taxes',
-		  type: 'POST',
-		  beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-		  data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val()},
-		  success: function(response) {
-		    $('#ajax-content').html(response);
-		  }
-		});
-	}
-	$('#input_date-2').change(f)
-	$('#input_date').change(f)
 });
 
+var f = function() {
+    window.location.href = "/taxes/" + $("#input_year").val();
+}
+$('#input_year').change(f)
+
+$('#print-1').click(function () {
+  var doc = new jsPDF('p', 'pt', [600, 1050]);
+    html2canvas($("#paper"), { onrendered: function(canvas) {
+      console.log(canvas.toDataURL());
+      console.log(canvas.height);
+      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 5, 595, canvas.height);
+        doc.save('Taxes.pdf');
+    }});
+  });
 </script>

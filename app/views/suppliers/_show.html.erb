@@ -8,6 +8,7 @@
     </ol>
   </div>
 </div>
+<%= hidden_field_tag 'supplier_id', @supplier.id%>
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <div class="box">
@@ -105,7 +106,16 @@
     </div>
   </div>
 </div>
-
+<div>
+  <div class="col-sm-2">
+    حتى
+    <input type="text" id="input_date-2" class="form-control" placeholder="تاريخ النهاية" value="<%=@_end.strftime("%m/%d/%Y")%>">
+  </div>
+  <div class="col-sm-2">
+    بداية من
+    <input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">  
+  </div>
+</div>
 <div class="row" id="table">
   <div class="col-xs-12">
     <div class="box" id="table">
@@ -164,11 +174,29 @@
 <script type="text/javascript">
 // Run Select2 plugin on elements
 // Run timepicker
+var f = function() {
+    var id = $("#supplier_id").val();
+    $.ajax({ url: '/suppliers/' + id,
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'p_method' : $("#method option:selected").val()},
+      success: function(response) {
+        $('#ajax-content').html(response);
+      }
+    });
+}
+
 $(document).ready(function() {
   // Create Wysiwig editor for textare
   
   WinMove();
     // Load Datatables and run plugin on tables
+
+  $('#input_date').datepicker({setDate: new Date()});
+  $('#input_date-2').datepicker({setDate: new Date()});
+  
+  $('#input_date-2').change(f);
+  $('#input_date').change(f);
 });
 
 $('#print-1').click(function () {
