@@ -9,7 +9,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-12 col-sm-12" id="xyz">
+  <div class="col-xs-12 col-sm-12">
     <div class="box">
       <div class="box-header">
         <div class="box-name">
@@ -108,10 +108,10 @@
 
 <div class="row" id="table">
   <div class="col-xs-12">
-    <div class="box">
+    <div class="box" id="table">
       <div class="box-header">
         <div align="center">
-          <span>عرض حركات الشراء من المورد</span>
+          <span>عرض حركات الشراء من <%= @supplier.name%></span>
         </div>
 
         <div class="no-move"></div>
@@ -150,57 +150,34 @@
         </table>
       </div>
     </div>
+    <button id="print-1">طباعة وحفظ</button>
+  </div>
+  </div>
   </div>
 </div>
 
 
 
-<!-- <div class="col-xs-6 col-xs-offset-6">
-    <div class="col-xs-4">
-      <a href"" class="btn btn-default btn-label-left" id="print-1"><span><i class="fa fa-floppy-o"></i></span> طباعة وحفظ</a>
-    </div>
-  </div> -->
+
 <%= javascript_include_tag 'js/jspdf.min' %>
 <%= javascript_include_tag 'js/html2canvas' %>
 <script type="text/javascript">
 // Run Select2 plugin on elements
-function DemoSelect2(){
-  $('#s2_with_tag').select2({placeholder: "Select OS"});
-  $('#s2_country').select2();
-}
 // Run timepicker
-function DemoTimePicker(){
-  $('#input_time').timepicker({setDate: new Date()});
-}
 $(document).ready(function() {
   // Create Wysiwig editor for textare
   
   WinMove();
-    // Load Datatables and run plugin on tables 
-  LoadDataTablesScripts(AllTables);
-});
-
-function AllTables(){
-  setupTables();
-  LoadSelect2Script(MakeSelect2);
-}
-function MakeSelect2(){
-  $('select').select2();
-  $('.dataTables_filter').each(function(){
-    $(this).find('label input[type=text]').attr('placeholder', 'Search');
-  });
-}
-$("tr[data-href]").click(function() {
-  window.location = this.dataset.href;
-}).hover(function() {
-    $(this).toggleClass('hover');
+    // Load Datatables and run plugin on tables
 });
 
 $('#print-1').click(function () {
-      var doc = new jsPDF('p', 'pt', 'a4');
-    html2canvas(document.querySelector("#xyz"), { onrendered: function(canvas) {
-      doc.addImage(canvas.toDataURL(), 'JPEG', 0, 0, 595, canvas.height);
-        doc.save('supplier-transactions.pdf');
+      var doc = new jsPDF('p', 'pt', [1142, 1430]);
+    html2canvas(document.querySelector("#table"), { onrendered: function(canvas) {
+      console.log(canvas.width)
+      console.log(canvas.height)
+      doc.addImage(canvas.toDataURL(), 'JPEG', 50, 50, canvas.width, canvas.height);
+        doc.save('Supplier-transactions.pdf');
     }});
   });
 </script>

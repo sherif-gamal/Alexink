@@ -147,9 +147,12 @@ class MaterialsController < ApplicationController
     update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح حركة شراء", 0)
     TreasuryDiary.where(transaction_id: @material.id, transaction_type: 1).destroy_all
     MaterialPaymentDetail.find(@material.id).destroy
+    supplier = Supplier.find(@material.supplier_id)
+    new_credit = supplier.credit - @material.debt
+    supplier.update(credit: new_credit)
     @material.destroy
     respond_to do |format|
-      format.html { redirect_to materials_url, notice: 'Material was successfully destroyed.' }
+      format.html { redirect_to materials_url, notice: 'تم مسح عملية الشراء.' }
       format.json { head :no_content }
     end
   end

@@ -145,9 +145,12 @@ class PurchasesController < ApplicationController
     update_treasury(@purchase.payment_method, -@purchase.price_with_taxes, PURCHASE, @material.id, "مسح حركة بيع", 0)
     TreasuryDiary.where(transaction_id: @purchase.id, transaction_type: PURCHASE).destroy_all
     permissions.destroy_all
+    client = Client.find(@purchase.client_id)
+    new_debt = client.debt - @purchase.debt
+    supplier.update(credit: new_credit)
     @purchase.destroy
     respond_to do |format|
-      format.html { redirect_to purchases_url, notice: 'Purchase was successfully destroyed.' }
+      format.html { redirect_to purchases_url, notice: 'تم مسح عملية البيع.' }
       format.json { head :no_content }
     end
   end
