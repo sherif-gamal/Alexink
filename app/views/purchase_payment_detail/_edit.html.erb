@@ -36,7 +36,7 @@
               </div>
             <% end %>
 
-            <div class="form-group">
+                        <div class="form-group">
               <%= f.label :treasury_debt,  'دائن خزنة', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :treasury_debt, {class:"pull-right"} %>
@@ -49,29 +49,90 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :bnp_debt,  'دائن بنك بي إن بي', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :bnp_debt,  'دائن بنك الإمارات دبي', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :bnp_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :bnp_credit,  'مدين بنك بي إن بي', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :bnp_credit,  'مدين بنك الإمارات دبي', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :bnp_credit, {class:"pull-right"} %>
               </div>
             </div>
 
             <div class="form-group">
-              <%= f.label :abu_dhabi_debt,  'دائن بنك أبو ظبي', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :bnp_dollar_debt,  'دائن الإمارات دبي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_dollar_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :bnp_dollar_credit,  'مدين الإمارات دبي دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_dollar_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :bnp_euro_debt,  'دائن بنك الإمارات دبي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_euro_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :bnp_euro_credit,  'مدين بنك الإمارات دبي يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :bnp_euro_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_debt,  'دائن بنك الإسكان والتعمير', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :abu_dhabi_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :abu_dhabi_credit,  'مدين بنك أبو ظبي', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :abu_dhabi_credit,  'مدين بنك الإسكان والتعمير', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
                 <%= f.text_field :abu_dhabi_credit, {class:"pull-right"} %>
               </div>
-            </div>           
+            </div>
 
+            
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_dollar_debt,  'دائن الإسكان والتعمير دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_dollar_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :abu_dhabi_dollar_credit,  'مدين الإسكان والتعمير دولار', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_dollar_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :abu_dhabi_euro_debt,  'دائن الإسكان والتعمير يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_euro_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :abu_dhabi_euro_credit,  'مدين الإسكان والتعمير يورو', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :abu_dhabi_euro_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :fx_difference_debt,  'دائن فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :fx_difference_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :fx_difference_credit,  'مدين فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :fx_difference_credit, {class:"pull-right"} %>
+              </div>
+            </div>           
 
             <div class="form-group">
               <%= f.label :operation_expense_debt,  'دائن م. تشغيل', {class:"col-sm-2 control-label pull-right"}%>
@@ -110,14 +171,62 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :creditor_debt,  'دائن موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :aq_debt,  'دائن أ . ق', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :creditor_debt, {class:"pull-right"} %>
+                <%= f.text_field :aq_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :creditor_credit,  'مدين موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :aq_credit,  'مدين أ . ق', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :creditor_credit, {class:"pull-right"} %>
+                <%= f.text_field :aq_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :aq_rasm_ta7seel_debt,  'دائن ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_rasm_ta7seel_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :aq_rasm_ta7seel_credit,  'مدين ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :aq_rasm_ta7seel_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :e3temadat_mostanadeya_debt,  'دائن اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :e3temadat_mostanadeya_debt, {class:"pull-right"} %>
+              </div>
+              
+              <%= f.label :e3temadat_mostanadeya_credit,  'مدين اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :e3temadat_mostanadeya_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :rental_debt,  'دائن ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :rental_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :rental_credit,  'مدين ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :rental_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :supplier_debt,  'دائن موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :supplier_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :supplier_credit,  'مدين موردين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :supplier_credit, {class:"pull-right"} %>
               </div>
             </div>
 
@@ -134,14 +243,26 @@
             </div>
 
             <div class="form-group">
-              <%= f.label :das_debt,  'دائن ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :m_moshtarayat_debt,  'دائن م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :das_debt, {class:"pull-right"} %>
+                <%= f.text_field :m_moshtarayat_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :das_credit,  'مدين ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :m_moshtarayat_credit,  'مدين م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :das_credit, {class:"pull-right"} %>
+                <%= f.text_field :m_moshtarayat_credit, {class:"pull-right"} %>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <%= f.label :outer_suppliers_debt,  'دائن موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :outer_suppliers_debt, {class:"pull-right"} %>
+              </div>
+
+              <%= f.label :outer_suppliers_credit,  'مدين موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-4 pull-right">
+                <%= f.text_field :outer_suppliers_credit, {class:"pull-right"} %>
               </div>
             </div>
 
@@ -181,42 +302,19 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <%= f.label :aq_debt,  'دائن أ . ق', {class:"col-sm-2 control-label pull-right"}%>
+                        <div class="form-group">
+              <%= f.label :das_debt,  'دائن ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :aq_debt, {class:"pull-right"} %>
+                <%= f.text_field :das_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :aq_credit,  'مدين أ . ق', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :das_credit,  'مدين ض ا ص', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :aq_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :e3temadat_mostanadeya_debt,  'دائن اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :e3temadat_mostanadeya_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :e3temadat_mostanadeya_credit,  'مدين اعتمادات مستندية', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :e3temadat_mostanadeya_credit, {class:"pull-right"} %>
+                <%= f.text_field :das_credit, {class:"pull-right"} %>
               </div>
             </div>
 
-            <div class="form-group">
-              <%= f.label :outer_suppliers_debt,  'دائن موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :outer_suppliers_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :outer_suppliers_credit,  'مدين موردين خارجين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :outer_suppliers_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
+            
             <div class="form-group">
               <%= f.label :osool_sabta_debt,  'دائن اصول ث', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
@@ -229,53 +327,6 @@
               </div>
             </div>
 
-            <div class="form-group">
-              <%= f.label :m_moshtarayat_debt,  'دائن م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :m_moshtarayat_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :m_moshtarayat_credit,  'مدين م. علي المشتريات', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :m_moshtarayat_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :bnp_euro_debt,  'دائن بنك بي ان بي يورو', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :bnp_euro_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :bnp_euro_credit,  'مدين بنك بي ان بي يورو', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :bnp_euro_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :fx_difference_debt,  'دائن فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :fx_difference_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :fx_difference_credit,  'مدين فروق عمله', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :fx_difference_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :aq_rasm_ta7seel_debt,  'دائن ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :aq_rasm_ta7seel_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :aq_rasm_ta7seel_credit,  'مدين ا.ق برسم التحصيل', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :aq_rasm_ta7seel_credit, {class:"pull-right"} %>
-              </div>
-            </div>
 
             <div class="form-group">
               <%= f.label :income_tax_debt,  'دائن ضرائب علي الدخل', {class:"col-sm-2 control-label pull-right"}%>
@@ -289,77 +340,19 @@
               </div>
             </div>
 
+            
             <div class="form-group">
-              <%= f.label :rental_debt,  'دائن ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :creditor_debt,  'دائن دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :rental_debt, {class:"pull-right"} %>
+                <%= f.text_field :creditor_debt, {class:"pull-right"} %>
               </div>
 
-              <%= f.label :rental_credit,  'مدين ايجار مقدم', {class:"col-sm-2 control-label pull-right"}%>
+              <%= f.label :creditor_credit,  'مدين دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
               <div class="col-sm-4 pull-right">
-                <%= f.text_field :rental_credit, {class:"pull-right"} %>
+                <%= f.text_field :creditor_credit, {class:"pull-right"} %>
               </div>
             </div>
 
-            <div class="form-group">
-              <%= f.label :contributor_creditor_debt,  'دائن دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :contributor_creditor_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :contributor_creditor_credit,  'مدين دائنو مساهمين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :contributor_creditor_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :bnp_dollar_debt,  'دائن بي ان بي دولار', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :bnp_dollar_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :bnp_dollar_credit,  'مدين بي ان بي دولار', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :bnp_dollar_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :abu_dhabi_dollar_debt,  'دائن ابو ظبي دولار', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :abu_dhabi_dollar_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :abu_dhabi_dollar_credit,  'مدين ابو ظبي دولار', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :abu_dhabi_dollar_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :supplier_debt,  'دائن موردين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :supplier_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :supplier_credit,  'مدين موردين', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :supplier_credit, {class:"pull-right"} %>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <%= f.label :abu_dhabi_euro_debt,  'دائن ابو ظبي يورو', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :abu_dhabi_euro_debt, {class:"pull-right"} %>
-              </div>
-
-              <%= f.label :abu_dhabi_euro_credit,  'مدين ابو ظبي يورو', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-4 pull-right">
-                <%= f.text_field :abu_dhabi_euro_credit, {class:"pull-right"} %>
-              </div>
-            </div>
 
             <div class="form-group">
               <%= f.label :other_debt,  'دائن ا . اخري', {class:"col-sm-2 control-label pull-right"}%>
@@ -372,6 +365,7 @@
                 <%= f.text_field :other_credit, {class:"pull-right"} %>
               </div>
             </div>
+
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">

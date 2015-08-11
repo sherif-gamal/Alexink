@@ -12,11 +12,6 @@ class RevisionController < ApplicationController
 			@revision = create_new @_year 
 		end
 
-		@last_year_revision = Revision.where(year: @_year - 1).first
-		if (!@last_year_revision)
-			@last_year_revision = create_new @_year - 1 
-		end
-
 		super
 	end
 

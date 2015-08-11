@@ -47,32 +47,44 @@ th, td { white-space: nowrap; }
               <th rowspan="2" >البيان</th>
               <th colspan="2" class="text-center">الإجمالي</th>
               <th colspan="2" class="text-center">الخزينة</th>
-              <th colspan="2" class="text-center">بنك بي إن بي</th>
-              <th colspan="2" class="text-center">بنك أبو ظبي</th>
+              <th colspan="2" class="text-center">بنك الإمارات دبي</th>
+              <th colspan="2" class="text-center">بنك الإمارات دبي دولار</th>
+              <th colspan="2" class="text-center">بنك الإمارات دبي يورو</th>
+              <th colspan="2" class="text-center">بنك الإسكان والتعمير</th>
+              <th colspan="2" class="text-center">بنك الإسكان والتعميل دولار</th>
+              <th colspan="2" class="text-center">بنك الإسكان والتعميل يورو</th>
+              <th colspan="2" class="text-center">فروق عملة</th>
+
               <th colspan="2" class="text-center">م. تشغيل</th>
               <th colspan="2" class="text-center">م. بيعية</th>
               <th colspan="2" class="text-center">م. عمومية إدارية</th>
+              <th colspan="2" class="text-center">أ . ق</th>
+              <th colspan="2" class="text-center">أ . ق برسم التحصيل</th>
+              <th colspan="2" class="text-center">اعتمادات مستندية</th>
+              <th colspan="2" class="text-center">إيجار مقدم</th>
+
               <th colspan="2" class="text-center">موردين</th>
               <th colspan="2" class="text-center">مشتريات</th>
-              <th colspan="2" class="text-center">ض أ ص</th>
+              <th colspan="2" class="text-center">م. على المشتريات</th>
+              <th colspan="2" class="text-center">موردين خارجيين</th>
               <th colspan="2" class="text-center">عملاء</th>
               <th colspan="2" class="text-center">مبيعات</th>
               <th colspan="2" class="text-center">ض مبيعات</th>
-              <th colspan="2" class="text-center">أ . ق</th>
-              <th colspan="2" class="text-center">اعتمادات مستندية</th>
-              <th colspan="2" class="text-center">موردين خارجيين</th>
+              
+              <th colspan="2" class="text-center">ض أ ص</th>
+              
+              
+              
               <th colspan="2" class="text-center">أصول ث</th>
-              <th colspan="2" class="text-center">م. على المشتريات</th>
-              <th colspan="2" class="text-center">بنك بي إن بي يورو</th>
-              <th colspan="2" class="text-center">فروق عملة</th>
-              <th colspan="2" class="text-center">أ . ق برسم التحصيل</th>
+              
+              
+              
+              
               <th colspan="2" class="text-center">ضرائب على الدخل</th>
-              <th colspan="2" class="text-center">إيجار مقدم</th>
+              
               <th colspan="2" class="text-center">دائنون مساهمون</th>
-              <th colspan="2" class="text-center">بي إن بي دولار</th>
-              <th colspan="2" class="text-center">أبو ظبي دولار</th>
+              
               <th colspan="2" class="text-center">موردين</th>
-              <th colspan="2" class="text-center">أبو ظبي يورو</th>
               <th colspan="2" class="text-center">أخرى</th>
             </tr>
                         <tr>
@@ -177,56 +189,58 @@ th, td { white-space: nowrap; }
                 <td><%=detail.treasury_credit%></td>
                 <td><%=detail.bnp_debt%></td>
                 <td><%=detail.bnp_credit%></td>
+                <td><%=detail.bnp_dollar_debt%></td>
+                <td><%=detail.bnp_dollar_credit%></td>
+                <td><%=detail.bnp_euro_debt%></td>
+                <td><%=detail.bnp_euro_credit%></td>
+                
                 <td><%=detail.abu_dhabi_debt%></td>
                 <td><%=detail.abu_dhabi_credit%></td>
+                <td><%=detail.abu_dhabi_dollar_debt%></td>
+                <td><%=detail.abu_dhabi_dollar_credit%></td>
+                <td><%=detail.abu_dhabi_euro_debt%></td>
+                <td><%=detail.abu_dhabi_euro_credit%></td>
+                <td><%=detail.fx_difference_debt%></td>
+                <td><%=detail.fx_difference_credit%></td>
+                
+                
                 <td><%=detail.operation_expense_debt%></td>
                 <td><%=detail.operation_expense_credit%></td>
                 <td><%=detail.sale_expense_debt%></td>
                 <td><%=detail.sale_expense_credit%></td>
                 <td><%=detail.general_managerial_debt%></td>
                 <td><%=detail.general_managerial_credit%></td>
-                <td><%=detail.creditor_debt%></td>
-                <td><%=detail.creditor_credit%></td>
+                <td><%=detail.aq_debt%></td>
+                <td><%=detail.aq_credit%></td>
+                <td><%=detail.aq_rasm_ta7seel_debt%></td>
+                <td><%=detail.aq_rasm_ta7seel_credit%></td>
+                <td><%=detail.e3temadat_mostanadeya_debt%></td>
+                <td><%=detail.e3temadat_mostanadeya_credit%></td>
+                <td><%=detail.rental_debt%></td>
+                <td><%=detail.rental_credit%></td>
+                <td><%=detail.supplier_debt%></td>
+                <td><%=detail.supplier_credit%></td>
                 <td><%=detail.purchases_debt%></td>
                 <td><%=detail.purchases_credit%></td>
-                <td><%=detail.das_debt%></td>
-                <td><%=detail.das_credit%></td>
+                <td><%=detail.m_moshtarayat_debt%></td>
+                <td><%=detail.m_moshtarayat_credit%></td>
+                <td><%=detail.outer_suppliers_debt%></td>
+                <td><%=detail.outer_suppliers_credit%></td>
+                
                 <td><%=detail.clients_debt%></td>
                 <td><%=detail.clients_credit%></td>
                 <td><%=detail.sales_debt%></td>
                 <td><%=detail.sales_credit%></td>
                 <td><%=detail.sales_tax_debt%></td>
                 <td><%=detail.sales_tax_credit%></td>
-                <td><%=detail.aq_debt%></td>
-                <td><%=detail.aq_credit%></td>
-                <td><%=detail.e3temadat_mostanadeya_debt%></td>
-                <td><%=detail.e3temadat_mostanadeya_credit%></td>
-                <td><%=detail.outer_suppliers_debt%></td>
-                <td><%=detail.outer_suppliers_credit%></td>
+                <td><%=detail.das_debt%></td>
+                <td><%=detail.das_credit%></td>
                 <td><%=detail.osool_sabta_debt%></td>
                 <td><%=detail.osool_sabta_credit%></td>
-                <td><%=detail.m_moshtarayat_debt%></td>
-                <td><%=detail.m_moshtarayat_credit%></td>
-                <td><%=detail.bnp_euro_debt%></td>
-                <td><%=detail.bnp_euro_credit%></td>
-                <td><%=detail.fx_difference_debt%></td>
-                <td><%=detail.fx_difference_credit%></td>
-                <td><%=detail.aq_rasm_ta7seel_debt%></td>
-                <td><%=detail.aq_rasm_ta7seel_credit%></td>
                 <td><%=detail.income_tax_debt%></td>
                 <td><%=detail.income_tax_credit%></td>
-                <td><%=detail.rental_debt%></td>
-                <td><%=detail.rental_credit%></td>
-                <td><%=detail.contributor_creditor_debt%></td>
-                <td><%=detail.contributor_creditor_credit%></td>
-                <td><%=detail.bnp_dollar_debt%></td>
-                <td><%=detail.bnp_dollar_credit%></td>
-                <td><%=detail.abu_dhabi_dollar_debt%></td>
-                <td><%=detail.abu_dhabi_dollar_credit%></td>
-                <td><%=detail.supplier_debt%></td>
-                <td><%=detail.supplier_credit%></td>
-                <td><%=detail.abu_dhabi_euro_debt%></td>
-                <td><%=detail.abu_dhabi_euro_credit%></td>
+                <td><%=detail.creditor_debt%></td>
+                <td><%=detail.creditor_credit%></td>
                 <td><%=detail.other_debt%></td>
                 <td><%=detail.other_credit%></td>
 

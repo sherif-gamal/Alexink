@@ -1590,7 +1590,7 @@ function setupTables() {
 function TestTable2(table_id){
 	var asInitVals = [];
 	var oTable = $('#'+table_id).dataTable( {
-		"aaSorting": [[ 0, "asc" ]],
+		"aaSorting": [[ 0, "desc" ]],
 		"sDom": "<'box-content'<'col-sm-6'f><'col-sm-6 text-right'l><'clearfix'>>rt<'box-content'<'col-sm-6'i><'col-sm-6 text-right'p><'clearfix'>>",
 		"sPaginationType": "bootstrap",
 		"bDestroy": true,
