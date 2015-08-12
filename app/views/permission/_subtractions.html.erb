@@ -79,7 +79,10 @@
           </thead>
           <tbody>
             <% @purchase_permissions.each do |permission| %>
-              <%purchase = @purchases.find(permission.transaction_id)%>
+              <%purchase = @purchases.find_by_id(permission.transaction_id)%>
+              <%if !purchase
+                  next
+                end%>
               <%products = @products.find(purchase.product_ids)%>
               <% url = "/permission/purchase/#{permission.id}" %>
               <tr data-href=<%=url%>>

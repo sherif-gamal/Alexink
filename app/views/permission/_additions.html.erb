@@ -89,7 +89,10 @@
           </thead>
           <tbody>
             <% @product_permissions.each do |permission| %>
-              <%@product = @products.find(permission.transaction_id)%>
+              <%@product = @products.find_by_id(permission.transaction_id)%>
+              <%if !@product
+                  next
+                end%>
               <% url = "/permission/product/#{permission.id}" %>
               <tr data-href=<%=url%>>
                 <td><%= permission.created_at.strftime("%Y/%m/%d") %></td>
