@@ -85,7 +85,13 @@ class SuppliersController < ApplicationController
   # DELETE /suppliers/1
   # DELETE /suppliers/1.json
   def destroy
-    @supplier.destroy
+    materials = Material.where("supplier_id = ?", @supplier.id)
+    
+    if purchases.empty?
+      @supplier.destroy
+    else
+      @supplier.update(deleted: 1)
+    end
     respond_to do |format|
       format.html { redirect_to suppliers_url, notice: 'Supplier was successfully destroyed.' }
       format.json { head :no_content }
