@@ -212,5 +212,6 @@ $(document).ready(function() {
   LoadBootstrapValidatorScript(DemoFormValidator);
   // Add drag-n-drop feature to boxes
   WinMove();
+  $('button[type=cancel],select').attr('onclick', 'window.location.href = "/"; return false;')
 });
 </script>
