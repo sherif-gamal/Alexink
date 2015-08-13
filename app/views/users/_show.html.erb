@@ -75,8 +75,11 @@
               </div>
             </div>
             
-            <%if @user == current_user%><%= link_to 'تعديل', edit_user_path(@user) %> |<%end%>
-			<%= link_to 'حذف', @user, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
+            <%if current_user.id == 1%><%= link_to 'تعديل', edit_user_path(@user) %>
+			         <%if @user.id != 1%> |
+                <%= link_to 'حذف', @user, method: :delete, data: { confirm: 'هل أنت متأكد؟' } %>
+                <%end%>
+            <%end%>
             </div>
           <% end %>
 

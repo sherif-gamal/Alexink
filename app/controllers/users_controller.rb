@@ -44,6 +44,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    puts "zzzzzzzzzzzzzzzzz #{user_params[:password]}"
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'تم تعديل البيانات بنجاح.' }
