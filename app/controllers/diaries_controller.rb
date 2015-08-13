@@ -116,17 +116,6 @@ class DiariesController < ApplicationController
 
 
 	def diaries
-		if params['p_method'].present? && params['p_method'] != 'all'
-			@p_method = params['p_method']
-			materials = Material.where("p_method = ?", params['p_method'])
-			expenses = Expense.where("p_method = ?", params['p_method'])
-			purchases = Purchase.where("p_method = ?", params['p_method'])
-		else
-			@p_method = 'all'
-			materials = Material.all
-			expenses = Expense.all
-			purchases = Purchase.all
-		end
 		if params['_start'].present?
 			@_start = 	Date.strptime(params['_start'], "%m/%d/%Y")
 		else
@@ -137,9 +126,11 @@ class DiariesController < ApplicationController
 		else
 			@_end = DateTime.tomorrow
 		end
-		materials = materials.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
-		expenses = expenses.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
-		purchases = purchases.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+
+		puts "#{@_start}, #{@_end}"
+		materials = Material.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		expenses = Expense.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
+		purchases = Purchase.where("date_added > ? and date_added <= ?", @_start, @_end).order(date_added: :desc)
 
 		@all = materials + expenses + purchases
 		@all = @all.sort_by{|e| e.date_added}
