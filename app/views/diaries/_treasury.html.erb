@@ -53,7 +53,10 @@
               <%sum = sum + a.amount%>
               <%if a.transaction_type == ApplicationController::PURCHASE%>
               <%puts "purchase and treasuryDiary id is #{a.id}"%>
-                <%m = Purchase.find(a.transaction_id)%>
+                <%m = Purchase.find_by_id(a.transaction_id)%>
+                <%if !m%>
+                  <%next%>
+                <%end%>
                 <%t = Client.find(m.client_id)%>
                 <tr data-href="<%= purchase_path(m) %>">
               <%elsif a.transaction_type == ApplicationController::CLIENT%>
@@ -120,7 +123,10 @@
             <% @treasury_subtractions.each do |a| %>
               <%sum = sum - a.amount%>
               <%if a.transaction_type == ApplicationController::MATERIAL%>
-                <%m = Material.find(a.transaction_id)%>
+                <%m = Material.find_by_id(a.transaction_id)%>
+                <%if !m%>
+                  <%next%>
+                <%end%>
                 <tr data-href="<%= material_path(m) %>">
               <%elsif a.transaction_type == ApplicationController::SUPPLIER%>
                 <%t = Supplier.find(a.transaction_id)%>
