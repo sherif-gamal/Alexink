@@ -240,7 +240,8 @@ function MakeSelect2(){
 }
 
 var f = function() {
-    $.ajax({ url: '/clients/status',
+  var id = $("#client_id").val();
+    $.ajax({ url: '/clients/' + id,
       type: 'POST',
       beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
       data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'p_method' : $("#method option:selected").val()},
