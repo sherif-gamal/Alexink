@@ -102,7 +102,9 @@ class ExpensesController < ApplicationController
     update_treasury(@expense.payment_method, @expense.price, EXPENSE, @expense.id, "مسح حركة بيع", 0)
     TreasuryDiary.where(transaction_id: @expense.id, transaction_type: EXPENSE).destroy_all
     e = ExpensePaymentDetail.find_by_id(@expense.id)
-    e.destroy
+    if e
+      e.destroy
+    end
     @expense.destroy
     respond_to do |format|
       format.html { redirect_to expenses_url, notice: 'Expense was successfully destroyed.' }

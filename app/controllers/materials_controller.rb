@@ -147,7 +147,9 @@ class MaterialsController < ApplicationController
     update_treasury(@material.payment_method, @material.price_with_taxes, MATERIAL, @material.id, "مسح حركة شراء", 0)
     TreasuryDiary.where(transaction_id: @material.id, transaction_type: 1).destroy_all
     m = MaterialPaymentDetail.find_by_id(@material.id)
-    m.destroy
+    if (m)
+      m.destroy
+    end
     supplier = Supplier.find(@material.supplier_id)
     new_credit = supplier.credit - @material.debt
     supplier.update(credit: new_credit)
