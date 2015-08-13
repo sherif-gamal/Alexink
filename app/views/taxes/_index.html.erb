@@ -114,16 +114,13 @@ input, button {
 </style>
 
 <div>
-  <div class="pull-right col-sm-1">
-    السنة
+  <div class="col-sm-2 pull-right">
+    بداية من
+    <input type="text" id="input_date" class="form-control" placeholder="تاريخ البداية" value="<%=@_start.strftime("%m/%d/%Y")%>">  
   </div>
-  <div class="pull-right col-sm-2">
-    <select id="input_year">
-      <%cur = Time.now.year%>
-      <%(2000..cur).each do |y|%>
-        <option value="<%= y%>" <%= @_year == y ? "selected" : ""%>><%= y%></option>
-      <%end%>
-    </select>  
+  <div class="col-sm-2 pull-right">
+    حتى
+    <input type="text" id="input_date-2" class="form-control" placeholder="تاريخ النهاية" value="<%=@_end.strftime("%m/%d/%Y")%>">
   </div>
 </div>
 
@@ -133,7 +130,7 @@ input, button {
         <div class="main-content">
             <div id="header-right">وزارة المالية<br/>مصلحة الضرائب</div>
             <div id="header-center">إقرار<br/>الضريبة العامة على المبيعات</div>
-            <div id="header-left">Logo</div>
+            
             <div id="details-box">
                 الاسم: شركة الإسكندرية للأحبار<br/>
                 العنوان: ك 27 طريق القاهرة - الإسكندرية الصحراوي<br/>
@@ -145,13 +142,13 @@ input, button {
             &nbsp
             الفترة:
             &nbsp
-            <span class="number-box">4</span><span class="number-box">7</span>&nbsp
-            <span class="number-box">4</span><span class="number-box">7</span>
+            <span class="number-box"><%=@_start.day % 10%></span><span class="number-box"><%=@_start.day / 10%></span>&nbsp
+            <span class="number-box"><%=@_start.month % 10%></span><span class="number-box"><%=@_start.month / 10%></span>
             &nbsp
             نهاية الفترة
             &nbsp
-            <span class="number-box">4</span><span class="number-box">7</span>&nbsp
-            <span class="number-box">4</span><span class="number-box">7</span>
+            <span class="number-box"><%=@_end.day % 10%></span><span class="number-box"><%=@_end.day / 10%></span>&nbsp
+            <span class="number-box"><%=@_end.month % 10%></span><span class="number-box"><%=@_end.month / 10%></span>
             </div>
             <hr style="position: absolute; top: 200px; left: 10px;">
             
@@ -254,17 +251,14 @@ function DemoTimePicker(){
 }
 $(document).ready(function() {
 	// Create Wysiwig editor for textare
-	TinyMCEStart('#wysiwig_simple', null);
-	TinyMCEStart('#wysiwig_full', 'extreme');
 	// Add slider for change test input length
-	FormLayoutExampleInputLength($( ".slider-style" ));
 	// Initialize datepicker
 	$('#input_date').datepicker({setDate: new Date()});
+    $('#input_date-2').datepicker({setDate: new Date()});
 	// Load Timepicker plugin
 	LoadTimePickerScript(DemoTimePicker);
 	// Add tooltip to form-controls
 	$('.form-control').tooltip();
-	LoadSelect2Script(DemoSelect2);
 	// Load example of form validation
 	LoadBootstrapValidatorScript(DemoFormValidator);
 	// Add drag-n-drop feature to boxes
@@ -272,9 +266,17 @@ $(document).ready(function() {
 });
 
 var f = function() {
-    window.location.href = "/taxes/" + $("#input_year").val();
+    $.ajax({ url: '/taxes',
+      type: 'POST',
+      beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+      data: {'_start': $('#input_date').val(), '_end' : $('#input_date-2').val(), 'p_method' : $("#method option:selected").val()},
+      success: function(response) {
+        $('#ajax-content').html(response);
+      }
+    });
 }
-$('#input_year').change(f)
+$('#input_date-2').change(f);
+$('#input_date').change(f);
 
 $('#print-1').click(function () {
   var doc = new jsPDF('p', 'pt', [600, 1050]);

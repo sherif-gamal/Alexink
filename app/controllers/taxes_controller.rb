@@ -5,16 +5,21 @@ class TaxesController < ApplicationController
 		# clients_foreign = Client.where.not("country like 'egypt' or country = 'مصر'")
 		# purchases_local = Purchase.where(client_id: clients_local.map {|c| c.id})
 		# purchases_foreign = Purchase.where(client_id: clients_foreign.map {|c| c.id})
-		if params['year'].present?
-			@_year = 	params['year'].to_i
+		if params['_start'].present?
+			@_start = 	Date.strptime(params['_start'], "%m/%d/%Y")
 		else
-			@_year = Time.now.year
+			@_start = 1.month.ago
+		end
+		if params['_end'].present?
+			@_end = Date.strptime(params['_end'], "%m/%d/%Y")
+		else
+			@_end = Date.today
 		end
 
-		purchases = Purchase.where(["date_added like ?", "%#{@_year}%"])
+		purchases = Purchase.where("date_added > ? and date_added <= ?", @_start, @_end)
 
-		materials_local = Material.where("date_added like ? and internal = 1", "%#{@_year}%")
-		materials_foreign = Material.where("date_added like ? and internal = 0", "%#{@_year}%")
+		materials_local = Material.where("date_added > ? and date_added <= ? and internal = 1", @_start, @_end)
+		materials_foreign = Material.where("date_added > ? and date_added <= ? and internal = 0", @_start, @_end)
 
 		# @purchases_price_local = 0
 		# @purchases_price_foreign = 0

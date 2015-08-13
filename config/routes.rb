@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   match '/clients/status', to: 'clients#status', via: [:post]
   match '/clients/:id', to: 'clients#show', via: [:post]
   match '/suppliers/:id', to: 'suppliers#show', via: [:post]
+  match '/taxes', to: 'taxes#index', via: [:post]
 
 
   get '/dashboard/index'
