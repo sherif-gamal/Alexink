@@ -151,15 +151,17 @@ th, td { white-space: nowrap; }
             <% @all.each do |a| %>
               <%if a.is_a? Expense%>
                 <%url = "/expense_payment_detail/#{a.id}"%>
-                <%detail = ExpensePaymentDetail.find(a.id)%>
+                <%detail = ExpensePaymentDetail.find_by_id(a.id)%>
               <%elsif a.is_a? Material%>
                 <%url = "/material_payment_detail/#{a.id}"%>
-                <%detail = MaterialPaymentDetail.find(a.id)%>
+                <%detail = MaterialPaymentDetail.find_by_id(a.id)%>
               <%elsif a.is_a? Purchase%>
                 <%url = "/purchase_payment_detail/#{a.id}"%>
-                <%detail = PurchasePaymentDetail.find(a.id)%>
+                <%detail = PurchasePaymentDetail.find_by_id(a.id)%>
               <%end%>
-
+              <%if !detail%>
+                <%next%>
+              <%end%>
               <tr data-href=<%=url%>>
                 <td><%=number%></td>
                 <td><%=a.date_added.blank? ? (d a.created_at) : a.date_added%></td>
