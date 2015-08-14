@@ -52,23 +52,23 @@
             <tbody>
               <tr>
                 <td>الخزنة</td>
-                <td><%= f.text_field :treasury_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :treasury_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.treasury_debt%></td>
+                <td><%= @revision.treasury_credit%></td>
                 <%result = @revision.treasury_debt - @revision.treasury_credit%>
                 <%if result >= 0%>
                   <td></td>
                   <td></td>
                 <%else%>
                   <td></td>
-                  <td>%></td>
+                  <td></td>
                 <%end%>
 
               </tr>
 
               <tr>
                 <td>بنك الإمارات دبي</td>
-                <td><%= f.text_field :bnp_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :bnp_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.bnp_debt%></td>
+                <td><%= @revision.bnp_credit%></td>
                 <%result = @revision.bnp_debt - @revision.bnp_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -80,8 +80,8 @@
 
                 <tr>
                 <td>بنك الإمارات دبي دولار</td>
-                <td><%= f.text_field :bnp_dollar_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :bnp_dollar_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.bnp_dollar_debt%></td>
+                <td><%= @revision.bnp_dollar_credit%></td>
                 <%result = @revision.bnp_dollar_debt - @revision.bnp_dollar_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -94,8 +94,8 @@
 
               <tr>
                 <td>بنك الإمارات دبي يورو</td>
-                <td><%= f.text_field :bnp_euro_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :bnp_euro_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.bnp_euro_debt%></td>
+                <td><%= @revision.bnp_euro_credit%></td>
                 <%result = @revision.bnp_euro_debt - @revision.bnp_euro_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -108,8 +108,8 @@
 
               <tr>
                 <td>بنك الإسكان والتعمير</td>
-                <td><%= f.text_field :abu_dhabi_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :abu_dhabi_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.abu_dhabi_debt%></td>
+                <td><%= @revision.abu_dhabi_credit%></td>
                 <%result = @revision.abu_dhabi_debt - @revision.abu_dhabi_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -122,8 +122,8 @@
 
               <tr>
                 <td>بنك الإسكان والتعمير دولار</td>
-                <td><%= f.text_field :abu_dhabi_dollar_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :abu_dhabi_dollar_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.abu_dhabi_dollar_debt%></td>
+                <td><%= @revision.abu_dhabi_dollar_credit%></td>
                 <%result = @revision.abu_dhabi_dollar_debt - @revision.abu_dhabi_dollar_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -136,8 +136,8 @@
 
               <tr>
                 <td>بنك الإسكان والتعمير يورو</td>
-                <td><%= f.text_field :abu_dhabi_euro_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :abu_dhabi_euro_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.abu_dhabi_euro_debt%></td>
+                <td><%= @revision.abu_dhabi_euro_credit%></td>
                 <%result = @revision.abu_dhabi_euro_debt - @revision.abu_dhabi_euro_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -150,8 +150,8 @@
 
               <tr>
                 <td>فروق عملة</td>
-                <td><%= f.text_field :fx_difference_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :fx_difference_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.fx_difference_debt%></td>
+                <td><%= @revision.fx_difference_credit%></td>
                 <%result = @revision.fx_difference_debt - @revision.fx_difference_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -164,8 +164,8 @@
 
               <tr>
                 <td>م. تشغيل</td>
-                <td><%= f.text_field :operation_expense_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :operation_expense_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.operation_expense_debt%></td>
+                <td><%= @revision.operation_expense_credit%></td>
                 <%result = @revision.operation_expense_debt - @revision.operation_expense_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -178,8 +178,8 @@
 
               <tr>
                 <td>م. بيعية</td>
-                <td><%= f.text_field :sale_expense_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :sale_expense_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.sale_expense_debt%></td>
+                <td><%= @revision.sale_expense_credit%></td>
                 <%result = @revision.sale_expense_debt - @revision.sale_expense_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -191,8 +191,8 @@
               </tr>
               <tr>
                 <td>م. عمومية وإدارية</td>
-                <td><%= f.text_field :general_managerial_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :general_managerial_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.general_managerial_debt%></td>
+                <td><%= @revision.general_managerial_credit%></td>
                 <%result = @revision.general_managerial_debt - @revision.general_managerial_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -205,8 +205,8 @@
 
               <tr>
                 <td>أ. ق.</td>
-                <td><%= f.text_field :aq_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :aq_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.aq_debt%></td>
+                <td><%= @revision.aq_credit%></td>
                 <%result = @revision.aq_debt - @revision.aq_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -219,8 +219,8 @@
 
               <tr>
                 <td>أ. ق. برسم تحصيل</td>
-                <td><%= f.text_field :aq_rasm_ta7seel_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :aq_rasm_ta7seel_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.aq_rasm_ta7seel_debt%></td>
+                <td><%= @revision.aq_rasm_ta7seel_credit%></td>
                 <%result = @revision.aq_rasm_ta7seel_debt - @revision.aq_rasm_ta7seel_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -233,8 +233,8 @@
 
               <tr>
                 <td>أ. ق. برسم تحصيل</td>
-                <td><%= f.text_field :e3temadat_mostanadeya_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :e3temadat_mostanadeya_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.e3temadat_mostanadeya_debt%></td>
+                <td><%= @revision.e3temadat_mostanadeya_credit%></td>
                 <%result = @revision.e3temadat_mostanadeya_debt - @revision.e3temadat_mostanadeya_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -247,8 +247,8 @@
 
               <tr>
                 <td>إيجار مقدم</td>
-                <td><%= f.text_field :rental_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :rental_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.rental_debt%></td>
+                <td><%= @revision.rental_credit%></td>
                 <%result = @revision.rental_debt - @revision.rental_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -261,8 +261,8 @@
 
               <tr>
                 <td>موردين</td>
-                <td><%= f.text_field :supplier_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :supplier_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.supplier_debt%></td>
+                <td><%= @revision.supplier_credit%></td>
                 <%result = @revision.supplier_debt - @revision.supplier_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -275,8 +275,8 @@
 
               <tr>
                 <td>مشتريات</td>
-                <td><%= f.text_field :purchases_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :purchases_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.purchases_debt%></td>
+                <td><%= @revision.purchases_credit%></td>
                 <%result = @revision.purchases_debt - @revision.purchases_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -289,8 +289,8 @@
 
               <tr>
                 <td>م. علي المشتريات</td>
-                <td><%= f.text_field :m_moshtarayat_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :m_moshtarayat_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.m_moshtarayat_debt%></td>
+                <td><%= @revision.m_moshtarayat_credit%></td>
                 <%result = @revision.m_moshtarayat_debt - @revision.m_moshtarayat_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -303,8 +303,8 @@
 
               <tr>
                 <td>موردين خارجين</td>
-                <td><%= f.text_field :outer_suppliers_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :outer_suppliers_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.outer_suppliers_debt%></td>
+                <td><%= @revision.outer_suppliers_credit%></td>
                 <%result = @revision.outer_suppliers_debt - @revision.outer_suppliers_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -317,8 +317,8 @@
 
               <tr>
                 <td>عملاء</td>
-                <td><%= f.text_field :clients_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :clients_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.clients_debt%></td>
+                <td><%= @revision.clients_credit%></td>
                 <%result = @revision.clients_debt - @revision.clients_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -331,8 +331,8 @@
 
               <tr>
                 <td>عملاء</td>
-                <td><%= f.text_field :sales_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :sales_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.sales_debt%></td>
+                <td><%= @revision.sales_credit%></td>
                 <%result = @revision.sales_debt - @revision.sales_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -345,8 +345,8 @@
 
               <tr>
                 <td>ض مبيعات</td>
-                <td><%= f.text_field :sales_tax_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :sales_tax_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.sales_tax_debt%></td>
+                <td><%= @revision.sales_tax_credit%></td>
                 <%result = @revision.sales_tax_debt - @revision.sales_tax_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -359,8 +359,8 @@
 
               <tr>
                 <td>ض ا ص</td>
-                <td><%= f.text_field :das_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :das_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.das_debt%></td>
+                <td><%= @revision.das_credit%></td>
                 <%result = @revision.das_debt - @revision.das_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -373,8 +373,8 @@
 
               <tr>
                 <td>اصول ث</td>
-                <td><%= f.text_field :osool_sabta_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :osool_sabta_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.osool_sabta_debt%></td>
+                <td><%= @revision.osool_sabta_credit%></td>
                 <%result = @revision.osool_sabta_debt - @revision.osool_sabta_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -387,8 +387,8 @@
 
               <tr>
                 <td>ضرائب علي الدخل</td>
-                <td><%= f.text_field :income_tax_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :income_tax_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.income_tax_debt%></td>
+                <td><%= @revision.income_tax_credit%></td>
                 <%result = @revision.income_tax_debt - @revision.income_tax_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -401,8 +401,8 @@
 
               <tr>
                 <td>دائنين مساهمين</td>
-                <td><%= f.text_field :creditor_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :creditor_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.creditor_debt%></td>
+                <td><%= @revision.creditor_credit%></td>
                 <%result = @revision.creditor_debt - @revision.creditor_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -415,8 +415,8 @@
 
               <tr>
                 <td>أخرى</td>
-                <td><%= f.text_field :other_debt, {onchange:"update_table()", style:"width:100px;"} %></td>
-                <td><%= f.text_field :other_credit, {onchange:"update_table()", style:"width:100px;"} %></td>
+                <td><%= @revision.other_debt%></td>
+                <td><%= @revision.other_credit%></td>
                 <%result = @revision.other_debt - @revision.other_credit%>
                 <%if result >= 0%>
                   <td></td>
@@ -464,16 +464,15 @@ function MakeSelect2(){
 
 var update_table = function() {
   var total_debt1 = 0;
-  console.log(total_debt1);
   var total_debt2 = 0;
   var total_credit1 = 0;
   var total_credit2 = 0;
   rows = $("#table tr").slice(3, 30)
   var t1 = 0, t2 = 0, t3 = 0, t4 = 0;
   for (var i = 0; i < rows.length; i++) {
-    t1 = parseFloat($(rows[i].children[1].children[0]).val());
+    t1 = parseFloat($(rows[i].children[1]).html());
     console.log(t1);
-    t2 = parseFloat($(rows[i].children[2].children[0]).val());
+    t2 = parseFloat($(rows[i].children[2]).html());
     total_debt1 += t1;
     total_credit1 += t2;
     var result = t1 - t2;

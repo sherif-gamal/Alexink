@@ -7,10 +7,7 @@ class RevisionController < ApplicationController
 			@_year = Time.now.year
 		end
 
-		@revision = Revision.where(year: @_year).first
-		if (!@revision)
-			@revision = create_new @_year 
-		end
+		@revision = calculate_revision @_year
 
 		super
 	end
@@ -27,13 +24,12 @@ class RevisionController < ApplicationController
 			params.require(:revision).permit!
 		end
 
-		def create_new(year)
+		def calculate_revision(year)
 			details = ExpensePaymentDetail.joins('inner join expenses on expenses.id = expense_payment_details.id where expenses.date_added like "' + year.to_s + '%"' )
 			details = details + MaterialPaymentDetail.joins('inner join materials on materials.id = material_payment_details.id where materials.date_added like "' + year.to_s + '%"' )
 			details = details + PurchasePaymentDetail.joins('inner join purchases on purchases.id = purchase_payment_details.id where purchases.date_added like "' + year.to_s + '%"' )
 			treasury_debt, treasury_credit, bnp_debt, bnp_credit, abu_dhabi_debt, abu_dhabi_credit,
 			 operation_expense_debt, operation_expense_credit, sale_expense_debt, sale_expense_credit, general_managerial_debt, general_managerial_credit, creditor_debt, creditor_credit, purchases_debt, purchases_credit, das_debt, das_credit, clients_debt, clients_credit, sales_debt, sales_credit, sales_tax_debt, sales_tax_credit, aq_debt, aq_credit, e3temadat_mostanadeya_debt, e3temadat_mostanadeya_credit, outer_suppliers_debt, outer_suppliers_credit, osool_sabta_debt, osool_sabta_credit, m_moshtarayat_debt, m_moshtarayat_credit, bnp_euro_debt, bnp_euro_credit, fx_difference_debt, fx_difference_credit, aq_rasm_ta7seel_debt, aq_rasm_ta7seel_credit, income_tax_debt, income_tax_credit, rental_debt, rental_credit, contributor_creditor_debt, contributor_creditor_credit, bnp_dollar_debt, bnp_dollar_credit, abu_dhabi_dollar_debt, abu_dhabi_dollar_credit, supplier_debt, supplier_credit, abu_dhabi_euro_debt, abu_dhabi_euro_credit, other_debt, other_credit = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-
 
 			details.each do |d|
 				treasury_debt = treasury_debt + (d.treasury_debt || 0)
@@ -93,7 +89,7 @@ class RevisionController < ApplicationController
 				other_debt = other_debt + (d.other_debt || 0)
 				other_credit = other_credit + (d.other_credit || 0)
 			end
-      		Revision.create(year: year, treasury_debt: treasury_debt, treasury_credit: treasury_credit,
+			data = {year: year, treasury_debt: treasury_debt, treasury_credit: treasury_credit,
       			bnp_debt: bnp_debt, bnp_credit: bnp_credit,
       			abu_dhabi_debt: abu_dhabi_debt, abu_dhabi_credit: abu_dhabi_credit, 
       			operation_expense_debt: operation_expense_debt, operation_expense_credit: operation_expense_credit,
@@ -114,6 +110,15 @@ class RevisionController < ApplicationController
       			bnp_dollar_debt: bnp_dollar_debt, bnp_dollar_credit: bnp_dollar_credit,
       			abu_dhabi_dollar_debt: abu_dhabi_dollar_debt, abu_dhabi_dollar_credit: abu_dhabi_dollar_credit,
       			supplier_debt: supplier_debt, supplier_credit: supplier_credit, abu_dhabi_euro_debt: abu_dhabi_euro_debt, abu_dhabi_euro_credit: abu_dhabi_euro_credit,
-      			other_debt: other_debt, other_credit: other_credit)
+      			other_debt: other_debt, other_credit: other_credit}
+
+			revision = Revision.where(year: @_year).first
+
+			if (revision)
+      			revision.update(data)
+      		else
+      			Revision.create(data)
+      		end
+      		return revision
 		end
 end
