@@ -46,11 +46,11 @@
               <th style="width: 70px" class="text-center">الكمية</th>
             </tr>
             <%index = 1%>
-            <%@products.each_with_index do |p, i|%>
+            <%@purchase.product_ids.each_with_index do |p, i|%>
               <tr>
                 <td><%=index%></td>
                 <%index = index + 1%>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=Product.find(p).name%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
               </tr>
             <%end%>
@@ -142,11 +142,11 @@
               <th style="width: 70px" class="text-center">الكمية</th>
             </tr>
             <%index = 1%>
-            <%@products.each_with_index do |p, i|%>
+            <%@purchase.product_ids.each_with_index do |p, i|%>
               <tr>
                 <td><%=index%></td>
                 <%index = index + 1%>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=Product.find(p).name%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
               </tr>
             <%end%>
@@ -224,7 +224,7 @@
               <th style="width: 50px" class="text-center">قرش</th>
               <th style="width: 60px" class="text-center">جنيه</th>
             </tr>
-            <%@products.each_with_index do |p, i|%>
+            <%@purchase.product_ids.each_with_index do |p, i|%>
               <tr>
                 <%price_i = @purchase.prices[i].to_f * @purchase.quantities[i].to_f%>
                 <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i) * 100%></td>
@@ -232,7 +232,7 @@
                 <td class="text-center"><%=sprintf '%02d', (@purchase.prices[i].to_f - @purchase.prices[i].to_i) * 100%></td>
                 <td class="text-center"><%=@purchase.prices[i].to_i%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=Product.find(p).name%></td>
               </tr>
             <%end%>
             <%(15 - @products.count).times.each do |i|%>
