@@ -90,7 +90,7 @@ class PermissionController < ApplicationController
 		@permission = ReleaseProductPermission.find(permission_id)
 		@invoice = Invoice.find(invoice_id)
 		@purchase = Purchase.find(@permission.transaction_id)
-		# @products = Product.find(@purchase.product_ids)
+		@products = @purchase.product_ids
 		@client = Client.find(@purchase.client_id)
 		
 		if request.xhr?
