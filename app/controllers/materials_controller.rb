@@ -111,8 +111,10 @@ class MaterialsController < ApplicationController
       redirect_to "/materials/#{@material.id}/edit", notice: 'المبلغ الموجود بالخزنة أقل من المبلغ المطلوب'
       return
     end
+    p = material_params
+    p['raw_material_ids'] = @material.raw_material_ids
     respond_to do |format|
-      if @material.update(material_params)
+      if @material.update(p)
         money = debt - material_params[:debt].to_f
         if (debt != @material.debt)
           update_treasury(@material.payment_method, - money, MATERIAL, @material.id, "تعديل موقف عملية شراء", 0)

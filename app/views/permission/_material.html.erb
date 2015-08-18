@@ -109,7 +109,7 @@
               <th style="width: 50px" class="text-center">قرش</th>
               <th style="width: 60px" class="text-center">جنيه</th>
             </tr>
-            <%@raw_materials.each_with_index do |p, i|%>
+            <%@material.raw_material_ids.each_with_index do |p, i|%>
               <tr>
                 <%price_i = @material.prices[i].to_f * @material.quantities[i].to_f%>
                 <td class="text-center"><%=sprintf '%02d', (price_i - price_i.to_i) * 100%></td>
@@ -117,7 +117,7 @@
                 <td class="text-center"><%=sprintf '%02d', (@material.prices[i].to_f - @material.prices[i].to_i) * 100%></td>
                 <td class="text-center"><%=@material.prices[i].to_i%></td>
                 <td class="text-center"><%=@material.quantities[i]%></td>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=RawMaterial.find(p).name%></td>
               </tr>
             <%end%>
             <%(15 - @raw_materials.count).times.each do |i|%>
