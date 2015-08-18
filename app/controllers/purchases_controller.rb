@@ -108,11 +108,10 @@ class PurchasesController < ApplicationController
   # PATCH/PUT /purchases/1.json
   def update
     debt = @purchase.debt
-    p purchase_params
     p = purchase_params
     p['product_ids'] = @purchase.product_ids
     respond_to do |format|
-      if @purchase.update(purchase_params)
+      if @purchase.update(p)
         if (debt != @purchase.debt)
           update_treasury(@purchase.payment_method, debt - @purchase.debt, PURCHASE, @purchase.id, "تعديل موقف عملية بيع", 0, params["cheque_num"])
         end
@@ -173,6 +172,7 @@ class PurchasesController < ApplicationController
        :payment_state, :client_id, :payment_method, :payment_state, :state, :debt,
         :quantities => [], :prices => [], )
       _params[:product_ids] = params[:product_ids]
+      return _params
     end
 
     def validate_params(params)  

@@ -105,17 +105,15 @@
             <div class="form-group">
                 <%= f.label :debt,  'المبلغ المتبقي', {class:"col-sm-2 control-label pull-right"}%>
                 <div class="col-sm-4 pull-right">
-                  <%= f.text_field :debt , {class:"form-control", disabled: @purchase.debt <= 0}%>
+                  <%= f.text_field :debt , {class:"form-control"}%>
                 </div>
             </div>
-            <%if @purchase.debt > 0%>
-              <div class="form-group">
-                <%= label_tag "cheque_num_label", "رقم الشيك", {class:"col-sm-2 control-label pull-right"}%>
-                <div class="col-sm-2 pull-right">
-                  <%= text_field_tag "cheque_num", "" , {class:"form-control"}%>
-                </div>
+            <div class="form-group">
+              <%= label_tag "cheque_num_label", "رقم الشيك", {class:"col-sm-2 control-label pull-right"}%>
+              <div class="col-sm-2 pull-right">
+                <%= text_field_tag "cheque_num", "" , {class:"form-control"}%>
+              </div>
             </div>
-            <%end%>
 
             <div class="form-group">
               <div class="col-sm-offset-2 col-sm-2 pull-right">
