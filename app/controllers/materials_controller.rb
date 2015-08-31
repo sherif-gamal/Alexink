@@ -21,8 +21,8 @@ class MaterialsController < ApplicationController
   # GET /materials/new
   def new
     @material = Material.new
-    @suppliers = Supplier.all
-    @raw_materials = RawMaterial.all
+    @suppliers = Supplier.all.where.not(deleted: 1)
+    @raw_materials = RawMaterial.where.not(deleted: 1)
     @internal = nil
     super
   end

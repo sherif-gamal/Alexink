@@ -22,7 +22,7 @@ class PurchasesController < ApplicationController
   def new
     @purchase = Purchase.new
     @clients = Client.where.not(deleted: 1)
-    @products = Product.all
+    @products = Product.where.not(deleted: 1)
     super
   end
 
@@ -41,12 +41,19 @@ class PurchasesController < ApplicationController
     if validate_params(_params) then
       purchase = Purchase.new(_params)
       purchase.user_name = current_user.name
-      products = Product.find(_params['product_ids'])
-      products.each_with_index do |product, i|
+      products = []
+      ids = _params['product_ids']
+      product_num = ids.length
+      product_num.times do |i|
+        product = Product.find(ids[i])
+        p product
+        puts _params['quantities'][i].to_f
+        puts product.in_stock 
         if (product.in_stock < _params['quantities'][i].to_f)
           redirect_to '/purchases/new', notice: 'الكمية المتاحة بالمخزن من ذلك المنتج أقل من المطلوب'
           return
         end
+        products.push product
       end
       purchase.price = 0
       purchase.prices.each_with_index do |price, i|

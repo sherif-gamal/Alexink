@@ -91,8 +91,7 @@ class ApplicationController < ActionController::Base
       treasury.bank = treasury.bank + amount
     end
     treasury.save
-    p date_added
-    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax, p_method: method, cheque_num: cheque_num, date_added: date_added)
+    TreasuryDiary.create(transaction_id: transaction_id, transaction_type: transaction_type, amount: amount, description: description, is_tax: is_tax, p_method: method, cheque_num: cheque_num, date_added: (date_added || Date.today))
   end
 
   def add_tax(method, transaction_type, transaction_id, price)

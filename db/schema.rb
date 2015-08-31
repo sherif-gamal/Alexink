@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150813114200) do
+ActiveRecord::Schema.define(version: 20150815015703) do
 
   create_table "add_material_permissions", force: :cascade do |t|
     t.integer  "transaction_id"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 20150813114200) do
     t.string   "due_date"
     t.integer  "internal"
     t.date     "date_added"
+    t.float    "fx_difference"
   end
 
   add_index "materials", ["supplier_id"], name: "index_materials_on_supplier_id"
@@ -398,11 +399,11 @@ ActiveRecord::Schema.define(version: 20150813114200) do
   end
 
   create_table "release_money_permissions", force: :cascade do |t|
-    t.integer  "transaction_for"
     t.integer  "transaction_id"
     t.integer  "quantity"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "transaction_for"
   end
 
   create_table "release_product_permissions", force: :cascade do |t|
