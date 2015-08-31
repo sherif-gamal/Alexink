@@ -81,9 +81,8 @@ class MaterialsController < ApplicationController
             update_treasury(@material.payment_method, @material.debt - @material.price_with_taxes, MATERIAL, @material.id, "عملية شراء", 0, @material.date_added)
           end
 
-          raw_materials = RawMaterial.find(@material.raw_material_ids)
-
-          raw_materials.each_with_index do |raw_material, i|
+          @material.raw_material_ids.each_with_index do |r, i|
+            raw_material = RawMaterial.find(r)
             raw_material.in_stock = raw_material.in_stock + @material.quantities[i].to_f
             raw_material.save
           end

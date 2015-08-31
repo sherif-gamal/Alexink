@@ -46,7 +46,6 @@ class PurchasesController < ApplicationController
       product_num = ids.length
       product_num.times do |i|
         product = Product.find(ids[i])
-        p product
         puts _params['quantities'][i].to_f
         puts product.in_stock 
         if (product.in_stock < _params['quantities'][i].to_f)

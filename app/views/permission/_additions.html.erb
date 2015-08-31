@@ -37,8 +37,8 @@
                 <td><%= material.date_added %></td>
                 <td><%= permission.id %></td>
                 <td><ul>
-                  <% @raw_materials.find(material.raw_material_ids).each do |r| %>
-                  <li><%= r.name%></li>
+                  <% material.raw_material_ids.each do |r| %>
+                  <li><%= @raw_materials.find(r).name%></li>
                   <%end%>
                 </ul>
                 </td>

@@ -50,7 +50,7 @@
               <tr>
                 <td><%=index%></td>
                 <%index = index + 1%>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=Product.find(p).name%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
               </tr>
             <%end%>
@@ -148,7 +148,7 @@
               <tr>
                 <td><%=index%></td>
                 <%index = index + 1%>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=Product.find(p).name%></td>
                 <td class="text-center"><%=@purchase.quantities[i]%></td>
               </tr>
             <%end%>

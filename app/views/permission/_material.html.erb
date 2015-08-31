@@ -44,8 +44,9 @@
               <th class="text-center">البيان</th>
               <th style="width: 70px" class="text-center">الكمية</th>
             </tr>
-            <%@raw_materials.each_with_index do |raw_material, i|%>
+            <%@material.raw_material_ids.each_with_index do |r, i|%>
             <tr>
+                <%raw_material = RawMaterial.find(r)%>
                 <td class="text-center"><%=raw_material.name%></th>
                 <td style="width: 70px" class="text-center"><%=@material.quantities[i]%></th>
             </tr>

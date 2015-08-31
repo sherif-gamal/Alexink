@@ -83,15 +83,14 @@
               <%if !purchase
                   next
                 end%>
-              <%products = @products.find(purchase.product_ids)%>
               <% url = "/permission/purchase/#{permission.id}" %>
               <tr data-href=<%=url%>>
                 <td><%= purchase.date_added%></td>
                 <td><%= permission.id %></td>
                 <td>
                   <ul>
-                    <%products.each do |product|%>
-                      <li><%= product.name %></li>
+                    <%purchase.product_ids.each do |product|%>
+                      <li><%= @products.find(product).name %></li>
                     <%end%>
                   </ul>
                 </td>

@@ -60,7 +60,7 @@
                 <td class="text-center"><%=sprintf '%02d', (@material.prices[i].to_f - @material.prices[i].to_i) * 100%></td>
                 <td class="text-center"><%=@material.prices[i].to_i%></td>
                 <td class="text-center"><%=@material.quantities[i]%></td>
-                <td class="text-center"><%=p.name%></td>
+                <td class="text-center"><%=RawMaterial.find(p).name%></td>
               </tr>
             <%end%>
             <%(15 - @raw_materials.count).times.each do |i|%>

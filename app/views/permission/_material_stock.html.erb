@@ -45,7 +45,7 @@
             </tr>
             <%@raw_materials.each_with_index do |raw_material, i|%>  
             <tr>
-                <td class="text-center"><%=raw_material.name%></th>
+                <td class="text-center"><%=RawMaterial.find(raw_material).name%></th>
                 <td style="width: 70px" class="text-center"><%=@material.quantities[i]%></td>
             </tr>
             <%end%>

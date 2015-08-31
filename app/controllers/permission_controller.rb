@@ -29,7 +29,7 @@ class PermissionController < ApplicationController
 		permission_id = params[:id]
 		@permission = AddMaterialPermission.find(permission_id)
 		@material = Material.find(@permission.transaction_id)
-		@raw_materials = RawMaterial.find(@material.raw_material_ids)
+		@raw_materials = @material.raw_material_ids
 		@supplier = Supplier.find(@material.supplier_id)
 		if request.xhr?
 	      flash.discard(:notice)
@@ -43,7 +43,7 @@ class PermissionController < ApplicationController
 		permission_id = params[:id]
 		@permission = ReleaseMoneyPermission.find(permission_id)
 		@material = Material.find(@permission.transaction_id)
-		@raw_materials = RawMaterial.find(@material.raw_material_ids)
+		@raw_materials = @material.raw_material_ids
 		@supplier = Supplier.find(@material.supplier_id)
 		if request.xhr?
 	      flash.discard(:notice)
@@ -59,7 +59,6 @@ class PermissionController < ApplicationController
 		@permission1 = AddMaterialPermission.find(permission1_id)
 		@permission2 = ReleaseMoneyPermission.find(permission2_id)
 		@material = Material.find(@permission1.transaction_id)
-		@raw_materials = RawMaterial.find(@material.raw_material_ids)
 		@supplier = Supplier.find(@material.supplier_id)
 		if request.xhr?
 	      flash.discard(:notice)
@@ -73,7 +72,7 @@ class PermissionController < ApplicationController
 		permission_id = params[:id]
 		@permission = ReleaseProductPermission.find(permission_id)
 		@purchase = Purchase.find(@permission.transaction_id)
-		@products = Product.find(@purchase.product_ids)
+		@products = @purchase.product_ids
 		@client = Client.find(@purchase.client_id)
 		
 		if request.xhr?
