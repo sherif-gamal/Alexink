@@ -121,7 +121,7 @@
                 <td class="text-center"><%=RawMaterial.find(p).name%></td>
               </tr>
             <%end%>
-            <%(15 - @raw_materials.count).times.each do |i|%>
+            <%(15 - @material.raw_material_ids.count).times.each do |i|%>
               <tr>
                 <td class="text-center">&nbsp</td>
                 <td class="text-center">&nbsp</td>
