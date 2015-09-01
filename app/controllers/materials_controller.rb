@@ -30,7 +30,7 @@ class MaterialsController < ApplicationController
   def new_internal
     @material = Material.new
     @suppliers = Supplier.all
-    @raw_materials = RawMaterial.all
+    @raw_materials = RawMaterial.where.not(deleted: 1)
     @internal = true
     if request.xhr?
       flash.discard(:notice)

@@ -37,8 +37,8 @@
             
             <div class="form-group">
               <%= f.label :date_added,  'تاريخ الحركة', {class:"col-sm-2 control-label pull-right"}%>
-              <div class="col-sm-2 pull-right">
-                  <%= f.date_field :date_added, {class:"form-control", value: Date.today.strftime("%m/%d/%Y")}%>
+              <div class="col-sm-3 pull-right">
+                  <%= f.date_field :date_added, {class:"form-control"}%>
               </div>
             </div>
             
@@ -150,7 +150,7 @@ $(document).ready(function() {
   FormLayoutExampleInputLength($( ".slider-style" ));
   // Initialize datepicker
   $('#input_date').datepicker({setDate: new Date()});
-  $('#expense_date_added').datepicker({setDate: new Date()});
+  document.getElementById('expense_date_added').valueAsDate = new Date();
   // Load Timepicker plugin
   LoadTimePickerScript(DemoTimePicker);
   // Add tooltip to form-controls
